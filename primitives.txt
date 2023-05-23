@@ -20,7 +20,6 @@ C!     c c-addr --           store char in memory
 C@     c-addr -- c         fetch char from memory
 DROP   x --                     drop top of stack
 DUP    x -- x x            duplicate top of stack
-EMIT   c --           output character to console
 EXECUTE   i*x xt -- j*x   execute Forth word 'xt'
 EXIT   --                 exit a colon definition
 FILL   c-addr u c --        fill memory with char

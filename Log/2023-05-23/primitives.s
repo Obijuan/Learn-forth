@@ -4,6 +4,7 @@
 	
 		
 	.globl do_1, do_add, do_point, do_lit, do_emit	
+	.globl do_key
 					
 	.include "macros.h"
 	
@@ -84,4 +85,17 @@ do_emit:
 	PRINT_CHAR_T0
 
 	ret
+	
+#-----------------------------------------------
+#-- Lectura de un caracter. Se deja en la pila 
+#-----------------------------------------------
+do_key:
+
+	#-- Devolver caracter en t0
+	READ_CHAR_T0
+	
+	#-- Meterlo en la pila
+	PUSH_T0
+
+ 	ret
 	

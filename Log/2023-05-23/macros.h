@@ -35,6 +35,14 @@ myLabel:   .string %str
 	  ecall
 	.end_macro
 	
+	#-- Esperar a que el usuario pulse un caracter
+	#-- Se devuelve por t0
+	.macro READ_CHAR_T0
+	  li a7, 12
+	  ecall
+	  mv t0,a0
+	.end_macro
+	
 	
 	#-------------------------------------------
 	#-- PARA LA IMPLEMENTACION DE LAS PRIMITIVAS
@@ -88,6 +96,10 @@ myLabel:   .string %str
 	
 	.macro EMIT
 	  jal do_emit 
+	.end_macro
+	
+	.macro KEY
+	  jal do_key
 	.end_macro
 	
 
