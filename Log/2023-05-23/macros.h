@@ -117,6 +117,10 @@ myLabel:   .string %str
 	.macro MINUS
 	  jal do_minus
 	.end_macro
+	
+	.macro LAND
+	  jal do_and
+	.end_macro
 
 
 	

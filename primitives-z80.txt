@@ -439,26 +439,6 @@ mplus1: pop de          ; restore saved IP
         push hl         ; push lo result
         next
 
-;C -      n1/u1 n2/u2 -- n3/u3    subtract n1-n2
-    head MINUS,1,-,docode
-        pop hl
-        or a
-        sbc hl,bc
-        ld b,h
-        ld c,l
-        next
-
-;C AND    x1 x2 -- x3            logical AND
-    head AND,3,AND,docode
-        pop hl
-        ld a,b
-        and h
-        ld b,a
-        ld a,c
-        and l
-        ld c,a
-        next
-
 ;C OR     x1 x2 -- x3           logical OR
     head OR,2,OR,docode
         pop hl

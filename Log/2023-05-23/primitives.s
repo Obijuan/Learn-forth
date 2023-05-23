@@ -3,7 +3,7 @@
 #----------------------------------------------------------------			
 	
 		
-	.globl do_1, do_plus, do_minus, do_point, do_lit, do_emit	
+	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
 	.globl do_key, do_store
 					
 	.include "macros.h"
@@ -65,6 +65,26 @@ do_minus:
 	#-- Depositar resultado e la pila
 	PUSH_T0
 
+	ret
+	
+#-------------------------------------------
+#-- AND    x1 x2 -- x3      logical AND
+#-------------------------------------------
+do_and:
+
+	#-- Obtener argumento superior en t1
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener argumento inferio en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion
+ 	and t0, t0, t1
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
 	ret
 	
 #-------------------------
