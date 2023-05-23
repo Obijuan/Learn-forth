@@ -28,6 +28,13 @@ myLabel:   .string %str
 	    ecall
 	.end_macro
 	
+	#-- Imprimir el caracter que hay en T0
+	.macro PRINT_CHAR_T0
+	  mv a0, t0
+	  li a7, 11 #-- Servicio printchar
+	  ecall
+	.end_macro
+	
 	
 	#-------------------------------------------
 	#-- PARA LA IMPLEMENTACION DE LAS PRIMITIVAS
@@ -68,6 +75,19 @@ myLabel:   .string %str
 	.macro POP_RA
 	   lw ra,0(s0)
 	   addi s0,s0,4
+	.end_macro
+	
+	#----------------------------------------------------
+	#-- PRIMITIVAS Y FUNCIONES DE ALTO NIVEL  
+	#-- PARA LOS PROGRAMAS EN FORTH
+	#----------------------------------------------------
+	.macro LIT (%val)
+	   li a0, %val
+	   jal do_lit
+	.end_macro
+	
+	.macro EMIT
+	  jal do_emit 
 	.end_macro
 	
 

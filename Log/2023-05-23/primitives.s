@@ -3,7 +3,7 @@
 #----------------------------------------------------------------			
 	
 		
-	.globl do_1, do_add, do_point, do_lit			
+	.globl do_1, do_add, do_point, do_lit, do_emit	
 					
 	.include "macros.h"
 	
@@ -71,4 +71,17 @@ do_lit:
 	mv t0,a0
 	PUSH_T0
 	ret
-		
+	
+#-----------------------------------------------------
+#-- Emit: Imprimir el caracter que está en la pila
+#-----------------------------------------------------
+do_emit:
+
+	#-- Leer el caracter de la pila
+	POP_T0
+	
+	#-- Imprimir
+	PRINT_CHAR_T0
+
+	ret
+	
