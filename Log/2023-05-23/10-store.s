@@ -1,15 +1,12 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 9
+#-- INTERPRETE DE FORTH. Version 10
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  key .
+#--  0xCACA 0x2100 !  
 #--
-#-- Se queda esperando a que se apriete una tecla y se imprime su
-#--   codigo ascii
+#--  0xCACA -> [0x2100]. Almacenar 0xCACA en la dirección 0x2100
+#--  
 #--
-#--  NOTA: En forth no se hace eco de la tecla pulsada...
-#--   sin embargo en el RARS sí... y no hay un servicio para
-#--   que no salga...
 #--------------------------------------------------------------------
 
 #-------------------------------------------
@@ -33,15 +30,18 @@
 	la s0, rstack
 
 	#-- Programa Forth: 
-	KEY
-	jal do_point
+	LIT(0xCACA)
+	LIT(0x2100)
+	STORE
 			
 	#-- Interprete de forth: Imprimir " ok"
 	PRINT_STRING ("  ok\n")
 	
 	#-- Terminar
 	EXIT
-				
+	
+
+									
 #---------------------------------
 #-- SEGMENTO DE DATOS
 #---------------------------------	
@@ -50,13 +50,13 @@
    #-----------------------
    #-- PILA de Datos
    #----------------------	
-	.space 4  #-- Tamaño 4 bytes
+	.space 16  #-- Tamaño 4 palabras
+	.align 2
 stack:
 
    #-----------------------
    #-- PILA de retorno
    #-- Elementos de 32 bits
    #-----------------------
-   	.align 2  #-- Alinear a palabra
         .space 16  #-- Tamaño: 4 palabras
 rstack:

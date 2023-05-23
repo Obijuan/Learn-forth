@@ -258,17 +258,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         DW LIT,0FFH,LIT,06H,BDOS
         DW DUP,SAVEKEY,CSTORE,EXIT
 
-;C KEY      -- c    get character from keyboard
-;   BEGIN SAVEKEY C@ 0= WHILE KEY? DROP REPEAT
-;   SAVEKEY C@  0 SAVEKEY C! ;
-; must use CP/M direct console I/O to avoid echo
-; (BDOS function 6, contained within KEY?)
-    head KEY,3,KEY,docolon
-KEY1:   DW SAVEKEY,CFETCH,ZEROEQUAL,qbranch,KEY2
-        DW QUERYKEY,DROP,branch,KEY1
-KEY2:   DW SAVEKEY,CFETCH,LIT,0,SAVEKEY,CSTORE
-        DW EXIT
-
 ;Z CPMACCEPT  c-addr +n -- +n'  get line of input
 ;   SWAP 2 - TUCK C!      max # of characters
 ;   DUP 0A BDOS DROP      CP/M Get Console Buffer
@@ -395,17 +384,6 @@ poptos: pop bc
         next
 
 ; MEMORY AND I/O OPERATIONS =====================
-
-;C !        x a-addr --   store cell in memory
-    head STORE,1,!,docode
-        ld h,b          ; address in hl
-        ld l,c
-        pop bc          ; data in bc
-        ld (hl),c
-        inc hl
-        ld (hl),b
-        pop bc          ; pop new TOS
-        next
 
 ;C C!      char c-addr --    store char in memory
     head CSTORE,2,C!,docode

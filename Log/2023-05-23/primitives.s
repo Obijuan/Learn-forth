@@ -4,7 +4,7 @@
 	
 		
 	.globl do_1, do_add, do_point, do_lit, do_emit	
-	.globl do_key
+	.globl do_key, do_store
 					
 	.include "macros.h"
 	
@@ -18,7 +18,7 @@
 do_1:
       
 	#-- Guardar el 1 en la pila
-	PUSH_BYTE (1)
+	PUSH (1)
 	
 	#-- Hemos terminado
 	ret
@@ -98,4 +98,25 @@ do_key:
 	PUSH_T0
 
  	ret
+ 	
+ #------------------------------------------------
+#-- Store (!)  x a-addr ---
+#--
+#-- Almacenar el valor x en la direccion addr
+#------------------------------------------------	
+do_store:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	mv t1, t0
+	
+	#-- Sacar de la pila el valor
+	#-- t0 = valor
+	POP_T0
+	
+	#-- Ejecutar!
+	sw t0, 0(t1)		
+		
+	ret
 	

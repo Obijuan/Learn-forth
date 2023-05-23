@@ -51,22 +51,22 @@ myLabel:   .string %str
 	
 	#-- Meter un valor en la pila
 	#-- PUSH (x)
-	.macro PUSH_BYTE (%valor)
+	.macro PUSH (%valor)
 	  li t0, %valor
-	  addi sp,sp,-1
-	  sb t0, 0(sp)
+	  addi sp,sp,-4
+	  sw t0, 0(sp)
 	.end_macro	
 	
 	#-- Guardar el registro t0 en la pila
 	.macro PUSH_T0
-	  addi sp,sp,-1
-	  sb t0, 0(sp)
+	  addi sp,sp,-4
+	  sw t0, 0(sp)
 	.end_macro
 	
 	#-- Meter el elemento de la pila en T0
 	.macro POP_T0
-	  lb t0, 0(sp)
-	  addi sp,sp,1
+	  lw t0, 0(sp)
+	  addi sp,sp,4
 	.end_macro
 	
 	#-----------------------------------------------
@@ -100,6 +100,10 @@ myLabel:   .string %str
 	
 	.macro KEY
 	  jal do_key
+	.end_macro
+	
+	.macro STORE
+	  jal do_store
 	.end_macro
 	
 
