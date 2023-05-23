@@ -3,7 +3,7 @@
 #----------------------------------------------------------------			
 	
 		
-	.globl do_1, do_add, do_point				
+	.globl do_1, do_add, do_point, do_lit			
 					
 	.include "macros.h"
 	
@@ -62,3 +62,13 @@ do_point:
 	
 	ret
 	
+	
+#-----------------------------------
+#-- Meter un literal en la pila
+#-- a0: Literal a meter en la pila
+#-----------------------------------	
+do_lit:
+	mv t0,a0
+	PUSH_T0
+	ret
+		
