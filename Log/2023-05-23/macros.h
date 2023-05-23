@@ -106,6 +106,17 @@ myLabel:   .string %str
 	  jal do_store
 	.end_macro
 	
+	.macro HOME
+	  jal do_home
+	.end_macro
+	
+	.macro PLUS
+	  jal do_plus
+	.end_macro
+	
+	.macro MINUS
+	  jal do_minus
+	.end_macro
 
 
 	

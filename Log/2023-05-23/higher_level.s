@@ -3,7 +3,7 @@
 #--   palabras primitivas o de alto nivel
 #------------------------------------------------
 
-	.global do_add3
+	.global do_add3, do_home
 
 	.include "macros.h"
 
@@ -16,8 +16,8 @@ do_add3:
 	PUSH_RA
 	
 	#-- Llamar a las palabras + +
-	jal do_add
-	jal do_add
+	PLUS
+	PLUS
 	
 	#-- Recuperar la direccion de retorno de la pila r
 	POP_RA
@@ -25,3 +25,18 @@ do_add3:
 	#-- Devolver control
 	ret	
 	
+#--- HOME: Llevar el cursor a HOme
+do_home:
+        #-- Guardar direccion de retorno
+	PUSH_RA
+	
+	LIT(27)
+	EMIT
+	LIT(91)
+	EMIT
+	LIT(72)
+	EMIT
+	
+	#-- Recuperar direccion de retorno
+	POP_RA
+	ret

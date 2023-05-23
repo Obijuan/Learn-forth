@@ -425,14 +425,6 @@ poptos: pop bc
 
 ; ARITHMETIC AND LOGICAL OPERATIONS =============
 
-;C +       n1/u1 n2/u2 -- n3/u3     add n1+n2
-    head PLUS,1,+,docode
-        pop hl
-        add hl,bc
-        ld b,h
-        ld c,l
-        next
-
 ;X M+       d n -- d         add single to double
     head MPLUS,2,M+,docode
         ex de,hl

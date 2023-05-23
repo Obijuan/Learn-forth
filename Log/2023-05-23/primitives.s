@@ -3,7 +3,7 @@
 #----------------------------------------------------------------			
 	
 		
-	.globl do_1, do_add, do_point, do_lit, do_emit	
+	.globl do_1, do_plus, do_minus, do_point, do_lit, do_emit	
 	.globl do_key, do_store
 					
 	.include "macros.h"
@@ -29,7 +29,7 @@ do_1:
 #-- Obtener los dos ultimos elementos de la pila,
 #-- sumarlos y depositar el resultado en la pila
 #---------------
-do_add:
+do_plus:
 
 	#-- Leer el primer elemento en t1
 	POP_T0
@@ -45,6 +45,26 @@ do_add:
 	PUSH_T0
 	
 	#-- Hemos terminado
+	ret
+	
+#-------------------------------------------
+#-- n1/u1 n2/u2 -- n3/u3    subtract n1-n2
+#------------------------------------------
+do_minus:
+
+	#-- Obtener segundo operando en t1
+	POP_T0
+	mv t1,t0
+	
+	#-- Obtener primer operando en t0
+	POP_T0
+	
+	#-- Realizar la resta
+	sub t0, t0, t1  #-- t0 - t1
+
+	#-- Depositar resultado e la pila
+	PUSH_T0
+
 	ret
 	
 #-------------------------
