@@ -170,6 +170,10 @@ myLabel:   .string %str
 	  jal do_zeroless
 	.end_macro
 
+	.macro EQUAL
+	  jal do_equal
+	.end_macro
+
 
 
 

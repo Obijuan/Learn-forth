@@ -6,7 +6,7 @@
 	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
-	.globl do_zeroequal, do_zeroless
+	.globl do_zeroequal, do_zeroless, do_equal
 					
 	.include "macros.h"
 	
@@ -308,7 +308,31 @@ do_zeroless:
 
 	ret
 
+#--------------------------------------
+#   =    x1 x2 -- flag   test x1=x2
+#--------------------------------------									
+do_equal:
 
+	#-- Obtener TOS en t1
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener otro argumento en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion de comparacion 
+ 	sub t0,t0,t1  #-- t0 = t0 - t1
+	seqz t0,t0    #-- Comprobar si t0 = 0
+
+	#-- Convertir a flags de Forth
+	#--- 1 --> -1
+	#--- 0 --> 0
+	neg t0,t0
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret
 
 #-------------------------
 #-- Palabra .

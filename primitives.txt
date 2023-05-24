@@ -1,6 +1,5 @@
 +!     n/u a-addr --           add cell to memory
 <      n1 n2 -- flag           test n1<n2, signed
-=      x1 x2 -- flag                   test x1=x2
 >      n1 n2 -- flag           test n1>n2, signed
 >R     x --   R: -- x        push to return stack
 ?DUP   x -- 0 | x x                DUP if nonzero

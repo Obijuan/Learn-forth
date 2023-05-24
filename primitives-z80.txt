@@ -461,15 +461,6 @@ mplus1: pop de          ; restore saved IP
 
 ; COMPARISON OPERATIONS =========================
 
-;C =      x1 x2 -- flag         test x1=x2
-    head EQUAL,1,=,docode
-        pop hl
-        or a
-        sbc hl,bc       ; x1-x2 in HL, SZVC valid
-        jr z,tostrue
-tosfalse: ld bc,0
-        next
-
 ;X <>     x1 x2 -- flag    test not eq (not ANSI)
     head NOTEQUAL,2,<>,docolon
         DW EQUAL,ZEROEQUAL,EXIT
