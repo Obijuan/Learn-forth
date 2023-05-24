@@ -5,7 +5,7 @@
 		
 	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
-	.globl do_oneminus, do_twostar, do_twoslash, do_lshift
+	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 					
 	.include "macros.h"
 	
@@ -239,6 +239,26 @@ do_lshift:
 
 	#-- Desplazamiento logico a la izquierda
 	sll t0,t0,t1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# RSHIFT  x1 u -- x2   logical R shift u places
+#----------------------------------------------
+do_rshift:
+
+	#-- Obtener el TOS en t1 (numero de bits a desplazar)
+	POP_T0
+	mv t1,t0
+
+	#-- Obtener el valor a desplazar en t0
+	POP_T0
+
+	#-- Desplazamiento logico a la derecha
+	srl t0,t0,t1
 
 	#-- Devolverlo a la pila
 	PUSH_T0

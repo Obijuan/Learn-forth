@@ -446,19 +446,6 @@ mplus1: pop de          ; restore saved IP
         ld c,a
         next
 
-;C RSHIFT  x1 u -- x2    logical R shift u places
-    head RSHIFT,6,RSHIFT,docode
-        ld b,c        ; b = loop counter
-        pop hl        ;   NB: hi 8 bits ignored!
-        inc b         ; test for counter=0 case
-        jr rsh2
-rsh1:   srl h         ; right shift HL, n times
-        rr l
-rsh2:   djnz rsh1
-        ld b,h        ; result is new TOS
-        ld c,l
-        next
-
 ;C +!     n/u a-addr --       add cell to memory
     head PLUSSTORE,2,+!,docode
         pop hl

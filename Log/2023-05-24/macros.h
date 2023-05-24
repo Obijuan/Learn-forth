@@ -158,6 +158,10 @@ myLabel:   .string %str
 	  jal do_lshift
 	.end_macro
 
+	.macro RSHIFT
+	  jal do_rshift
+	.end_macro
+
 
 
 
