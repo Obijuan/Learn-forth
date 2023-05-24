@@ -178,6 +178,10 @@ myLabel:   .string %str
 	  jal do_less
 	.end_macro
 
+	.macro ULESS
+	  jal do_uless
+	.end_macro
+
 
 
 

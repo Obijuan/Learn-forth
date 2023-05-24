@@ -469,16 +469,6 @@ mplus1: pop de          ; restore saved IP
     head GREATER,1,>,docolon
         DW SWOP,LESS,EXIT
 
-;C U<    u1 u2 -- flag       test u1<n2, unsigned
-    head ULESS,2,U<,docode
-        pop hl
-        or a
-        sbc hl,bc       ; u1-u2 in HL, SZVC valid
-        sbc a,a         ; propagate cy through A
-        ld b,a          ; put 0000 or FFFF in TOS
-        ld c,a
-        next
-
 ;X U>    u1 u2 -- flag     u1>u2 unsgd (not ANSI)
     head UGREATER,2,U>,docolon
         DW SWOP,ULESS,EXIT
