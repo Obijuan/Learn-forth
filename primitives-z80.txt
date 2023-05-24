@@ -439,11 +439,6 @@ mplus1: pop de          ; restore saved IP
         push hl         ; push lo result
         next
 
-;C 1+      n1/u1 -- n2/u2       add 1 to TOS
-    head ONEPLUS,2,1+,docode
-        inc bc
-        next
-
 ;C 1-      n1/u1 -- n2/u2     subtract 1 from TOS
     head ONEMINUS,2,1-,docode
         dec bc

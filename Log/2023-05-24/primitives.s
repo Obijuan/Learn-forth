@@ -4,7 +4,8 @@
 	
 		
 	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
-	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate
+	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
+	#.globl 
 					
 	.include "macros.h"
 	
@@ -158,7 +159,24 @@ do_negate:
  	PUSH_T0
  	
 	ret	
-	
+
+#----------------------------------------
+# 1+   n1/u1 -- n2/u2      add 1 to TOS
+#----------------------------------------
+do_oneplus:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Incrementarlo en 1
+	addi t0,t0,1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+
 #-------------------------
 #-- Palabra .
 #--
@@ -211,7 +229,7 @@ do_key:
 
  	ret
  	
- #------------------------------------------------
+#------------------------------------------------
 #-- Store (!)  x a-addr ---
 #--
 #-- Almacenar el valor x en la direccion addr

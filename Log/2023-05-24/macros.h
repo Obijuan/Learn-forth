@@ -138,6 +138,12 @@ myLabel:   .string %str
 	  jal do_negate
 	.end_macro
 
+	.macro ONEPLUS
+	  jal do_oneplus
+	.end_macro
+
+
+
 
 
 

@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 18
+#-- INTERPRETE DE FORTH. Version 19
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  2 negate .
+#--  2 1+ .
 #--
-#-- Resultado: -2
+#-- Resultado: 3
 #--------------------------------------------------------------------
 #-- (TODO) Optimizacion para el futuro:
 #--   -Dejar el elemento superior (TOS: Top of Stack) en un registro
@@ -33,7 +33,7 @@
 
 	#-- Programa Forth: 
 	LIT(2)
-	NEGATE
+	ONEPLUS
 	jal do_point
 			
 	#-- Interprete de forth: Imprimir " ok"
