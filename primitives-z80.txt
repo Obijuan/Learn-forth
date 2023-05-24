@@ -446,18 +446,6 @@ mplus1: pop de          ; restore saved IP
         ld c,a
         next
 
-;C LSHIFT  x1 u -- x2    logical L shift u places
-    head LSHIFT,6,LSHIFT,docode
-        ld b,c        ; b = loop counter
-        pop hl        ;   NB: hi 8 bits ignored!
-        inc b         ; test for counter=0 case
-        jr lsh2
-lsh1:   add hl,hl     ; left shift HL, n times
-lsh2:   djnz lsh1
-        ld b,h        ; result is new TOS
-        ld c,l
-        next
-
 ;C RSHIFT  x1 u -- x2    logical R shift u places
     head RSHIFT,6,RSHIFT,docode
         ld b,c        ; b = loop counter

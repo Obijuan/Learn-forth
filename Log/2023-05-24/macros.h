@@ -154,6 +154,10 @@ myLabel:   .string %str
 	  jal do_twoslash
 	.end_macro
 
+	.macro LSHIFT
+	  jal do_lshift
+	.end_macro
+
 
 
 
