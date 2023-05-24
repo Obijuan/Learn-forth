@@ -7,6 +7,7 @@
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
+	.globl do_qdup
 					
 	.include "macros.h"
 	
@@ -396,6 +397,26 @@ do_dup:
 	PUSH_T0
 	PUSH_T0
 
+	ret
+
+#----------------------------------------------
+#  ?DUP     x -- 0 | x x    DUP if nonzero
+#----------------------------------------------
+do_qdup:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- En todos los casos este valor debe estar en la pila
+	PUSH_T0
+
+	#-- t0=0? --> fin
+	beqz t0, qdup_end
+
+	#-- Meter otra copia de t0
+	PUSH_T0
+
+qdup_end:
 	ret
 
 

@@ -186,6 +186,10 @@ myLabel:   .string %str
 	  jal do_dup
 	.end_macro
 
+	.macro QDUP
+	  jal do_qdup
+	.end_macro
+
 
 
 
