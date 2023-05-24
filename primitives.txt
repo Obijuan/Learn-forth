@@ -7,7 +7,6 @@ CONSTANT   n --           define a Forth constant
 C!     c c-addr --           store char in memory
 C@     c-addr -- c         fetch char from memory
 DROP   x --                     drop top of stack
-DUP    x -- x x            duplicate top of stack
 EXECUTE   i*x xt -- j*x   execute Forth word 'xt'
 EXIT   --                 exit a colon definition
 FILL   c-addr u c --        fill memory with char

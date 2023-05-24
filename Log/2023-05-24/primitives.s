@@ -6,7 +6,7 @@
 	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
-	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless
+	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 					
 	.include "macros.h"
 	
@@ -382,6 +382,20 @@ do_uless:
  	#-- Guardar resultado en la pila
  	PUSH_T0
  	
+	ret
+
+#----------------------------------------------
+# DUP      x -- x x     duplicate top of stack
+#----------------------------------------------
+do_dup:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Devolverlo a la pila dos veces
+	PUSH_T0
+	PUSH_T0
+
 	ret
 
 

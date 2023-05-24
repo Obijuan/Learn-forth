@@ -275,11 +275,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
 
 ; STACK OPERATIONS ==============================
 
-;C DUP      x -- x x      duplicate top of stack
-    head DUP,3,DUP,docode
-pushtos: push bc
-        next
-
 ;C ?DUP     x -- 0 | x x    DUP if nonzero
     head QDUP,4,?DUP,docode
         ld a,b
