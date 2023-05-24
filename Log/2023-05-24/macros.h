@@ -146,6 +146,10 @@ myLabel:   .string %str
 	  jal do_oneminus
 	.end_macro
 
+	.macro TWOSTAR
+	  jal do_twostar
+	.end_macro
+
 
 
 
