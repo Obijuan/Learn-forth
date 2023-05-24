@@ -465,23 +465,6 @@ mplus1: pop de          ; restore saved IP
     head NOTEQUAL,2,<>,docolon
         DW EQUAL,ZEROEQUAL,EXIT
 
-;C <      n1 n2 -- flag        test n1<n2, signed
-    head LESS,1,<,docode
-        pop hl
-        or a
-        sbc hl,bc       ; n1-n2 in HL, SZVC valid
-; if result negative & not OV, n1<n2
-; neg. & OV => n1 +ve, n2 -ve, rslt -ve, so n1>n2
-; if result positive & not OV, n1>=n2
-; pos. & OV => n1 -ve, n2 +ve, rslt +ve, so n1<n2
-; thus OV reverses the sense of the sign bit
-        jp pe,revsense  ; if OV, use rev. sense
-        jp p,tosfalse   ;   if +ve, result false
-tostrue: ld bc,0ffffh   ;   if -ve, result true
-        next
-revsense: jp m,tosfalse ; OV: if -ve, reslt false
-        jr tostrue      ;     if +ve, result true
-
 ;C >     n1 n2 -- flag         test n1>n2, signed
     head GREATER,1,>,docolon
         DW SWOP,LESS,EXIT

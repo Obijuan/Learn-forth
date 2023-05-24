@@ -174,6 +174,10 @@ myLabel:   .string %str
 	  jal do_equal
 	.end_macro
 
+	.macro LESS
+	  jal do_less
+	.end_macro
+
 
 
 
