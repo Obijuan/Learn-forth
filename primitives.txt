@@ -21,12 +21,10 @@ EXIT   --                 exit a colon definition
 FILL   c-addr u c --        fill memory with char
 I      -- n   R: sys1 sys2 -- sys1 sys2
                      get the innermost loop index
-INVERT x1 -- x2                 bitwise inversion
 J      -- n   R: 4*sys -- 4*sys
                         get the second loop index
 LSHIFT x1 u -- x2        logical L shift u places
 NEGATE x1 -- x2                  two's complement
-OR     x1 x2 -- x3                     logical OR
 OVER   x1 x2 -- x1 x2 x1        per stack diagram
 ROT    x1 x2 x3 -- x2 x3 x1     per stack diagram
 RSHIFT x1 u -- x2        logical R shift u places
@@ -38,7 +36,6 @@ UM/MOD ud u1 -- u2 u3     unsigned 32/16->16 div.
 UNLOOP --   R: sys1 sys2 --       drop loop parms
 U<     u1 u2 -- flag         test u1<n2, unsigned
 VARIABLE   --             define a Forth variable
-XOR    x1 x2 -- x3                    logical XOR
 
                ANS Forth Extensions
 These are optional words whose definitions are
