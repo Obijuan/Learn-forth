@@ -150,6 +150,10 @@ myLabel:   .string %str
 	  jal do_twostar
 	.end_macro
 
+	.macro TWOSLASH
+	  jal do_twoslash
+	.end_macro
+
 
 
 

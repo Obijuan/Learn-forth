@@ -5,7 +5,7 @@
 		
 	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
-	.globl do_oneminus, do_twostar
+	.globl do_oneminus, do_twostar, do_twoslash
 					
 	.include "macros.h"
 	
@@ -209,6 +209,21 @@ do_twostar:
 
 	ret
 
+#----------------------------------------------
+# 2/   x1 -- x2      arithmetic right shift
+#----------------------------------------------
+do_twoslash:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Desplazamiento aritmetico a la derecha
+	srai t0,t0,1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
 
 #-------------------------
 #-- Palabra .

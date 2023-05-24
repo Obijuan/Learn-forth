@@ -446,12 +446,6 @@ mplus1: pop de          ; restore saved IP
         ld c,a
         next
 
-;C 2/      x1 -- x2        arithmetic right shift
-    head TWOSLASH,2,2/,docode
-        sra b
-        rr c
-        next
-
 ;C LSHIFT  x1 u -- x2    logical L shift u places
     head LSHIFT,6,LSHIFT,docode
         ld b,c        ; b = loop counter
