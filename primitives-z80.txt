@@ -439,17 +439,6 @@ mplus1: pop de          ; restore saved IP
         push hl         ; push lo result
         next
 
-;C NEGATE   x1 -- x2            two's complement
-    head NEGATE,6,NEGATE,docode
-        ld a,b
-        cpl
-        ld b,a
-        ld a,c
-        cpl
-        ld c,a
-        inc bc
-        next
-
 ;C 1+      n1/u1 -- n2/u2       add 1 to TOS
     head ONEPLUS,2,1+,docode
         inc bc

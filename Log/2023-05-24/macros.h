@@ -134,6 +134,10 @@ myLabel:   .string %str
 	  jal do_invert
 	.end_macro
 
+	.macro NEGATE
+	  jal do_negate
+	.end_macro
+
 
 
 

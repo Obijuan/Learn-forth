@@ -4,7 +4,7 @@
 	
 		
 	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
-	.globl do_key, do_store, do_or, do_xor, do_invert
+	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate
 					
 	.include "macros.h"
 	
@@ -137,6 +137,22 @@ do_invert:
  	
  	#-- Realizar la operacion
  	not t0, t0
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret	
+
+#--------------------------------------
+#  NEGATE x1 -- x2   two's complement
+#--------------------------------------									
+do_negate:
+
+	#-- Obtener argumento superior en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion
+ 	neg t0, t0
  	
  	#-- Guardar resultado en la pila
  	PUSH_T0
