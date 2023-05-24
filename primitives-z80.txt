@@ -439,11 +439,6 @@ mplus1: pop de          ; restore saved IP
         push hl         ; push lo result
         next
 
-;C 1-      n1/u1 -- n2/u2     subtract 1 from TOS
-    head ONEMINUS,2,1-,docode
-        dec bc
-        next
-
 ;Z ><      x1 -- x2         swap bytes (not ANSI)
     head swapbytes,2,><,docode
         ld a,b
