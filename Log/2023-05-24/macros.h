@@ -162,6 +162,10 @@ myLabel:   .string %str
 	  jal do_rshift
 	.end_macro
 
+	.macro ZEROEQUAL
+	  jal do_zeroequal
+	.end_macro
+
 
 
 
