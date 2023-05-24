@@ -6,7 +6,7 @@
 	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
-	.globl do_zeroequal
+	.globl do_zeroequal, do_zeroless
 					
 	.include "macros.h"
 	
@@ -286,6 +286,28 @@ do_zeroequal:
 	PUSH_T0
 
 	ret
+
+#----------------------------------------------
+# 0<     n -- flag      true if TOS negative
+#----------------------------------------------
+do_zeroless:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Es t0<0? Dejar flag en t0 (1 si, 0 no)
+	sltz t0,t0
+
+	#-- Convertir a flags de Forth
+	#--- 1 --> -1
+	#--- 0 --> 0
+	neg t0,t0
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
 
 
 #-------------------------

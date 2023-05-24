@@ -461,14 +461,6 @@ mplus1: pop de          ; restore saved IP
 
 ; COMPARISON OPERATIONS =========================
 
-;C 0<     n -- flag      true if TOS negative
-    head ZEROLESS,2,0<,docode
-        sla b           ; sign bit -> cy flag
-        sbc a,a         ; propagate cy through A
-        ld b,a          ; put 0000 or FFFF in TOS
-        ld c,a
-        next
-
 ;C =      x1 x2 -- flag         test x1=x2
     head EQUAL,1,=,docode
         pop hl

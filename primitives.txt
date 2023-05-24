@@ -5,7 +5,6 @@
 >R     x --   R: -- x        push to return stack
 ?DUP   x -- 0 | x x                DUP if nonzero
 @      a-addr -- x         fetch cell from memory
-0<     n -- flag             true if TOS negative
 CONSTANT   n --           define a Forth constant
 C!     c c-addr --           store char in memory
 C@     c-addr -- c         fetch char from memory
