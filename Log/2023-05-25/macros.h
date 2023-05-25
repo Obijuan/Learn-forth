@@ -210,6 +210,10 @@ myLabel:   .string %str
 	  jal do_fetch
 	.end_macro
 
+	.macro CFETCH
+	  jal do_cfetch
+	.end_macro
+
 
 
 

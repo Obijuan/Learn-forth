@@ -350,13 +350,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         pop bc          ; pop new TOS
         next
 
-;C C@     c-addr -- char   fetch char from memory
-    head CFETCH,2,C@,docode
-        ld a,(bc)
-        ld c,a
-        ld b,0
-        next
-
 ;Z PC!     char c-addr --    output char to port
     head PCSTORE,3,PC!,docode
         pop hl          ; char in L

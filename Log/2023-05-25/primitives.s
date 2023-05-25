@@ -7,7 +7,7 @@
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
-	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch
+	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 					
 	.include "macros.h"
 	
@@ -598,6 +598,23 @@ do_fetch:
 	
 	#-- Lectura de la memoria
 	lw t0, 0(t0)
+
+	#-- Guardar el valor en la pila
+	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- C@     c-addr -- char   fetch char from memory
+#------------------------------------------------	
+do_cfetch:
+	#-- Sacar de la pila la dirección
+	#-- t0 --> Direccion donde leer
+	POP_T0				
+	mv t1, t0
+	
+	#-- Lectura de la memoria
+	lbu t0, 0(t0)
 
 	#-- Guardar el valor en la pila
 	PUSH_T0		
