@@ -198,6 +198,10 @@ myLabel:   .string %str
 	  jal do_swap
 	.end_macro
 
+	.macro OVER
+	  jal do_over
+	.end_macro
+
 
 
 
