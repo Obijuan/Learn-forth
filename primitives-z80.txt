@@ -275,11 +275,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
 
 ; STACK OPERATIONS ==============================
 
-;C DROP     x --          drop top of stack
-    head DROP,4,DROP,docode
-poptos: pop bc
-        next
-
 ;C SWAP     x1 x2 -- x2 x1    swap top two items
     head SWOP,4,SWAP,docode
         pop hl
