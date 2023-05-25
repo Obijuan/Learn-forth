@@ -214,6 +214,10 @@ myLabel:   .string %str
 	  jal do_cfetch
 	.end_macro
 
+	.macro CSTORE
+	  jal do_cstore
+	.end_macro
+
 
 
 

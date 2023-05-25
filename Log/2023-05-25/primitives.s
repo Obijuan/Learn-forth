@@ -8,6 +8,7 @@
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
+	.globl do_cstore
 					
 	.include "macros.h"
 	
@@ -621,4 +622,22 @@ do_cfetch:
 		
 	ret
 	
+#------------------------------------------------
+#-- C!    char c-addr --    store char in memory
+#------------------------------------------------	
+do_cstore:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	mv t1, t0
+	
+	#-- Sacar de la pila el valor
+	#-- t0 = valor
+	POP_T0
+	
+	#-- Ejecutar!
+	sb t0, 0(t1)		
+		
+	ret
 	

@@ -2,7 +2,6 @@
 >      n1 n2 -- flag           test n1>n2, signed
 >R     x --   R: -- x        push to return stack
 CONSTANT   n --           define a Forth constant
-C!     c c-addr --           store char in memory
 EXECUTE   i*x xt -- j*x   execute Forth word 'xt'
 EXIT   --                 exit a colon definition
 FILL   c-addr u c --        fill memory with char

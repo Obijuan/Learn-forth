@@ -341,15 +341,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
 
 ; MEMORY AND I/O OPERATIONS =====================
 
-;C C!      char c-addr --    store char in memory
-    head CSTORE,2,C!,docode
-        ld h,b          ; address in hl
-        ld l,c
-        pop bc          ; data in bc
-        ld (hl),c
-        pop bc          ; pop new TOS
-        next
-
 ;Z PC!     char c-addr --    output char to port
     head PCSTORE,3,PC!,docode
         pop hl          ; char in L
