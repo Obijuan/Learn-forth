@@ -7,7 +7,7 @@
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
-	.globl do_qdup, do_drop, do_swap, do_over
+	.globl do_qdup, do_drop, do_swap, do_over, do_rot
 					
 	.include "macros.h"
 	
@@ -471,6 +471,37 @@ do_over:
 
 	#-- Meter t2 en la pila
 	mv t0,t2
+	PUSH_T0
+
+	#-- Meter t1 en la pila
+	mv t0, t1
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# ROT    x1 x2 x3 -- x2 x3 x1  per stack diagram
+#----------------------------------------------
+do_rot:
+
+	#-- Obtener el TOS: t3 = x3
+	POP_T0
+	mv t3,t0
+
+	#-- Obtener el siguiente elemento: t2 = x2
+	POP_T0
+	mv t2,t0
+
+    #-- Obtener el siguiente elemento: t1 = x1
+	POP_T0
+	mv t1,t0
+
+	#-- Meter t2 en la pila
+	mv t0,t2
+	PUSH_T0
+
+	#-- Meter t3 en la pila
+	mv t0,t3
 	PUSH_T0
 
 	#-- Meter t1 en la pila

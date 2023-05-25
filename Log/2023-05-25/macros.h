@@ -202,6 +202,10 @@ myLabel:   .string %str
 	  jal do_over
 	.end_macro
 
+	.macro ROT
+	  jal do_rot
+	.end_macro
+
 
 
 
