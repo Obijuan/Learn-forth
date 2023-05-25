@@ -535,12 +535,31 @@ do_point:
 	
 #-----------------------------------
 #-- Meter un literal en la pila
-#-- a0: Literal a meter en la pila
-#-----------------------------------	
+#-- El literal se encuentra en la posicion siguiente del
+#-- Thread de Forth
+#-----------------------------------
 do_lit:
-	mv t0,a0
-	PUSH_T0
-	ret
+    #-- ra Contiene la dirección del LITERAL
+    lw t0, 0(ra)
+    #-- HACK: En realidad no es el literal exacto, esta
+    #--  dentro de la instruccion lui (en los 20-bits de mayor peso)
+    #-- Desplazar t0 >> 12  (12 bits a la derecha)
+    srli t0,t0,12
+
+    #-- Incrementar ra en 4 para que se ejecute la instruccion
+    #-- tras el literal (y no el lui)
+    addi ra,ra,4
+    
+    #-- En t0 tenemos el literal
+    #-- Lo metemos en la pila
+    PUSH_T0
+    ret
+
+#-- old version
+# do_lit:
+# 	mv t0,a0
+# 	PUSH_T0
+# 	ret
 	
 #-----------------------------------------------------
 #-- Emit: Imprimir el caracter que está en la pila

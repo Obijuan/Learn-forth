@@ -118,11 +118,25 @@ myLabel:   .string %str
 	  jal do_test_rpfetch
 	.end_macro
 
-	#-- Primitivas
-	.macro LIT (%val)
-	   li a0, %val
-	   jal do_lit
+	#--------------- Primitivas
+
+	#--- Para meter literales directamente en el codigo
+	.macro DW(%val)
+	  lui zero,%val
 	.end_macro
+
+	#-- Literal sin argumentos
+	.macro LIT
+	  jal do_lit
+	.end_macro
+
+	#-- Literal con argumentos
+	.macro LIT (%val)
+	   jal do_lit
+	   DW(%val)
+	.end_macro
+
+	
 	
 	.macro EMIT
 	  jal do_emit 
