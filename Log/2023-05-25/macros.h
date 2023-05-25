@@ -222,6 +222,10 @@ myLabel:   .string %str
 	  jal do_spfetch
 	.end_macro
 
+	.macro SPSTORE
+	  jal do_spstore
+	.end_macro
+
 
 
 

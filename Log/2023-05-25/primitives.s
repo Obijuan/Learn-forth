@@ -8,7 +8,7 @@
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
-	.globl do_cstore, do_spfetch
+	.globl do_cstore, do_spfetch, do_spstore
 					
 	.include "macros.h"
 	
@@ -649,5 +649,19 @@ do_spfetch:
 	#-- Meter sp en la pila
 	mv t0,sp
 	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- SP!  a-addr --       set data stack pointer
+#------------------------------------------------	
+do_spstore:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	
+	#-- Establecer el nuevo puntero de pila
+	mv sp, t0
 		
 	ret
