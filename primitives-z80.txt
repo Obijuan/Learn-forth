@@ -350,15 +350,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         pop bc          ; pop new TOS
         next
 
-;C @       a-addr -- x   fetch cell from memory
-    head FETCH,1,@,docode
-        ld h,b          ; address in hl
-        ld l,c
-        ld c,(hl)
-        inc hl
-        ld b,(hl)
-        next
-
 ;C C@     c-addr -- char   fetch char from memory
     head CFETCH,2,C@,docode
         ld a,(bc)

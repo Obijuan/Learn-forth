@@ -206,6 +206,10 @@ myLabel:   .string %str
 	  jal do_rot
 	.end_macro
 
+	.macro FETCH
+	  jal do_fetch
+	.end_macro
+
 
 
 
