@@ -41,7 +41,6 @@ document.  Others are functions I find useful.
 ><     x1 -- x2                        swap bytes 
 ?branch  x --                  branch if TOS zero
 BDOS   DE C -- A                   call CP/M BDOS
-branch --                           branch always
 PC!    c p-addr --            output char to port
 PC@    p-addr -- c           input char from port
 SCAN   c-addr1 u1 c -- c-addr2 u2

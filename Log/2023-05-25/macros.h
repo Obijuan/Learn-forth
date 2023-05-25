@@ -136,6 +136,16 @@ myLabel:   .string %str
 	   DW(%val)
 	.end_macro
 
+	#--- Leer literal en t0
+	.macro READLIT_T0
+		#-- ra Contiene la dirección del LITERAL
+		lw t0, 0(ra)
+		#-- HACK: En realidad no es el literal exacto, esta
+		#--  dentro de la instruccion lui (en los 20-bits de mayor peso)
+		#-- Desplazar t0 >> 12  (12 bits a la derecha)
+		srli t0,t0,12
+	.end_macro
+
 	
 	
 	.macro EMIT
@@ -288,6 +298,10 @@ myLabel:   .string %str
 
 	.macro PLUSSTORE
 	  jal do_plusstore
+	.end_macro
+
+	.macro BRANCH
+	  jal do_branch
 	.end_macro
 
 	

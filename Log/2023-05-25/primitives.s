@@ -9,7 +9,7 @@
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
-	.globl do_rpstore, do_tor, do_rfrom, do_plusstore
+	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 					
 	.include "macros.h"
 	
@@ -539,12 +539,8 @@ do_point:
 #-- Thread de Forth
 #-----------------------------------
 do_lit:
-    #-- ra Contiene la dirección del LITERAL
-    lw t0, 0(ra)
-    #-- HACK: En realidad no es el literal exacto, esta
-    #--  dentro de la instruccion lui (en los 20-bits de mayor peso)
-    #-- Desplazar t0 >> 12  (12 bits a la derecha)
-    srli t0,t0,12
+
+    READLIT_T0
 
     #-- Incrementar ra en 4 para que se ejecute la instruccion
     #-- tras el literal (y no el lui)
@@ -774,4 +770,19 @@ do_plusstore:
 	#-- Almacenar el nuevo dato (n + mem[addr])
 	sw t0, 0(t1)	
 		
+	ret
+
+#-------------------------------------------------
+#-- branch   --                  branch always
+#-------------------------------------------------
+do_branch:
+
+	READLIT_T0
+	
+	#-- El literal es la direccion destino a la que
+	#-- saltar. Lo guardamos directamente en ra
+	mv ra, t0
+   
+    #-- Al hacer el ret salta a la direccion
+	#-- indicada
 	ret

@@ -337,15 +337,6 @@ mplus1: pop de          ; restore saved IP
 
 ; LOOP AND BRANCH OPERATIONS ====================
 
-;Z branch   --                  branch always
-    head branch,6,branch,docode
-dobranch: ld a,(de)     ; get inline value => IP
-        ld l,a
-        inc de
-        ld a,(de)
-        ld h,a
-        nexthl
-
 ;Z ?branch   x --              branch if TOS zero
     head qbranch,7,?branch,docode
         ld a,b
