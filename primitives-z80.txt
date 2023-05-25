@@ -301,13 +301,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         inc ix
         next
 
-;Z RP!  a-addr --       set return stack pointer
-    head RPSTORE,3,RP!,docode
-        push bc
-        pop ix
-        pop bc
-        next
-
 ; MEMORY AND I/O OPERATIONS =====================
 
 ;Z PC!     char c-addr --    output char to port

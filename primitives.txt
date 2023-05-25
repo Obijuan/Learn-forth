@@ -47,7 +47,6 @@ BDOS   DE C -- A                   call CP/M BDOS
 branch --                           branch always
 PC!    c p-addr --            output char to port
 PC@    p-addr -- c           input char from port
-RP!    a-addr --         set return stack pointer
 SCAN   c-addr1 u1 c -- c-addr2 u2
                                find matching char
 SKIP   c-addr1 u1 c -- c-addr2 u2

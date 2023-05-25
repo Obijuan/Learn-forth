@@ -9,6 +9,7 @@
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
+	.globl do_rpstore
 					
 	.include "macros.h"
 	
@@ -689,5 +690,19 @@ do_rpfetch:
 	
 	#-- Meterlo en la pila
 	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- RP!  a-addr --       set return stack pointer
+#------------------------------------------------	
+do_rpstore:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	
+	#-- Establecer el nuevo puntero de pila R
+	mv s0, t0
 		
 	ret

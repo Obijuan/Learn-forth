@@ -245,6 +245,10 @@ myLabel:   .string %str
 	  jal do_rpfetch
 	.end_macro
 
+	.macro RPSTORE
+	  jal do_rpstore
+	.end_macro
+
 	
 
 
