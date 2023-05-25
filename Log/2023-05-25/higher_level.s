@@ -3,7 +3,7 @@
 #--   palabras primitivas o de alto nivel
 #------------------------------------------------
 
-	.global do_add3, do_home, do_test_rfetch
+	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 	.include "macros.h"
 
@@ -55,3 +55,15 @@ do_test_rfetch:
 	#-- Recuperar direccion de retorno
 	POP_RA
 	ret
+
+#--- Prueba para RP@
+do_test_rpfetch:
+    #-- Guardar direccion de retorno
+	PUSH_RA
+	
+	RPFETCH
+
+	#-- Recuperar direccion de retorno
+	POP_RA
+	ret
+				

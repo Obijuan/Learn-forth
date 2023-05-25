@@ -301,13 +301,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         inc ix
         next
 
-;Z RP@  -- a-addr       get return stack pointer
-    head RPFETCH,3,RP@,docode
-        push bc
-        push ix
-        pop bc
-        next
-
 ;Z RP!  a-addr --       set return stack pointer
     head RPSTORE,3,RP!,docode
         push bc

@@ -8,7 +8,7 @@
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
-	.globl do_cstore, do_spfetch, do_spstore, do_rfetch
+	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 					
 	.include "macros.h"
 	
@@ -673,6 +673,19 @@ do_rfetch:
 
 	#-- Leer el elemento de la pila R (sin sacarlo)
 	lw t0, 0(s0)
+	
+	#-- Meterlo en la pila
+	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- RP@  -- a-addr       get return stack pointer
+#------------------------------------------------	
+do_rpfetch:
+
+	#-- Meter el puntero de la pila r en t0
+	mv t0, s0
 	
 	#-- Meterlo en la pila
 	PUSH_T0		

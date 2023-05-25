@@ -99,6 +99,10 @@ myLabel:   .string %str
 	  jal do_test_rfetch
 	.end_macro
 
+	.macro TEST_RPFETCH
+	  jal do_test_rpfetch
+	.end_macro
+
 	#-- Primitivas
 	.macro LIT (%val)
 	   li a0, %val
@@ -237,6 +241,11 @@ myLabel:   .string %str
 	  jal do_rfetch
 	.end_macro
 
+	.macro RPFETCH
+	  jal do_rpfetch
+	.end_macro
+
+	
 
 
 
