@@ -8,7 +8,7 @@
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
-	.globl do_cstore
+	.globl do_cstore, do_spfetch
 					
 	.include "macros.h"
 	
@@ -641,3 +641,13 @@ do_cstore:
 		
 	ret
 	
+#------------------------------------------------
+#-- SP@  -- a-addr       get data stack pointer
+#------------------------------------------------	
+do_spfetch:
+	
+	#-- Meter sp en la pila
+	mv t0,sp
+	PUSH_T0		
+		
+	ret

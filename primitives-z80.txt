@@ -308,15 +308,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         ld b,(ix+1)     ;       to TOS
         next
 
-;Z SP@  -- a-addr       get data stack pointer
-    head SPFETCH,3,SP@,docode
-        push bc
-        ld hl,0
-        add hl,sp
-        ld b,h
-        ld c,l
-        next
-
 ;Z SP!  a-addr --       set data stack pointer
     head SPSTORE,3,SP!,docode
         ld h,b
