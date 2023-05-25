@@ -420,23 +420,13 @@ qdup_end:
 	ret
 
 #----------------------------------------------
-#  ?DUP     x -- 0 | x x    DUP if nonzero
+# DROP     x --          drop top of stack
 #----------------------------------------------
-do_qdup:
+do_drop:
 
 	#-- Obtener el TOS en t0
 	POP_T0
 
-	#-- En todos los casos este valor debe estar en la pila
-	PUSH_T0
-
-	#-- t0=0? --> fin
-	beqz t0, qdup_end
-
-	#-- Meter otra copia de t0
-	PUSH_T0
-
-qdup_end:
 	ret
 
 
