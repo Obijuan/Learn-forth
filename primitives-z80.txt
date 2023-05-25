@@ -283,15 +283,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
     head TUCK,4,TUCK,docolon
         DW SWOP,OVER,EXIT
 
-;C >R    x --   R: -- x   push to return stack
-    head TOR,2,>R,docode
-        dec ix          ; push TOS onto rtn stk
-        ld (ix+0),b
-        dec ix
-        ld (ix+0),c
-        pop bc          ; pop new TOS
-        next
-
 ;C R>    -- x    R: x --   pop from return stack
     head RFROM,2,R>,docode
         push bc         ; push old TOS

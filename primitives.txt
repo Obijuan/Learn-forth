@@ -1,6 +1,5 @@
 +!     n/u a-addr --           add cell to memory
 >      n1 n2 -- flag           test n1>n2, signed
->R     x --   R: -- x        push to return stack
 CONSTANT   n --           define a Forth constant
 EXECUTE   i*x xt -- j*x   execute Forth word 'xt'
 EXIT   --                 exit a colon definition

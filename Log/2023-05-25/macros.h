@@ -84,6 +84,13 @@ myLabel:   .string %str
 	   lw ra,0(s0)
 	   addi s0,s0,4
 	.end_macro
+
+	#-- Guardar t0 en rstack
+	.macro PUSHR_T0
+	  addi s0,s0,-4
+	  sw t0,0(s0)
+	.end_macro
+
 	
 	#----------------------------------------------------
 	#-- PRIMITIVAS Y FUNCIONES DE ALTO NIVEL  
@@ -247,6 +254,10 @@ myLabel:   .string %str
 
 	.macro RPSTORE
 	  jal do_rpstore
+	.end_macro
+
+	.macro TOR
+	  jal do_tor
 	.end_macro
 
 	
