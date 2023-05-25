@@ -16,7 +16,6 @@ OVER   x1 x2 -- x1 x2 x1        per stack diagram
 ROT    x1 x2 x3 -- x2 x3 x1     per stack diagram
 R>     -- x    R: x --      pop from return stack
 R@     -- x    R: x -- x       fetch from rtn stk
-SWAP   x1 x2 -- x2 x1          swap top two items
 UM*    u1 u2 -- ud       unsigned 16x16->32 mult.
 UM/MOD ud u1 -- u2 u3     unsigned 32/16->16 div.
 UNLOOP --   R: sys1 sys2 --       drop loop parms

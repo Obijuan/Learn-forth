@@ -7,7 +7,7 @@
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
-	.globl do_qdup, do_drop
+	.globl do_qdup, do_drop, do_swap
 					
 	.include "macros.h"
 	
@@ -429,6 +429,28 @@ do_drop:
 
 	ret
 
+#----------------------------------------------
+# SWAP    x1 x2 -- x2 x1    swap top two items
+#----------------------------------------------
+do_swap:
+
+	#-- Obtener el TOS: t2 = x2
+	POP_T0
+	mv t2,t0
+
+	#-- Obtener el siguiente elemento: t1 = x1
+	POP_T0
+	mv t1,t0
+
+	#-- Meter t2 en la pila
+	mv t0,t2
+	PUSH_T0
+
+	#-- Meter t1 en la pila
+	mv t0,t1
+	PUSH_T0
+
+	ret
 
 #-------------------------
 #-- Palabra .
