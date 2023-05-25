@@ -3,7 +3,7 @@
 #--   palabras primitivas o de alto nivel
 #------------------------------------------------
 
-	.global do_add3, do_home
+	.global do_add3, do_home, do_test_rfetch
 
 	.include "macros.h"
 
@@ -37,6 +37,21 @@ do_home:
 	LIT(72)
 	EMIT
 	
+	#-- Recuperar direccion de retorno
+	POP_RA
+	ret
+
+#--- Prueba para R@
+#--- Al entrar aquí se guarda la direccion de retorno en la pila R
+#--- Se llama a R@ para guardar este valor en la pila
+#--- (Desde el nivel 0 la pila R está vacia, por eso hay que
+#---  llamarla desde esta palabra de nivel superior)
+do_test_rfetch:
+    #-- Guardar direccion de retorno
+	PUSH_RA
+	
+	RFETCH
+
 	#-- Recuperar direccion de retorno
 	POP_RA
 	ret

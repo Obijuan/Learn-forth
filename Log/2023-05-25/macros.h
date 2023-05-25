@@ -89,6 +89,17 @@ myLabel:   .string %str
 	#-- PRIMITIVAS Y FUNCIONES DE ALTO NIVEL  
 	#-- PARA LOS PROGRAMAS EN FORTH
 	#----------------------------------------------------
+
+	#--------- Alto nivel
+	.macro HOME
+	  jal do_home
+	.end_macro
+
+	.macro TEST_RFETCH
+	  jal do_test_rfetch
+	.end_macro
+
+	#-- Primitivas
 	.macro LIT (%val)
 	   li a0, %val
 	   jal do_lit
@@ -104,10 +115,6 @@ myLabel:   .string %str
 	
 	.macro STORE
 	  jal do_store
-	.end_macro
-	
-	.macro HOME
-	  jal do_home
 	.end_macro
 	
 	.macro PLUS
@@ -224,6 +231,10 @@ myLabel:   .string %str
 
 	.macro SPSTORE
 	  jal do_spstore
+	.end_macro
+
+	.macro RFETCH
+	  jal do_rfetch
 	.end_macro
 
 

@@ -301,13 +301,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         inc ix
         next
 
-;C R@    -- x     R: x -- x   fetch from rtn stk
-    head RFETCH,2,R@,docode
-        push bc         ; push old TOS
-        ld c,(ix+0)     ; fetch top rtn stk item
-        ld b,(ix+1)     ;       to TOS
-        next
-
 ;Z RP@  -- a-addr       get return stack pointer
     head RPFETCH,3,RP@,docode
         push bc
