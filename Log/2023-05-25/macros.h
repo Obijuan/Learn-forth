@@ -272,6 +272,10 @@ myLabel:   .string %str
 	  jal do_rfrom
 	.end_macro
 
+	.macro PLUSSTORE
+	  jal do_plusstore
+	.end_macro
+
 	
 
 

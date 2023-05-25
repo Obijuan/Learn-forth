@@ -9,7 +9,7 @@
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
-	.globl do_rpstore, do_tor, do_rfrom
+	.globl do_rpstore, do_tor, do_rfrom, do_plusstore
 					
 	.include "macros.h"
 	
@@ -730,5 +730,29 @@ do_rfrom:
 	
 	#-- Meterlo en la pila
 	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- +!     n/u a-addr --       add cell to memory
+#------------------------------------------------	
+do_plusstore:
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde leer
+	POP_T0				
+	mv t1, t0
+
+	#-- Sacar el dato a sumar: t0 --> Dato
+	POP_T0
+	
+	#-- Lectura de la memoria
+	#-- t2 = Mem[addr]
+	lw t2, 0(t1)
+
+	#-- Sumar el dato n (n + mem[addr])
+	add t0, t0, t2
+
+	#-- Almacenar el nuevo dato (n + mem[addr])
+	sw t0, 0(t1)	
 		
 	ret
