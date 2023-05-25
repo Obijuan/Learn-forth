@@ -337,16 +337,6 @@ mplus1: pop de          ; restore saved IP
 
 ; LOOP AND BRANCH OPERATIONS ====================
 
-;Z ?branch   x --              branch if TOS zero
-    head qbranch,7,?branch,docode
-        ld a,b
-        or c            ; test old TOS
-        pop bc          ; pop new TOS
-        jr z,dobranch   ; if old TOS=0, branch
-        inc de          ; else skip inline value
-        inc de
-        next
-
 ;Z (do)    n1|u1 n2|u2 --  R: -- sys1 sys2
 ;Z                          run-time code for DO
 ; '83 and ANSI standard loops terminate when the

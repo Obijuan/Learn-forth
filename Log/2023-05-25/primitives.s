@@ -10,6 +10,7 @@
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
+	.globl do_qbranch
 					
 	.include "macros.h"
 	
@@ -786,3 +787,36 @@ do_branch:
     #-- Al hacer el ret salta a la direccion
 	#-- indicada
 	ret
+
+#-------------------------------------------------
+#-- ?branch   x --           branch if TOS zero
+#-------------------------------------------------
+do_qbranch:
+
+	#-- Leer la condicion que está en TOS
+	POP_T0
+
+	#-- Si es 0 se hace el salto que indique la literal
+	#-- si NO es 0, se continua
+	bne t0,zero,skip
+
+	#-- Hay que hacer el salto
+	#-- Leer la Literal que contiene la direccion a la que
+	#-- hay que saltar
+	READLIT_T0
+	
+	#-- El literal es la direccion destino a la que
+	#-- saltar. Lo guardamos directamente en ra
+	mv ra, t0
+	j end_qbranch
+
+	#-- No realizar el salto
+	#-- INcrementar ra en 4 para evitar la constante
+skip:   
+	addi ra,ra,4
+
+end_qbranch:
+    #-- Al hacer el ret salta a la direccion
+	#-- indicada
+	ret
+

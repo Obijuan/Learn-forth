@@ -304,6 +304,10 @@ myLabel:   .string %str
 	  jal do_branch
 	.end_macro
 
+	.macro QBRANCH
+	  jal do_qbranch
+	.end_macro
+
 	
 
 

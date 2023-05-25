@@ -1,13 +1,14 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 48
+#-- INTERPRETE DE FORTH. Version 49
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  R@ . BRANCH 0x3C 5 . 7 .
+#--  Programa sin salto (la condicion es 1)
+#--  R@ . 1 ?branch 5 . 7 .
+#--  Resultado: 32 5 7  ok
 #--
-#-- Resultado: 32 7  ok
-#--
-#-- Reimplementacion de LIT para leer las constantes directamente
-#-- del programa forth, en vez de pasar por argumentos a una funcion
+#--  Programa con salto (la condicion es 0)
+#--  R@ . 0 ?branch 5 . 7 .
+#--  Resultado: 32 7  ok
 #--  
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -112,14 +113,19 @@ ini2:
     RFETCH          #-- Dir: 0x20
     jal do_point    #-- 0x24
 
-    BRANCH          #-- 0x28
-    DW(0x3C)        #-- 0x2C
+    #--- Condicion de salto
+    #--- 0---> Hacer salto
+    #--- 1 --> No hacer salto
+    LIT(0)          #-- 0x28 - 0x2C
 
-    LIT(5)          #-- 0x30 - 0x34
-    jal do_point    #-- 0x38
+    QBRANCH         #-- 0x30
+    DW(0x44)        #-- 0x34
 
-    LIT(7)          #-- 0x3C - 0x40
-    jal do_point    #-- 0x44
+    LIT(5)          #-- 0x38 - 0x3C
+    jal do_point    #-- 0x40
+
+    LIT(7)          #-- 0x44 - 0x48
+    jal do_point    #-- 0x4C
     
 	#-- Interprete de forth: Imprimir " ok"
 	PRINT_STRING (" ok\n")
