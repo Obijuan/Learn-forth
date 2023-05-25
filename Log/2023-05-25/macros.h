@@ -68,6 +68,18 @@ myLabel:   .string %str
 	  lw t0, 0(sp)
 	  addi sp,sp,4
 	.end_macro
+
+	#-- Guardar t0 en rstack
+	.macro PUSHR_T0
+	  addi s0,s0,-4
+	  sw t0,0(s0)
+	.end_macro
+
+	#-- Leer la Pila R en t0
+	.macro POPR_T0
+	  lw t0, 0(s0)
+	  addi s0,s0,4
+	.end_macro
 	
 	#-----------------------------------------------
 	#-- PARA IMPLEMENTACION DE LAS INSTRUCCIONES
@@ -85,11 +97,7 @@ myLabel:   .string %str
 	   addi s0,s0,4
 	.end_macro
 
-	#-- Guardar t0 en rstack
-	.macro PUSHR_T0
-	  addi s0,s0,-4
-	  sw t0,0(s0)
-	.end_macro
+	
 
 	
 	#----------------------------------------------------
@@ -258,6 +266,10 @@ myLabel:   .string %str
 
 	.macro TOR
 	  jal do_tor
+	.end_macro
+
+	.macro RFROM
+	  jal do_rfrom
 	.end_macro
 
 	

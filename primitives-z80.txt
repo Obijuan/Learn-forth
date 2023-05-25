@@ -283,15 +283,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
     head TUCK,4,TUCK,docolon
         DW SWOP,OVER,EXIT
 
-;C R>    -- x    R: x --   pop from return stack
-    head RFROM,2,R>,docode
-        push bc         ; push old TOS
-        ld c,(ix+0)     ; pop top rtn stk item
-        inc ix          ;       to TOS
-        ld b,(ix+0)
-        inc ix
-        next
-
 ; MEMORY AND I/O OPERATIONS =====================
 
 ;Z PC!     char c-addr --    output char to port

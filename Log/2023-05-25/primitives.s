@@ -9,7 +9,7 @@
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
-	.globl do_rpstore, do_tor
+	.globl do_rpstore, do_tor, do_rfrom
 					
 	.include "macros.h"
 	
@@ -717,5 +717,18 @@ do_tor:
 	
 	#-- Meterlo en la pila R
 	PUSHR_T0
+		
+	ret
+
+#------------------------------------------------
+#-- R>    -- x    R: x --   pop from return stack
+#------------------------------------------------	
+do_rfrom:
+
+	#-- Leer el elemento de la pila R
+	POPR_T0
+	
+	#-- Meterlo en la pila
+	PUSH_T0		
 		
 	ret
