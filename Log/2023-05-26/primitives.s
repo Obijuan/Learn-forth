@@ -10,7 +10,7 @@
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
-	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop
+	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii
 					
 	.include "macros.h"
 	
@@ -929,3 +929,19 @@ xplusloop_repeat:
 end_xplusloop:
 	ret
 
+
+#-------------------------------------------------
+#-- I     -- n   R: sys1 sys2 -- sys1 sys2
+#--     get the innermost loop index
+#-- sys1: limite
+#-- sys2: indice
+#-------------------------------------------------
+do_ii:
+    #-- Leer el indice. t0 = indice
+	#-- sin sacarlo de la pila R
+	lw t0, 0(s0)
+
+	#-- Guardarlo en la pila
+	PUSH_T0
+	
+	ret
