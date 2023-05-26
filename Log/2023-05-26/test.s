@@ -4,7 +4,7 @@
 #---------------------------------------------------------
 .include "macros.h"
 
-    .globl do_swab, do_lo, do_hi
+    .globl do_swab, do_lo, do_hi, do_tohex
 
     .text
 
@@ -67,6 +67,34 @@ do_hi:
     #-- Desplazarlo a la derecha 4 bits
     srli t0,t0,4
     
+    #-- Meterlo en la pila
+    PUSH_T0
+    
+	ret
+
+#-------------------------------------------------
+#-- >HEX  c1 -- c2    convert nybble to hex char
+#-------------------------------------------------
+do_tohex:
+
+	#-- Leer el TOS
+    POP_T0
+
+    li t1, 10
+    blt t0, t1, numeric
+
+    #-- El nibble es A-F
+    #-- Hay que sumar 55 para convertirlo a caracter
+    addi t0, t0, 55
+    j end_tohex
+
+    #-- El nibble es 0-9
+numeric:
+
+    #-- Hay que sumar 48
+    addi t0,t0, 48
+    
+end_tohex: 
     #-- Meterlo en la pila
     PUSH_T0
     

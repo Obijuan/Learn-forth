@@ -353,6 +353,10 @@ myLabel:   .string %str
 	  jal do_hi
 	.end_macro
 
+	.macro TOHEX
+	  jal do_tohex
+	.end_macro
+
 	
 
 

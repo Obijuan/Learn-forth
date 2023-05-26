@@ -17,16 +17,6 @@
 ; are in file CAMEL80.AZM.
 ; ===============================================
 
-;Z >HEX  c1 -- c2    convert nybble to hex char
-    head TOHEX,4,>HEX,docode
-        ld a,c
-        sub 0ah
-        jr c,numeric
-        add a,7
-numeric: add a,3ah
-        ld c,a
-        next
-
 ;Z .HH   c --       print byte as 2 hex digits
 ;   DUP HI >HEX EMIT LO >HEX EMIT ;
     head DOTHH,3,.HH,docolon
