@@ -4,7 +4,7 @@
 #---------------------------------------------------------
 .include "macros.h"
 
-    .globl do_swab, do_lo, do_hi, do_tohex, do_dothh
+    .globl do_swab, do_lo, do_hi, do_tohex, do_dothh, do_dotb
 
     .text
 
@@ -122,3 +122,28 @@ do_dothh:
 
 	#-- Devolver control
 	ret	
+
+#-------------------------------------------------
+#--  .HH   c --       print byte as 2 hex digits
+#-- NIVEL SUPERIOR (NO PRIMITIVA)
+#--   DUP HI >HEX EMIT LO >HEX EMIT ;
+#-------------------------------------------------
+do_dotb:
+
+    #-- Guardar direccion de retorno en la pila r
+	PUSH_RA
+	
+	DUP
+    CFETCH
+    DOTHH
+    LIT(0x20)
+    EMIT
+    ONEPLUS
+	
+	#-- Recuperar la direccion de retorno de la pila r
+	POP_RA
+
+	#-- Devolver control
+	ret	
+
+    ret

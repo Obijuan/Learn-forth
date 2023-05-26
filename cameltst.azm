@@ -17,11 +17,6 @@
 ; are in file CAMEL80.AZM.
 ; ===============================================
 
-;Z .B    a -- a+1   fetch & print byte, advancing
-;   DUP C@ .HH 20 EMIT 1+ ;
-    head DOTB,2,.B,docolon
-    DW DUP,CFETCH,DOTHH,lit,20h,EMIT,ONEPLUS,EXIT
-
 ;Z .A   u --       print unsigned as 4 hex digits
 ;   DUP >< .HH .HH 20 EMIT ;
     head DOTA,2,.A,docolon
