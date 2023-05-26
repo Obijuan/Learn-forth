@@ -886,12 +886,5 @@ xloop_repeat:
 	#-- Actualizar el indide en la pila R
 	sw t2, 0(s0)
 
-	#-- Leer la literal (que contiene la direccion 
-	#-- a la que saltar)
-	READLIT_T0
-
-	#-- Actualiar ra para que salte a DO
-	mv ra, t0
-
 end_xloop:
 	ret
