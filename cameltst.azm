@@ -17,14 +17,6 @@
 ; are in file CAMEL80.AZM.
 ; ===============================================
 
-;Z LO   c1 -- c2    return low nybble of TOS
-    head LO,2,LO,docode
-        ld a,c
-        and 0fh
-        ld c,a
-        ld b,0
-        next
-
 ;Z HI   c1 -- c2    return high nybble of TOS
     head HI,2,HI,docode
         ld a,c

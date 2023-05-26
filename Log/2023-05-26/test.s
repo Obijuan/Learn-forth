@@ -4,7 +4,7 @@
 #---------------------------------------------------------
 .include "macros.h"
 
-    .globl do_swab
+    .globl do_swab, do_lo
 
     .text
 
@@ -32,6 +32,21 @@ do_swab:
 
     #-- Componer la nueva palabra (con los bytes ya cambiados)
     or t0,t0,t1
+    
+    #-- Meterla en la pila
+    PUSH_T0
+    
+	ret
+
+#-------------------------------------------------
+#-- LO   c1 -- c2    return low nybble of TOS
+#-------------------------------------------------
+do_lo:
+
+	#-- Leer el TOS
+    POP_T0
+
+    andi t0,t0,0xF
     
     #-- Meterla en la pila
     PUSH_T0

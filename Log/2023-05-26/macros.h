@@ -345,6 +345,10 @@ myLabel:   .string %str
 	  jal do_swab
 	.end_macro
 
+	.macro LO
+	  jal do_lo
+	.end_macro
+
 	
 
 
