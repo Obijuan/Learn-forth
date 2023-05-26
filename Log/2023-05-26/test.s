@@ -4,7 +4,7 @@
 #---------------------------------------------------------
 .include "macros.h"
 
-    .globl do_swab, do_lo
+    .globl do_swab, do_lo, do_hi
 
     .text
 
@@ -49,6 +49,25 @@ do_lo:
     andi t0,t0,0xF
     
     #-- Meterla en la pila
+    PUSH_T0
+    
+	ret
+
+#-------------------------------------------------
+#-- HI   c1 -- c2    return high nybble of TOS
+#-------------------------------------------------
+do_hi:
+
+	#-- Leer el TOS
+    POP_T0
+
+    #-- Aislar el nibble (resto de bits a 0)
+    andi t0,t0,0xF0
+
+    #-- Desplazarlo a la derecha 4 bits
+    srli t0,t0,4
+    
+    #-- Meterlo en la pila
     PUSH_T0
     
 	ret
