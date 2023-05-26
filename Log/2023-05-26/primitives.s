@@ -863,7 +863,7 @@ do_xloop:
 	addi t2,t2,1
 
 	#-- si index < limit --> saltar a DO
-	blt t2, t1, repeat
+	blt t2, t1, xloop_repeat
 
 	#-- Hemos terminado. Vaciar la pila R
 	POPR_T0
@@ -874,7 +874,7 @@ do_xloop:
 	j end_xloop
 
 	#-- No hemos terminado: Saltar a DO
-repeat:
+xloop_repeat:
 	#-- Actualizar el indide en la pila R
 	sw t2, 0(s0)
 
