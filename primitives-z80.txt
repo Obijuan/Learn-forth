@@ -337,20 +337,6 @@ mplus1: pop de          ; restore saved IP
 
 ; LOOP AND BRANCH OPERATIONS ====================
 
-;Z (+loop)   n --   R: sys1 sys2 --  | sys1 sys2
-;Z                        run-time code for +LOOP
-; Add n to the loop index.  If loop terminates,
-; clean up the return stack and skip the branch.
-; Else take the inline branch.
-    head xplusloop,7,(+loop),docode
-        pop hl      ; this will be the new TOS
-        push bc
-        ld b,h
-        ld c,l
-        exx
-        pop bc      ; old TOS = loop increment
-        jr looptst
-
 ;C I        -- n   R: sys1 sys2 -- sys1 sys2
 ;C                  get the innermost loop index
     head II,1,I,docode

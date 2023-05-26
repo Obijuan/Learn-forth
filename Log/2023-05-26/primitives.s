@@ -10,7 +10,7 @@
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
-	.globl do_qbranch, do_xdo, do_xloop
+	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop
 					
 	.include "macros.h"
 	
@@ -867,7 +867,8 @@ do_xloop:
 	#-- sin sacarlo de la pila R
 	lw t1, 4(s0)
 
-	#-- Incrementar el indice
+	#-- Incrementar el indice en 1 unidad
+	#-- (+LOOP incrementa en n unidades, tomadas de la pila)
 	addi t2,t2,1
 
 	#-- si index < limit --> saltar a DO
@@ -888,3 +889,43 @@ xloop_repeat:
 
 end_xloop:
 	ret
+
+#-------------------------------------------------
+#-- (+loop)   n --   R: sys1 sys2 --  | sys1 sys2
+#-- sys1: limite
+#-- sys2: indice
+#-------------------------------------------------
+do_xplusloop:
+	#-- Leer el indice. t2 = indice
+	#-- sin sacarlo de la pila R
+	lw t2, 0(s0)
+
+	#-- Leer el limite. t1 = limite
+	#-- sin sacarlo de la pila R
+	lw t1, 4(s0)
+
+	#-- Leer de la pila n: el numero a incrementar el indice
+	POP_T0
+
+	#-- Incrementar el indice
+	add t2,t2,t0
+
+	#-- si index < limit --> saltar a DO
+	blt t2, t1, xplusloop_repeat
+
+	#-- Hemos terminado. Vaciar la pila R
+	POPR_T0
+	POPR_T0
+
+	#-- Incrementar ra para saltar la literal
+	addi ra,ra,4
+	j end_xplusloop
+
+	#-- No hemos terminado: Saltar a DO
+xplusloop_repeat:
+	#-- Actualizar el indide en la pila R
+	sw t2, 0(s0)
+
+end_xplusloop:
+	ret
+

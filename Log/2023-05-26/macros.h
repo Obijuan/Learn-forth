@@ -321,6 +321,10 @@ myLabel:   .string %str
 	  jal do_xloop
 	.end_macro
 
+	.macro XPLUSLOOP
+	  jal do_xplusloop
+	.end_macro
+
 	
 
 
