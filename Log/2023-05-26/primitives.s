@@ -778,11 +778,19 @@ do_plusstore:
 #-------------------------------------------------
 do_branch:
 
-	READLIT_T0
+	#-- HACK PARA EL RARS:
+	#-- Branch no hace nada. Sólo retorna
+	#-- Tras el branch se coloca un jump a la
+	#-- etiqueta que se quiere
+
+	#-- Implementacion si podemos guardar el literal
+	#-- (direccion) a continuacion de branch:
+
+	#READLIT_T0
 	
 	#-- El literal es la direccion destino a la que
 	#-- saltar. Lo guardamos directamente en ra
-	mv ra, t0
+	#mv ra, t0
    
     #-- Al hacer el ret salta a la direccion
 	#-- indicada

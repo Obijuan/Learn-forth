@@ -146,6 +146,11 @@ myLabel:   .string %str
 		srli t0,t0,12
 	.end_macro
 
+	#-- Literal direccion
+	.macro ADDR(%label)
+	  j %label
+	.end_macro
+
 	
 	
 	.macro EMIT
