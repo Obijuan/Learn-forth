@@ -1,0 +1,889 @@
+#----------------------------------------------------------------
+#-- Implementacion de las palabras primitivas
+#----------------------------------------------------------------			
+	
+		
+	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
+	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
+	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
+	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
+	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
+	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
+	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
+	.globl do_qbranch, do_xdo, do_xloop
+					
+	.include "macros.h"
+	
+	.text			
+#---------------
+#-- Palabra 1	
+#--
+#-- Meter 1 en la pila (PUSH 1)
+#---------------
+
+do_1:
+      
+	#-- Guardar el 1 en la pila
+	PUSH (1)
+	
+	#-- Hemos terminado
+	ret
+	
+#---------------
+#-- Palabra +
+#--
+#-- Obtener los dos ultimos elementos de la pila,
+#-- sumarlos y depositar el resultado en la pila
+#---------------
+do_plus:
+
+	#-- Leer el primer elemento en t1
+	POP_T0
+	mv t1,t0
+	
+	#-- Leer segundo elemento
+	POP_T0
+	
+	#-- Realizar la suma
+	add t0, t0,t1
+	
+	#-- Guardar resultado en la pila
+	PUSH_T0
+	
+	#-- Hemos terminado
+	ret
+	
+#-------------------------------------------
+#-- n1/u1 n2/u2 -- n3/u3    subtract n1-n2
+#------------------------------------------
+do_minus:
+
+	#-- Obtener segundo operando en t1
+	POP_T0
+	mv t1,t0
+	
+	#-- Obtener primer operando en t0
+	POP_T0
+	
+	#-- Realizar la resta
+	sub t0, t0, t1  #-- t0 - t1
+
+	#-- Depositar resultado e la pila
+	PUSH_T0
+
+	ret
+	
+#-------------------------------------------
+#-- AND    x1 x2 -- x3      logical AND
+#-------------------------------------------
+do_and:
+
+	#-- Obtener argumento superior en t1
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener argumento inferio en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion
+ 	and t0, t0, t1
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret
+
+#--------------------------------------
+# OR     x1 x2 -- x3  logical OR
+#--------------------------------------									
+do_or:
+
+	#-- Obtener argumento superior en t1
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener argumento inferio en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion
+ 	or t0, t0, t1
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret
+
+#--------------------------------------
+# XOR    x1 x2 -- x3   logical XOR
+#--------------------------------------									
+do_xor:
+
+	#-- Obtener argumento superior en t1
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener argumento inferio en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion
+ 	xor t0, t0, t1
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret
+
+#--------------------------------------
+# INVERT x1 -- x2    bitwise inversion
+#--------------------------------------									
+do_invert:
+
+	#-- Obtener argumento superior en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion
+ 	not t0, t0
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret	
+
+#--------------------------------------
+#  NEGATE x1 -- x2   two's complement
+#--------------------------------------									
+do_negate:
+
+	#-- Obtener argumento superior en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion
+ 	neg t0, t0
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret	
+
+#----------------------------------------
+# 1+   n1/u1 -- n2/u2      add 1 to TOS
+#----------------------------------------
+do_oneplus:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Incrementarlo en 1
+	addi t0,t0,1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# 1-  n1/u1 -- n2/u2     subtract 1 from TOS
+#----------------------------------------------
+do_oneminus:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Decrementarlo en 1
+	addi t0,t0,-1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# 2*    x1 -- x2        arithmetic left shift
+#----------------------------------------------
+do_twostar:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Desplazamiento aritmetico a la izquierda
+	#-- (El aritmetico a la izquierda es equivalente al logico a la izq.)
+	slli t0,t0,1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# 2/   x1 -- x2      arithmetic right shift
+#----------------------------------------------
+do_twoslash:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Desplazamiento aritmetico a la derecha
+	srai t0,t0,1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# LSHIFT  x1 u -- x2    logical L shift u places
+#----------------------------------------------
+do_lshift:
+
+	#-- Obtener el TOS en t1 (cantidad a desplazar)
+	POP_T0
+	mv t1,t0
+
+	#-- Obtener el valor a desplazar en t0
+	POP_T0
+
+	#-- Desplazamiento logico a la izquierda
+	sll t0,t0,t1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# RSHIFT  x1 u -- x2   logical R shift u places
+#----------------------------------------------
+do_rshift:
+
+	#-- Obtener el TOS en t1 (numero de bits a desplazar)
+	POP_T0
+	mv t1,t0
+
+	#-- Obtener el valor a desplazar en t0
+	POP_T0
+
+	#-- Desplazamiento logico a la derecha
+	srl t0,t0,t1
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# 0=     n/u -- flag    return true if TOS=0
+#----------------------------------------------
+do_zeroequal:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Es t0=0? Dejar flag en t0 (1 si, 0 no)
+	seqz t0, t0 
+
+	#-- Convertir a flags de Forth
+	#--- 1 --> -1
+	#--- 0 --> 0
+	neg t0,t0
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# 0<     n -- flag      true if TOS negative
+#----------------------------------------------
+do_zeroless:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Es t0<0? Dejar flag en t0 (1 si, 0 no)
+	sltz t0,t0
+
+	#-- Convertir a flags de Forth
+	#--- 1 --> -1
+	#--- 0 --> 0
+	neg t0,t0
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	ret
+
+#--------------------------------------
+#   =    x1 x2 -- flag   test x1=x2
+#--------------------------------------									
+do_equal:
+
+	#-- Obtener TOS en t1
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener otro argumento en t0
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion de comparacion 
+ 	sub t0,t0,t1  #-- t0 = t0 - t1
+	seqz t0,t0    #-- Comprobar si t0 = 0
+
+	#-- Convertir a flags de Forth
+	#--- 1 --> -1
+	#--- 0 --> 0
+	neg t0,t0
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret
+
+#-------------------------------------------
+#  <    n1 n2 -- flag   test n1<n2, signed
+#-------------------------------------------									
+do_less:
+
+	#-- Obtener TOS en  t1 (t1 = n2)
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener otro argumento en t0 (t0 = n1)
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion de comparacion
+	slt t0, t0, t1 
+
+	#-- Convertir a flags de Forth
+	#--- 1 --> -1
+	#--- 0 --> 0
+	neg t0,t0
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret
+
+#----------------------------------------------------
+#  U<    u1 u2 -- flag       test u1<n2, unsigned
+#----------------------------------------------------									
+do_uless:
+
+	#-- Obtener TOS en  t1 (t1 = n2)
+ 	POP_T0
+ 	mv t1,t0
+ 	
+ 	#-- Obtener otro argumento en t0 (t0 = n1)
+ 	POP_T0
+ 	
+ 	#-- Realizar la operacion de comparacion
+	sltu t0, t0, t1 
+
+	#-- Convertir a flags de Forth
+	#--- 1 --> -1
+	#--- 0 --> 0
+	neg t0,t0
+ 	
+ 	#-- Guardar resultado en la pila
+ 	PUSH_T0
+ 	
+	ret
+
+#----------------------------------------------
+# DUP      x -- x x     duplicate top of stack
+#----------------------------------------------
+do_dup:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Devolverlo a la pila dos veces
+	PUSH_T0
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+#  ?DUP     x -- 0 | x x    DUP if nonzero
+#----------------------------------------------
+do_qdup:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- En todos los casos este valor debe estar en la pila
+	PUSH_T0
+
+	#-- t0=0? --> fin
+	beqz t0, qdup_end
+
+	#-- Meter otra copia de t0
+	PUSH_T0
+
+qdup_end:
+	ret
+
+#----------------------------------------------
+# DROP     x --          drop top of stack
+#----------------------------------------------
+do_drop:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	ret
+
+#----------------------------------------------
+# SWAP    x1 x2 -- x2 x1    swap top two items
+#----------------------------------------------
+do_swap:
+
+	#-- Obtener el TOS: t2 = x2
+	POP_T0
+	mv t2,t0
+
+	#-- Obtener el siguiente elemento: t1 = x1
+	POP_T0
+	mv t1,t0
+
+	#-- Meter t2 en la pila
+	mv t0,t2
+	PUSH_T0
+
+	#-- Meter t1 en la pila
+	mv t0,t1
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# OVER    x1 x2 -- x1 x2 x1   per stack diagram
+#----------------------------------------------
+do_over:
+
+	#-- Obtener el TOS: t2 = x2
+	POP_T0
+	mv t2,t0
+
+	#-- Obtener el siguiente elemento: t1 = x1
+	POP_T0
+	mv t1,t0
+
+	#-- Meter t1 en la pila
+	mv t0,t1
+	PUSH_T0
+
+	#-- Meter t2 en la pila
+	mv t0,t2
+	PUSH_T0
+
+	#-- Meter t1 en la pila
+	mv t0, t1
+	PUSH_T0
+
+	ret
+
+#----------------------------------------------
+# ROT    x1 x2 x3 -- x2 x3 x1  per stack diagram
+#----------------------------------------------
+do_rot:
+
+	#-- Obtener el TOS: t3 = x3
+	POP_T0
+	mv t3,t0
+
+	#-- Obtener el siguiente elemento: t2 = x2
+	POP_T0
+	mv t2,t0
+
+    #-- Obtener el siguiente elemento: t1 = x1
+	POP_T0
+	mv t1,t0
+
+	#-- Meter t2 en la pila
+	mv t0,t2
+	PUSH_T0
+
+	#-- Meter t3 en la pila
+	mv t0,t3
+	PUSH_T0
+
+	#-- Meter t1 en la pila
+	mv t0, t1
+	PUSH_T0
+
+	ret
+
+#-------------------------
+#-- Palabra .
+#--
+#-- Sacar el ultimo elemento de la pila e
+#-- imprimirlo
+#-------------------
+do_point:
+	
+	#-- Sacar el elemento de la pila
+	POP_T0
+	
+	#-- Imprimirlo
+	PRINT_T0
+
+	#-- Imprimir un espacio
+	li t0, 32
+	PRINT_CHAR_T0
+	
+	ret
+	
+	
+#-----------------------------------
+#-- Meter un literal en la pila
+#-- El literal se encuentra en la posicion siguiente del
+#-- Thread de Forth
+#-----------------------------------
+do_lit:
+
+    READLIT_T0
+
+    #-- Incrementar ra en 4 para que se ejecute la instruccion
+    #-- tras el literal (y no el lui)
+    addi ra,ra,4
+    
+    #-- En t0 tenemos el literal
+    #-- Lo metemos en la pila
+    PUSH_T0
+    ret
+
+#-- old version
+# do_lit:
+# 	mv t0,a0
+# 	PUSH_T0
+# 	ret
+	
+#-----------------------------------------------------
+#-- Emit: Imprimir el caracter que está en la pila
+#-----------------------------------------------------
+do_emit:
+
+	#-- Leer el caracter de la pila
+	POP_T0
+	
+	#-- Imprimir
+	PRINT_CHAR_T0
+
+	ret
+	
+#-----------------------------------------------
+#-- Lectura de un caracter. Se deja en la pila 
+#-----------------------------------------------
+do_key:
+
+	#-- Devolver caracter en t0
+	READ_CHAR_T0
+	
+	#-- Meterlo en la pila
+	PUSH_T0
+
+ 	ret
+ 	
+#------------------------------------------------
+#-- Store (!)  x a-addr ---
+#--
+#-- Almacenar el valor x en la direccion addr
+#------------------------------------------------	
+do_store:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	mv t1, t0
+	
+	#-- Sacar de la pila el valor
+	#-- t0 = valor
+	POP_T0
+	
+	#-- Ejecutar!
+	sw t0, 0(t1)		
+		
+	ret
+
+#------------------------------------------------
+#-- @     a-addr -- x   fetch cell from memory
+#------------------------------------------------	
+do_fetch:
+	#-- Sacar de la pila la dirección
+	#-- t0 --> Direccion donde leer
+	POP_T0				
+	mv t1, t0
+	
+	#-- Lectura de la memoria
+	lw t0, 0(t0)
+
+	#-- Guardar el valor en la pila
+	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- C@     c-addr -- char   fetch char from memory
+#------------------------------------------------	
+do_cfetch:
+	#-- Sacar de la pila la dirección
+	#-- t0 --> Direccion donde leer
+	POP_T0				
+	mv t1, t0
+	
+	#-- Lectura de la memoria
+	lbu t0, 0(t0)
+
+	#-- Guardar el valor en la pila
+	PUSH_T0		
+		
+	ret
+	
+#------------------------------------------------
+#-- C!    char c-addr --    store char in memory
+#------------------------------------------------	
+do_cstore:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	mv t1, t0
+	
+	#-- Sacar de la pila el valor
+	#-- t0 = valor
+	POP_T0
+	
+	#-- Ejecutar!
+	sb t0, 0(t1)		
+		
+	ret
+	
+#------------------------------------------------
+#-- SP@  -- a-addr       get data stack pointer
+#------------------------------------------------	
+do_spfetch:
+	
+	#-- Meter sp en la pila
+	mv t0,sp
+	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- SP!  a-addr --       set data stack pointer
+#------------------------------------------------	
+do_spstore:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	
+	#-- Establecer el nuevo puntero de pila
+	mv sp, t0
+		
+	ret
+
+#------------------------------------------------
+#-- R@    -- x     R: x -- x   fetch from rtn stk
+#------------------------------------------------	
+do_rfetch:
+
+	#-- Leer el elemento de la pila R (sin sacarlo)
+	lw t0, 0(s0)
+	
+	#-- Meterlo en la pila
+	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- RP@  -- a-addr       get return stack pointer
+#------------------------------------------------	
+do_rpfetch:
+
+	#-- Meter el puntero de la pila r en t0
+	mv t0, s0
+	
+	#-- Meterlo en la pila
+	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- RP!  a-addr --       set return stack pointer
+#------------------------------------------------	
+do_rpstore:
+
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde escribir
+	POP_T0				
+	
+	#-- Establecer el nuevo puntero de pila R
+	mv s0, t0
+		
+	ret
+
+#------------------------------------------------
+#--  >R    x --   R: -- x   push to return stack
+#------------------------------------------------	
+do_tor:
+
+	#-- Sacar de la pila el dato (x)
+	POP_T0				
+	
+	#-- Meterlo en la pila R
+	PUSHR_T0
+		
+	ret
+
+#------------------------------------------------
+#-- R>    -- x    R: x --   pop from return stack
+#------------------------------------------------	
+do_rfrom:
+
+	#-- Leer el elemento de la pila R
+	POPR_T0
+	
+	#-- Meterlo en la pila
+	PUSH_T0		
+		
+	ret
+
+#------------------------------------------------
+#-- +!     n/u a-addr --       add cell to memory
+#------------------------------------------------	
+do_plusstore:
+	#-- Sacar de la pila la dirección
+	#-- t1 --> Direccion donde leer
+	POP_T0				
+	mv t1, t0
+
+	#-- Sacar el dato a sumar: t0 --> Dato
+	POP_T0
+	
+	#-- Lectura de la memoria
+	#-- t2 = Mem[addr]
+	lw t2, 0(t1)
+
+	#-- Sumar el dato n (n + mem[addr])
+	add t0, t0, t2
+
+	#-- Almacenar el nuevo dato (n + mem[addr])
+	sw t0, 0(t1)	
+		
+	ret
+
+#-------------------------------------------------
+#-- branch   --                  branch always
+#-------------------------------------------------
+do_branch:
+
+	READLIT_T0
+	
+	#-- El literal es la direccion destino a la que
+	#-- saltar. Lo guardamos directamente en ra
+	mv ra, t0
+   
+    #-- Al hacer el ret salta a la direccion
+	#-- indicada
+	ret
+
+#-------------------------------------------------
+#-- ?branch   x --           branch if TOS zero
+#-------------------------------------------------
+do_qbranch:
+
+	#-- Leer la condicion que está en TOS
+	POP_T0
+
+	#-- Si es 0 se hace el salto que indique la literal
+	#-- si NO es 0, se continua
+	bne t0,zero,skip
+
+	#-- Hay que hacer el salto
+	#-- Leer la Literal que contiene la direccion a la que
+	#-- hay que saltar
+	READLIT_T0
+	
+	#-- El literal es la direccion destino a la que
+	#-- saltar. Lo guardamos directamente en ra
+	mv ra, t0
+	j end_qbranch
+
+	#-- No realizar el salto
+	#-- INcrementar ra en 4 para evitar la constante
+skip:   
+	addi ra,ra,4
+
+end_qbranch:
+    #-- Al hacer el ret salta a la direccion
+	#-- indicada
+	ret
+
+#-------------------------------------------------
+#-- (do)    n1|u1 n2|u2 --  R: -- sys1 sys2
+#-------------------------------------------------
+#-- En una implementacin basica, sys1 es el limite
+#-- sys2 el indice, pero en la pila R
+do_xdo:
+
+	#-- Leer indice de la pila
+	#-- t1=indice
+	POP_T0
+	mv t1,t0
+
+	#-- Leer limite de la pila
+	#-- t0=limite
+	POP_T0
+
+	#-- Meter limite en pila R (sys1)
+	PUSHR_T0
+
+	#-- Meter indice en pila R (sys2)
+	mv t0,t1
+	PUSHR_T0
+
+	ret
+
+#-------------------------------------------------
+#-- (loop)   R: sys1 sys2 --  | sys1 sys2
+#-- sys1: limite
+#-- sys2: indice
+#-------------------------------------------------
+do_xloop:
+	#-- Leer el indice. t2 = indice
+	#-- sin sacarlo de la pila R
+	lw t2, 0(s0)
+
+	#-- Leer el limite. t1 = limite
+	#-- sin sacarlo de la pila R
+	lw t1, 4(s0)
+
+	#-- Incrementar el indice
+	addi t2,t2,1
+
+	#-- si index < limit --> saltar a DO
+	blt t2, t1, repeat
+
+	#-- Hemos terminado. Vaciar la pila R
+	POPR_T0
+	POPR_T0
+
+	#-- Incrementar ra para saltar la literal
+	addi ra,ra,4
+	j end_xloop
+
+	#-- No hemos terminado: Saltar a DO
+repeat:
+	#-- Actualizar el indide en la pila R
+	sw t2, 0(s0)
+
+	#-- Leer la literal (que contiene la direccion 
+	#-- a la que saltar)
+	READLIT_T0
+
+	#-- Actualiar ra para que salte a DO
+	mv ra, t0
+
+end_xloop:
+	ret

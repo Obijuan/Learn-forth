@@ -32,10 +32,6 @@ Many of these are necessary to implement ANS
 Forth words, but are not specified by the ANS
 document.  Others are functions I find useful.
 
-(do)   n1|u1 n2|u2 --  R: -- sys1 sys2
-                             run-time code for DO
-(loop) R: sys1 sys2 --  | sys1 sys2
-                           run-time code for LOOP
 (+loop)  n --   R: sys1 sys2 --  | sys1 sys2
                           run-time code for +LOOP
 ><     x1 -- x2                        swap bytes 

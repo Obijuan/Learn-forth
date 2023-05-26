@@ -337,63 +337,6 @@ mplus1: pop de          ; restore saved IP
 
 ; LOOP AND BRANCH OPERATIONS ====================
 
-;Z (do)    n1|u1 n2|u2 --  R: -- sys1 sys2
-;Z                          run-time code for DO
-; '83 and ANSI standard loops terminate when the
-; boundary of limit-1 and limit is crossed, in
-; either direction.  This can be conveniently
-; implemented by making the limit 8000h, so that
-; arithmetic overflow logic can detect crossing.
-; I learned this trick from Laxen & Perry F83.
-; fudge factor = 8000h-limit, to be added to
-; the start value.
-    head xdo,4,(do),docode
-        ex de,hl
-        ex (sp),hl   ; IP on stack, limit in HL
-        ex de,hl
-        ld hl,8000h
-        or a
-        sbc hl,de    ; 8000-limit in HL
-        dec ix       ; push this fudge factor
-        ld (ix+0),h  ;    onto return stack
-        dec ix       ;    for later use by 'I'
-        ld (ix+0),l
-        add hl,bc    ; add fudge to start value
-        dec ix       ; push adjusted start value
-        ld (ix+0),h  ;    onto return stack
-        dec ix       ;    as the loop index.
-        ld (ix+0),l
-        pop de       ; restore the saved IP
-        pop bc       ; pop new TOS
-        next
-
-;Z (loop)   R: sys1 sys2 --  | sys1 sys2
-;Z                        run-time code for LOOP
-; Add 1 to the loop index.  If loop terminates,
-; clean up the return stack and skip the branch.
-; Else take the inline branch.  Note that LOOP
-; terminates when index=8000h.
-    head xloop,6,(loop),docode
-        exx
-        ld bc,1
-looptst: ld l,(ix+0)  ; get the loop index
-        ld h,(ix+1)
-        or a
-        adc hl,bc    ; increment w/overflow test
-        jp pe,loopterm  ; overflow=loop done
-        ; continue the loop
-        ld (ix+0),l  ; save the updated index
-        ld (ix+1),h
-        exx
-        jr dobranch  ; take the inline branch
-loopterm: ; terminate the loop
-        ld bc,4      ; discard the loop info
-        add ix,bc
-        exx
-        inc de       ; skip the inline branch
-        inc de
-        next
-
 ;Z (+loop)   n --   R: sys1 sys2 --  | sys1 sys2
 ;Z                        run-time code for +LOOP
 ; Add n to the loop index.  If loop terminates,
