@@ -17,10 +17,6 @@
 ; are in file CAMEL80.AZM.
 ; ===============================================
 
-;Z .A   u --       print unsigned as 4 hex digits
-;   DUP >< .HH .HH 20 EMIT ;
-    head DOTA,2,.A,docolon
-        DW DUP,SWAB,DOTHH,DOTHH,lit,20h,EMIT,EXIT
 
 ;X DUMP   addr u --      dump u locations at addr
 ;   0 DO
