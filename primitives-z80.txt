@@ -337,14 +337,6 @@ mplus1: pop de          ; restore saved IP
 
 ; LOOP AND BRANCH OPERATIONS ====================
 
-;C UNLOOP   --   R: sys1 sys2 --  drop loop parms
-    head UNLOOP,6,UNLOOP,docode
-        inc ix
-        inc ix
-        inc ix
-        inc ix
-        next
-
 ; MULTIPLY AND DIVIDE ===========================
 
 ;C UM*     u1 u2 -- ud   unsigned 16x16->32 mult.

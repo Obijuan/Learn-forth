@@ -333,6 +333,10 @@ myLabel:   .string %str
 	  jal do_jj
 	.end_macro
 
+	.macro UNLOOP
+	  jal do_unloop
+	.end_macro
+
 	
 
 

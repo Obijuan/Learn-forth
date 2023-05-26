@@ -11,6 +11,7 @@
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
+	.globl do_unloop
 					
 	.include "macros.h"
 	
@@ -957,4 +958,14 @@ do_jj:
 	#-- Guardarlo en la pila
 	PUSH_T0
 	
+	ret
+
+#-------------------------------------------------
+#-- UNLOOP   --   R: sys1 sys2 --  drop loop parms
+#-------------------------------------------------
+do_unloop:
+
+	POPR_T0
+	POPR_T0
+    
 	ret

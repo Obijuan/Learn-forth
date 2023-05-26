@@ -5,7 +5,6 @@ EXIT   --                 exit a colon definition
 FILL   c-addr u c --        fill memory with char
 UM*    u1 u2 -- ud       unsigned 16x16->32 mult.
 UM/MOD ud u1 -- u2 u3     unsigned 32/16->16 div.
-UNLOOP --   R: sys1 sys2 --       drop loop parms
 VARIABLE   --             define a Forth variable
 
                ANS Forth Extensions
