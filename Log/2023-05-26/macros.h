@@ -337,6 +337,14 @@ myLabel:   .string %str
 	  jal do_unloop
 	.end_macro
 
+
+#--------------------------------
+#-- Palabras para hacer pruebas 
+#--------------------------------
+	.macro SWAB
+	  jal do_swab
+	.end_macro
+
 	
 
 
