@@ -17,18 +17,6 @@
 ; are in file CAMEL80.AZM.
 ; ===============================================
 
-;Z HI   c1 -- c2    return high nybble of TOS
-    head HI,2,HI,docode
-        ld a,c
-        and 0f0h
-        rrca
-        rrca
-        rrca
-        rrca
-        ld c,a
-        ld b,0
-        next
-
 ;Z >HEX  c1 -- c2    convert nybble to hex char
     head TOHEX,4,>HEX,docode
         ld a,c
