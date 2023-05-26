@@ -10,7 +10,7 @@
 	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
-	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii
+	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 					
 	.include "macros.h"
 	
@@ -940,6 +940,19 @@ do_ii:
     #-- Leer el indice. t0 = indice
 	#-- sin sacarlo de la pila R
 	lw t0, 0(s0)
+
+	#-- Guardarlo en la pila
+	PUSH_T0
+	
+	ret
+
+#-------------------------------------------------
+#-- J        -- n   R: 4*sys -- 4*sys
+#--                  get the second loop index
+#-------------------------------------------------
+do_jj:
+    #-- Leer el indice exterior
+	lw t0, 8(s0)
 
 	#-- Guardarlo en la pila
 	PUSH_T0

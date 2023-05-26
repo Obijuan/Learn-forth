@@ -337,20 +337,6 @@ mplus1: pop de          ; restore saved IP
 
 ; LOOP AND BRANCH OPERATIONS ====================
 
-;C J        -- n   R: 4*sys -- 4*sys
-;C                  get the second loop index
-    head JJ,1,J,docode
-        push bc     ; push old TOS
-        ld l,(ix+4) ; get current loop index
-        ld h,(ix+5)
-        ld c,(ix+6) ; get fudge factor
-        ld b,(ix+7)
-        or a
-        sbc hl,bc   ; subtract fudge factor,
-        ld b,h      ;   returning true index
-        ld c,l
-        next
-
 ;C UNLOOP   --   R: sys1 sys2 --  drop loop parms
     head UNLOOP,6,UNLOOP,docode
         inc ix

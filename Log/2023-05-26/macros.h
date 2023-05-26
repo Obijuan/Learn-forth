@@ -329,6 +329,10 @@ myLabel:   .string %str
 	  jal do_ii
 	.end_macro
 
+	.macro JJ
+	  jal do_jj
+	.end_macro
+
 	
 
 
