@@ -17,11 +17,6 @@
 ; are in file CAMEL80.AZM.
 ; ===============================================
 
-;Z .HH   c --       print byte as 2 hex digits
-;   DUP HI >HEX EMIT LO >HEX EMIT ;
-    head DOTHH,3,.HH,docolon
-        DW DUP,HI,TOHEX,EMIT,LO,TOHEX,EMIT,EXIT
-
 ;Z .B    a -- a+1   fetch & print byte, advancing
 ;   DUP C@ .HH 20 EMIT 1+ ;
     head DOTB,2,.B,docolon
