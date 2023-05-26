@@ -810,13 +810,8 @@ do_qbranch:
 	bne t0,zero,skip
 
 	#-- Hay que hacer el salto
-	#-- Leer la Literal que contiene la direccion a la que
-	#-- hay que saltar
-	READLIT_T0
-	
-	#-- El literal es la direccion destino a la que
-	#-- saltar. Lo guardamos directamente en ra
-	mv ra, t0
+	#-- Directamente se termina para que
+	#-- se ejecute el salto que sigue a qbranch
 	j end_qbranch
 
 	#-- No realizar el salto

@@ -5,6 +5,7 @@
 .include "macros.h"
 
     .globl do_swab, do_lo, do_hi, do_tohex, do_dothh, do_dotb, do_dota
+    .globl do_dump
 
     .text
 
@@ -161,6 +162,52 @@ do_dota:
     DOTHH  #-- 0xABCD (prints AB)
     DOTHH  #--  (prints CD)
     LIT(0x20)
+    EMIT
+	
+	#-- Recuperar la direccion de retorno de la pila r
+	POP_RA
+
+	#-- Devolver control
+	ret	
+
+#-------------------------------------------------
+#-- ;X DUMP   addr u --      dump u locations at addr
+#-- NIVEL SUPERIOR (NO PRIMITIVA)
+#-- ;   0 DO
+#-- ;      I 15 AND 0= IF CR DUP .A THEN
+#-- ;      .B
+#-- ;   LOOP DROP ;
+#-------------------------------------------------
+do_dump:
+
+    #-- Guardar direccion de retorno en la pila r
+	PUSH_RA
+    
+    LIT(0)
+    XDO
+dump2:
+      II
+      LIT(15)
+      LAND
+      ZEROEQUAL
+      QBRANCH
+      ADDR(dump1)
+      #CR
+      LIT(10)
+      EMIT
+      LIT(13)
+      EMIT
+      DUP
+      DOTA
+dump1:
+      DOTB
+    XLOOP
+    ADDR(dump2)
+
+    # CR
+    LIT(10)
+    EMIT
+    LIT(13)
     EMIT
 	
 	#-- Recuperar la direccion de retorno de la pila r

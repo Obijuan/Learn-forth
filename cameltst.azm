@@ -17,18 +17,6 @@
 ; are in file CAMEL80.AZM.
 ; ===============================================
 
-
-;X DUMP   addr u --      dump u locations at addr
-;   0 DO
-;      I 15 AND 0= IF CR DUP .A THEN
-;      .B
-;   LOOP DROP ;
-    head DUMP,4,DUMP,docolon
-        DW LIT,0,XDO
-DUMP2:  DW II,LIT,15,AND,ZEROEQUAL,qbranch,DUMP1
-        DW CR,DUP,DOTA
-DUMP1:  DW DOTB,XLOOP,DUMP2,DROP,EXIT
-
 ;Z ZQUIT   --    endless dump for testing
 ;   0 BEGIN  0D EMIT 0A EMIT  DUP .A
 ;       .B .B .B .B .B .B .B .B
