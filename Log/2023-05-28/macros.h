@@ -34,6 +34,10 @@
 		PUSH_RA
 	.end_macro
 
+	.macro DOCON
+	  PUSH_RA
+	  jal do_con
+	.end_macro
 
 
 	#-----------------------------------
@@ -415,7 +419,9 @@ myLabel:   .string %str
 	  jal do_bye
 	.end_macro
 	
-
+	.macro CELL
+	  jal do_cell
+	.end_macro
 
 
 

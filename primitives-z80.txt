@@ -118,15 +118,6 @@ dovar:  ; -- a-addr
 ;   CREATE , DOES> (machine code fragment)
     head CONSTANT,8,CONSTANT,docolon
         DW CREATE,COMMA,XDOES
-; DOCON, code action of CONSTANT,
-; entered by CALL DOCON
-docon:  ; -- x
-        pop hl     ; parameter field address
-        push bc    ; push old TOS
-        ld c,(hl)  ; fetch contents of parameter
-        inc hl     ;    field -> TOS
-        ld b,(hl)
-        next
 
 ;Z USER     n --        define user variable 'n'
 ;   CREATE , DOES> (machine code fragment)

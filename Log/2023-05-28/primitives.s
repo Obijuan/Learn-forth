@@ -11,11 +11,26 @@
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
-	.globl do_unloop, do_bye, do_execute
+	.globl do_unloop, do_bye, do_execute, do_con
 					
 	.include "macros.h"
 	
-	.text			
+	.text
+
+#---------------------------------------------------
+#-- DOCON, code action of CONSTANT
+#---------------------------------------------------
+do_con:
+  #-- Leer la constante en t0
+  READLIT_T0
+
+  #-- Meterla en la pila
+  PUSH_T0
+
+  #---- NEXT
+  POP_RA
+  NEXT
+
 #---------------
 #-- Palabra 1	
 #--
