@@ -247,10 +247,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         DW DUP,LIT,0Ah,BDOS,DROP
         DW ONEPLUS,CFETCH,LIT,0Ah,EMIT,EXIT
 
-;X BYE     i*x --    return to CP/M
-    head bye,3,bye,docode
-        jp 0
-
 ; STACK OPERATIONS ==============================
 
 ;X NIP    x1 x2 -- x2           per stack diagram
