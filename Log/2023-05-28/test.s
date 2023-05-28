@@ -180,8 +180,10 @@ do_dota:
 #-------------------------------------------------
 do_dump:
 
-    #-- Guardar direccion de retorno en la pila r
-	PUSH_RA
+   #-- Internal code fragment
+   DOCOLON
+
+   #-- New high level Thread
     
     LIT(0)
     XDO
@@ -210,11 +212,7 @@ dump1:
     LIT(13)
     EMIT
 	
-	#-- Recuperar la direccion de retorno de la pila r
-	POP_RA
-
-	#-- Devolver control
-	ret	
+	EXIT
 
 #-------------------------------------------------
 #-- ZQUIT   --    endless dump for testing

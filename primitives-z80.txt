@@ -98,19 +98,6 @@ reset:  ld hl,(6h)   ; BDOS address, rounded down
 
 ; DEFINING WORDS ================================
 
-; ENTER, a.k.a. DOCOLON, entered by CALL ENTER
-; to enter a new high-level thread (colon def'n.)
-; (internal code fragment, not a Forth word)
-; N.B.: DOCOLON must be defined before any
-; appearance of 'docolon' in a 'word' macro!
-docolon:               ; (alternate name)
-enter:  dec ix         ; push old IP on ret stack
-        ld (ix+0),d
-        dec ix
-        ld (ix+0),e
-        pop hl         ; param field adrs -> IP
-        nexthl         ; use the faster 'nexthl'
-
 ;C VARIABLE   --      define a Forth variable
 ;   CREATE 1 CELLS ALLOT ;
 ; Action of RAM variable is identical to CREATE,

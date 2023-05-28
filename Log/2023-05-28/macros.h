@@ -26,6 +26,14 @@
 	  j do_execute
 	.end_macro
 
+	# ENTER, a.k.a. DOCOLON, entered by CALL ENTER
+	# to enter a new high-level thread (colon def'n.)
+	# (internal code fragment, not a Forth word)
+	.macro DOCOLON
+	    #-- Guardar direccion de retorno en la pila r
+		PUSH_RA
+	.end_macro
+
 
 
 	#-----------------------------------
