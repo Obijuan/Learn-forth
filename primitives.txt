@@ -10,7 +10,6 @@ VARIABLE   --             define a Forth variable
                ANS Forth Extensions
 
 <>     x1 x2 -- flag               test not equal 
-BYE    i*x --                      return to CP/M
 CMOVE  c-addr1 c-addr2 u --      move from bottom
 CMOVE> c-addr1 c-addr2 u --         move from top
 KEY?   -- flag        return true if char waiting
