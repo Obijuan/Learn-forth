@@ -96,17 +96,6 @@ reset:  ld hl,(6h)   ; BDOS address, rounded down
 ; A task w/o terminal input requires 200h bytes.
 ; Double all except TIB and PAD for 32-bit CPUs.
 
-; INTERPRETER LOGIC =============================
-; See also "defining words" at end of this file
-
-;C EXECUTE   i*x xt -- j*x   execute Forth word
-;C                           at 'xt'
-    head EXECUTE,7,EXECUTE,docode
-        ld h,b          ; address of word -> HL
-        ld l,c
-        pop bc          ; get new TOS
-        jp (hl)         ; go do Forth word
-
 ; DEFINING WORDS ================================
 
 ; ENTER, a.k.a. DOCOLON, entered by CALL ENTER

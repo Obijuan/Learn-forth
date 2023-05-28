@@ -11,7 +11,7 @@
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
-	.globl do_unloop, do_bye
+	.globl do_unloop, do_bye, do_execute
 					
 	.include "macros.h"
 	
@@ -971,3 +971,23 @@ do_unloop:
 do_bye:
 	OS_EXIT
 
+#---------------------------------------------------
+# EXECUTE   i*x xt -- j*x   execute Forth word
+#---------------------------------------------------
+do_execute:
+
+	#-- xt: Direccion donde está la palabra forth
+	#-- a ejecutar
+
+	#-- Obtener la direccion de la pila (xt)
+	#-- t0 = xt
+	POP_T0
+
+	#-- Meter la dirección en ra
+	mv ra,t0
+
+	#-- Y sumar 4 para apuntar a la siguiente instrucción
+	addi ra,ra,4
+
+	#-- Ejecutar la palabra
+	jalr  zero, t0, 0

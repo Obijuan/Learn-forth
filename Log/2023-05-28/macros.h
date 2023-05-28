@@ -22,6 +22,10 @@
 	  NEXT	
 	.end_macro
 
+	.macro EXECUTE
+	  j do_execute
+	.end_macro
+
 
 
 	#-----------------------------------
