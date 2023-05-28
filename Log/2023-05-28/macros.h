@@ -12,11 +12,13 @@
 	  ret
 	.end_macro
 
+
+
 	#-----------------------------------
 	#-- DE ACCESO AL SISTEMA OPERATIVO
 	#-----------------------------------
 	#-- Terminar el programa
-	.macro EXIT
+	.macro OS_EXIT
 	  li a7, 10
 	  ecall
 	.end_macro	
@@ -387,6 +389,9 @@ myLabel:   .string %str
 	  jal do_zquit
 	.end_macro
 
+	.macro BYE
+	  jal do_bye
+	.end_macro
 	
 
 

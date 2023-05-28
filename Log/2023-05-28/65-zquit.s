@@ -101,7 +101,7 @@ rstack2:      #-- Dir: 0x2054
 	PRINT_STRING (" ok\n")
 	
 	#-- Terminar
-	EXIT
+	BYE
 	
 
 

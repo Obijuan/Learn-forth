@@ -11,7 +11,7 @@
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
-	.globl do_unloop
+	.globl do_unloop, do_bye
 					
 	.include "macros.h"
 	
@@ -964,3 +964,10 @@ do_unloop:
 	POPR_T0
     
 	NEXT
+
+#---------------------------------------------------
+# BYE     i*x --    return to OS
+#---------------------------------------------------
+do_bye:
+	OS_EXIT
+
