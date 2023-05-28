@@ -1,12 +1,5 @@
 ; Listing 2.
 ; ===============================================
-; CamelForth for the Zilog Z80
-; (c) 1994 Bradford J. Rodriguez
-; Permission is granted to freely copy, modify,
-; and distribute this program for personal or
-; educational use.  Commercial inquiries should
-; be directed to the author at 221 King St. E.,
-; #32, Hamilton, Ontario L8N 1B5 Canada
 ;
 ; CAMEL80.AZM: Code Primitives
 ;   Source code is for the Z80MR macro assembler.
@@ -105,14 +98,6 @@ reset:  ld hl,(6h)   ; BDOS address, rounded down
 
 ; INTERPRETER LOGIC =============================
 ; See also "defining words" at end of this file
-
-;C EXIT     --      exit a colon definition
-    head EXIT,4,EXIT,docode
-        ld e,(ix+0)    ; pop old IP from ret stk
-        inc ix
-        ld d,(ix+0)
-        inc ix
-        next
 
 ;C EXECUTE   i*x xt -- j*x   execute Forth word
 ;C                           at 'xt'

@@ -259,4 +259,4 @@ zquit1:
 	POP_RA
 
 	#-- Devolver control
-	ret	
+	EXIT

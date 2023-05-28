@@ -3,13 +3,23 @@
 #------------------------------------------------
 
     #----------------------------------
-	#-- INTERPRETE DE FORTH
+	#-- LOGICA DEL INTERPRETE DE FORTH
 	#----------------------------------
 
 	#-- NEXT: Ejecutar la siguiente instruccion Forth
 	#-- del hilo actual
 	.macro NEXT
 	  ret
+	.end_macro
+
+	#-- EXIT. Terminar una palabra de alto nivel
+	# exit a colon definition
+	.macro EXIT
+	  #-- Recuperar la direccion de retorno de la pila r
+	  POP_RA
+
+	  #-- Devolver control
+	  NEXT	
 	.end_macro
 
 
