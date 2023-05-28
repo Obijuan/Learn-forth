@@ -963,4 +963,4 @@ do_unloop:
 	POPR_T0
 	POPR_T0
     
-	ret
+	NEXT

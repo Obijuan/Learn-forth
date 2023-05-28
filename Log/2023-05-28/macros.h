@@ -2,6 +2,16 @@
 #-- MACROS
 #------------------------------------------------
 
+    #----------------------------------
+	#-- INTERPRETE DE FORTH
+	#----------------------------------
+
+	#-- NEXT: Ejecutar la siguiente instruccion Forth
+	#-- del hilo actual
+	.macro NEXT
+	  ret
+	.end_macro
+
 	#-----------------------------------
 	#-- DE ACCESO AL SISTEMA OPERATIVO
 	#-----------------------------------

@@ -68,28 +68,6 @@ link    DEFL $
         ENDIF
         ENDM
 
-; The NEXT macro (7 bytes) assembles the 'next'
-; code in-line in every Z80 CamelForth CODE word.
-next    MACRO
-        ex de,hl
-        ld e,(hl)
-        inc hl
-        ld d,(hl)
-        inc hl
-        ex de,hl
-        jp (hl)
-        ENDM
-
-; NEXTHL is used when the IP is already in HL.
-nexthl  MACRO
-        ld e,(hl)
-        inc hl
-        ld d,(hl)
-        inc hl
-        ex de,hl
-        jp (hl)
-        ENDM
-
 ; RESET AND INTERRUPT VECTORS ===================
 ; ...are not used in the CP/M implementation
 ; Instead, we have the...
