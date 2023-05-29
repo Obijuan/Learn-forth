@@ -12,7 +12,7 @@
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
-	.globl douser, do_fill
+	.globl douser, do_fill, do_cmove
 					
 	.include "macros.h"
 	
@@ -1108,3 +1108,47 @@ fill_bucle:
 fill_end:
 
 	NEXT
+
+#-----------------------------------------------------
+#  X CMOVE   c-addr1 c-addr2 u --  move from bottom
+#  Copiar u bytes desdde addr1 hasta addr2 (src-->dst)
+#-----------------------------------------------------
+do_cmove:
+
+	#-- t2 = Numero de caracteres a copiar (u)
+	POP_T0
+	mv t2, t0
+
+	#-- t1 = Direccion destino (addr2)
+	POP_T0
+	mv t1, t0
+
+	#-- t0 = Direccion fuente (addr1)
+	POP_T0
+
+cmove_bucle:
+
+	#-- Si no quedan caracteres por copiar, terminar
+	beq t2, zero, cmove_end
+
+	#-- Leer byte fuente
+	lb t3, 0(t0)
+
+	#-- Escribir byte en destino
+	sb t3, 0(t1)
+
+	#-- Decrementar contador de bytes
+	addi t2,t2,-1
+
+	#-- Incrementar direccion fuente
+	addi t0,t0,1
+
+	#-- Incrementar direccion destino
+	addi t1,t1,1
+
+	#-- Repetir
+	j cmove_bucle
+
+cmove_end:
+	NEXT
+

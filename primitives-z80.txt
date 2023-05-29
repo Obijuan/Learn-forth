@@ -303,25 +303,6 @@ udiv4:  rl e        ; rotate result bit into DE,
 
 ; BLOCK AND STRING OPERATIONS ===================
 
-;X CMOVE   c-addr1 c-addr2 u --  move from bottom
-; as defined in the ANSI optional String word set
-; On byte machines, CMOVE and CMOVE> are logical
-; factors of MOVE.  They are easy to implement on
-; CPUs which have a block-move instruction.
-    head CMOVE,5,CMOVE,docode
-        push bc
-        exx
-        pop bc      ; count
-        pop de      ; destination adrs
-        pop hl      ; source adrs
-        ld a,b      ; test for count=0
-        or c
-        jr z,cmovedone
-        ldir        ; move from bottom to top
-cmovedone: exx
-        pop bc      ; pop new TOS
-        next
-
 ;X CMOVE>  c-addr1 c-addr2 u --  move from top
 ; as defined in the ANSI optional String word set
     head CMOVEUP,6,CMOVE>,docode

@@ -473,6 +473,11 @@ myLabel:   .string %str
 	  jal do_fill
 	.end_macro
 
+	.macro CMOVE
+	  jal do_cmove
+	.end_macro
+
+
 
 
 	
