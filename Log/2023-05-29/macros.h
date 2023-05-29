@@ -248,6 +248,10 @@ myLabel:   .string %str
 	  jal do_twostar
 	.end_macro
 
+	.macro FOURSTAR
+	  jal do_fourstar
+	.end_macro
+
 	.macro TWOSLASH
 	  jal do_twoslash
 	.end_macro
@@ -434,6 +438,10 @@ myLabel:   .string %str
 
 	.macro CELLPLUS
 	  jal do_cellplus
+	.end_macro
+
+	.macro CELLS
+	  jal do_cells
 	.end_macro
 
 

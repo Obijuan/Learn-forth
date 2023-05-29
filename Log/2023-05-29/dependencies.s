@@ -4,7 +4,7 @@
 
 	.include "macros.h"
 
-  .global do_cell, do_cellplus
+  .global do_cell, do_cellplus, do_cells
 
 # ALIGNMENT AND PORTABILITY OPERATORS ===========
 # Many of these are synonyms for other words,
@@ -33,3 +33,10 @@ do_cellplus:
   PUSH_T0
 
   NEXT
+
+#----------------------------------------------------
+#-- CELLS    n1 -- n2            cells->adrs units
+#-- Devolver el tamaño de n1 celdas en bytes
+#----------------------------------------------------
+do_cells:
+  j do_fourstar

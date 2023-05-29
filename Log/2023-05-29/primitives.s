@@ -11,7 +11,7 @@
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
-	.globl do_unloop, do_bye, do_execute, docon, do_savekey
+	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
 					
 	.include "macros.h"
 	
@@ -249,6 +249,23 @@ do_twostar:
 	PUSH_T0
 
 	ret
+
+#----------------------------------------------
+# 4*    x1 -- x2        arithmetic left shift by 2 bits
+#----------------------------------------------
+do_fourstar:
+
+	#-- Obtener el TOS en t0
+	POP_T0
+
+	#-- Desplazamiento aritmetico a la izquierda
+	#-- (El aritmetico a la izquierda es equivalente al logico a la izq.)
+	slli t0,t0,2
+
+	#-- Devolverlo a la pila
+	PUSH_T0
+
+	NEXT
 
 #----------------------------------------------
 # 2/   x1 -- x2      arithmetic right shift
