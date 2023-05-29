@@ -12,16 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;Z tibsize  -- n         size of TIB
-    head TIBSIZE,7,TIBSIZE,docon
-        dw 124          ; 2 chars safety zone
-
-;X tib     -- a-addr     Terminal Input Buffer
-;  HEX 82 CONSTANT TIB   CP/M systems: 126 bytes
-;  HEX -80 USER TIB      others: below user area
-    head TIB,3,TIB,docon
-        dw 82h
-
 ;C >IN     -- a-addr        holds offset into TIB
 ;  2 USER >IN
     head TOIN,3,>IN,douser

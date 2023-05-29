@@ -496,6 +496,15 @@ myStr: .byte %len,
 	  jal do_bl
 	.end_macro
 
+	.macro TIB
+	  jal do_tib
+	.end_macro
+
+	.macro TIBSIZE
+	  jal do_tibsize
+	.end_macro
+
+
 
 	
 

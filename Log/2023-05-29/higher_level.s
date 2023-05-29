@@ -4,7 +4,7 @@
 #------------------------------------------------
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
-	.global do_type, do_bl
+	.global do_type, do_bl, do_tib, do_tibsize
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 
@@ -115,6 +115,23 @@ do_bl:
   DOCON
   DW(0x20)
 
+#----------------------------------------------------
+# tib     -- a-addr     Terminal Input Buffer
+# HEX 82 CONSTANT TIB   CP/M systems: 126 bytes
+# HEX -80 USER TIB      others: below user area
+#----------------------------------------------------
+do_tib:
+  DOCON
+  DW(0x2000)
+
+#----------------------------------------------------
+#  tibsize  -- n         size of TIB
+# HEX 82 CONSTANT TIB   CP/M systems: 126 bytes
+# HEX -80 USER TIB      others: below user area
+#----------------------------------------------------
+do_tibsize:
+  DOCON
+  DW(124)
 
 
 
