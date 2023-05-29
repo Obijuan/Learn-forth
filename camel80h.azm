@@ -12,10 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;C BL      -- char            an ASCII space
-    head BL,2,BL,docon
-        dw 20h
-
 ;Z tibsize  -- n         size of TIB
     head TIBSIZE,7,TIBSIZE,docon
         dw 124          ; 2 chars safety zone

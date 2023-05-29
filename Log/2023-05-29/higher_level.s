@@ -4,7 +4,7 @@
 #------------------------------------------------
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
-	.global do_type
+	.global do_type, do_bl
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 
@@ -108,6 +108,12 @@ TYP4:
 TYP5:
 	EXIT
 
+#----------------------------------------------------
+#-- BL      -- char            an ASCII space
+#----------------------------------------------------
+do_bl:
+  DOCON
+  DW(0x20)
 
 
 
