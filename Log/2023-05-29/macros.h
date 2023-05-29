@@ -44,6 +44,11 @@
       jal dovar
 	.end_macro
 
+	.macro DOUSER
+	  PUSH_RA
+	  jal douser
+	.end_macro
+
 
 	#-----------------------------------
 	#-- DE ACCESO AL SISTEMA OPERATIVO

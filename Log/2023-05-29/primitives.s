@@ -12,6 +12,7 @@
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
+	.globl douser
 					
 	.include "macros.h"
 	
@@ -47,6 +48,28 @@ docreate:
 	PUSH_T0
 
 	#--- NEXT
+	POP_RA
+	NEXT
+
+#---------------------------------------------------
+#--  DOUSER, code action of USER,
+#-- entered by CALL DOUSER
+#--    --- a-addr
+#--
+#-- Meter en la pila la direccion de la zona de usuario
+#-- (base) menos el offsert indicado por el parámetro
+#---------------------------------------------------
+douser:
+    #-- Leer el parametro en t0 (offset)
+	READLIT_T0
+
+    #-- Restar el offsert
+    sub t0, s2, t0
+
+	#-- Meter direccion en la pila
+	PUSH_T0
+
+	#---- NEXT
 	POP_RA
 	NEXT
 

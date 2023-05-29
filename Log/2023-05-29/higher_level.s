@@ -3,11 +3,25 @@
 #--   palabras primitivas o de alto nivel
 #------------------------------------------------
 
+	.global do_u0
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 	.include "macros.h"
 
 	.text
+
+#-------------------------------------------------------------
+#- u0      -- a-addr       current user area adrs
+#- Devolver direccion de la zona de usuario (parte inferior)
+#-------------------------------------------------------------
+do_u0:
+    DOUSER
+    DW(0)
+
+
+
+#------------------------- PRUEBAS ------------------------------------------
+
 #--------------------------------
 #-- Palabras de nivel superior	
 #--------------------------------

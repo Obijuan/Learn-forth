@@ -114,20 +114,6 @@ reset:  ld hl,(6h)   ; BDOS address, rounded down
 ;   CREATE , DOES> (machine code fragment)
     head USER,4,USER,docolon
         DW CREATE,COMMA,XDOES
-; DOUSER, code action of USER,
-; entered by CALL DOUSER
-douser:  ; -- a-addr
-        pop hl     ; parameter field address
-        push bc    ; push old TOS
-        ld c,(hl)  ; fetch contents of parameter
-        inc hl     ;    field
-        ld b,(hl)
-        push iy    ; copy user base address to HL
-        pop hl
-        add hl,bc  ;    and add offset
-        ld b,h     ; put result in TOS
-        ld c,l
-        next
 
 ; DODOES, code action of DOES> clause
 ; entered by       CALL fragment

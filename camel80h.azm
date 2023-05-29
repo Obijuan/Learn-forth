@@ -26,11 +26,6 @@
     head TIB,3,TIB,docon
         dw 82h
 
-;Z u0      -- a-addr       current user area adrs
-;  0 USER U0
-    head U0,2,U0,douser
-        dw 0
-
 ;C >IN     -- a-addr        holds offset into TIB
 ;  2 USER >IN
     head TOIN,3,>IN,douser
