@@ -284,18 +284,6 @@ ACC3:   DW OVER,CSTORE,ONEPLUS,OVER,UMIN
 ACC4:   DW BRANCH,ACC1
 ACC5:   DW DROP,NIP,SWOP,MINUS,EXIT
 
-;C TYPE    c-addr +n --     type line to term'l
-;   ?DUP IF
-;     OVER + SWAP DO I C@ EMIT LOOP
-;   ELSE DROP THEN ;
-    head TYPE,4,TYPE,docolon
-        DW QDUP,QBRANCH,TYP4
-        DW OVER,PLUS,SWOP,XDO
-TYP3:   DW II,CFETCH,EMIT,XLOOP,TYP3
-        DW BRANCH,TYP5
-TYP4:   DW DROP
-TYP5:   DW EXIT
-
 ;C S"       --         compile in-line string
 ;   COMPILE (S")  [ HEX ]
 ;   22 WORD C@ 1+ ALIGNED ALLOT ; IMMEDIATE

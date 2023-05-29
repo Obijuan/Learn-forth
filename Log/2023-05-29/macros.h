@@ -66,16 +66,6 @@
 	  ecall
 	.end_macro
 	
-	#-- Imprimir la cadena indicada
-	.macro PRINT_STRING (%str)
-	  .data
-myLabel:   .string %str
-	  .text
-	    la a0, myLabel
-	    li a7, 4
-	    ecall
-	.end_macro
-	
 	#-- Imprimir el caracter que hay en T0
 	.macro PRINT_CHAR_T0
 	  mv a0, t0
@@ -496,6 +486,10 @@ myStr: .byte %len,
 	  .text
 	  la a0, myStr
 	  jal do_xsquote
+	.end_macro
+
+	.macro TYPE
+	  jal do_type
 	.end_macro
 
 

@@ -4,7 +4,9 @@
 #------------------------------------------------
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
+	.global do_type
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
+
 
 	.include "macros.h"
 
@@ -72,6 +74,42 @@ do_xsquote:
     #-- TOR
 
 	EXIT
+
+#----------------------------------------------------
+#  TYPE    c-addr +n --     type line to term'l
+#   ?DUP IF
+#     OVER + SWAP DO I C@ EMIT LOOP
+#   ELSE DROP THEN ;
+#----------------------------------------------------
+do_type:
+    DOCOLON
+	
+	#--- Programa Forth
+    QDUP
+    QBRANCH      # IF
+    ADDR(TYP4)
+
+      OVER
+      PLUS
+      SWOP
+      XDO    # DO
+TYP3:
+        II
+        CFETCH
+        EMIT
+      XLOOP
+      ADDR(TYP3)
+      BRANCH
+      ADDR(TYP5)
+
+TYP4: 
+    DROP  #-- Else
+
+TYP5:
+	EXIT
+
+
+
 
 
 #------------------------- PRUEBAS ------------------------------------------
