@@ -3,7 +3,7 @@
 #--   palabras primitivas o de alto nivel
 #------------------------------------------------
 
-	.global do_u0, do_ninit
+	.global do_u0, do_ninit, do_count
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 	.include "macros.h"
@@ -25,6 +25,19 @@ do_u0:
 do_ninit:
   DOCON
   DW(36)  #-- 9 palabras (de 4 bytes)
+
+#----------------------------------------------------
+#-- COUNT   c-addr1 -- c-addr2 u  counted->adr/len
+#   DUP CHAR+ SWAP C@ ;
+#----------------------------------------------------
+do_count:
+	DOCOLON
+	DUP
+	CHARPLUS
+	SWOP      #-- Es swap
+	CFETCH
+	EXIT
+
 
 
 #------------------------- PRUEBAS ------------------------------------------

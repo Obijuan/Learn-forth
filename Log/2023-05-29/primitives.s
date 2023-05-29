@@ -7,7 +7,7 @@
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
-	.globl do_qdup, do_drop, do_swap, do_over, do_rot, do_fetch, do_cfetch
+	.globl do_qdup, do_drop, do_swop, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
@@ -511,7 +511,7 @@ do_drop:
 #----------------------------------------------
 # SWAP    x1 x2 -- x2 x1    swap top two items
 #----------------------------------------------
-do_swap:
+do_swop:
 
 	#-- Obtener el TOS: t2 = x2
 	POP_T0

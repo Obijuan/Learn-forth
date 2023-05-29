@@ -301,8 +301,12 @@ myLabel:   .string %str
 	  jal do_drop
 	.end_macro
 
+	.macro SWOP
+	  jal do_swop
+	.end_macro
+
 	.macro SWAP
-	  jal do_swap
+	  jal do_swop
 	.end_macro
 
 	.macro OVER
@@ -475,6 +479,10 @@ myLabel:   .string %str
 
 	.macro CMOVE
 	  jal do_cmove
+	.end_macro
+
+	.macro COUNT
+	  jal do_count
 	.end_macro
 
 

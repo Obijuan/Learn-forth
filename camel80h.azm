@@ -240,11 +240,6 @@ MIN1:   dw DROP,EXIT
 
 ; INPUT/OUTPUT ==================================
 
-;C COUNT   c-addr1 -- c-addr2 u  counted->adr/len
-;   DUP CHAR+ SWAP C@ ;
-    head COUNT,5,COUNT,docolon
-        dw DUP,CHARPLUS,SWOP,CFETCH,EXIT
-
 ;C CR      --               output newline
 ;   0D EMIT 0A EMIT ;
     head CR,2,CR,docolon
