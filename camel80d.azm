@@ -28,10 +28,6 @@ noop:   next
     head ALIGNED,7,ALIGNED,docode
         jr noop
 
-;C CHARS    n1 -- n2            chars->adrs units
-    head CHARS,5,CHARS,docode
-        jr noop
-
 ;C >BODY    xt -- a-addr      adrs of param field
 ;   3 + ;                     Z80 (3 byte CALL)
     head TOBODY,5,>BODY,docolon

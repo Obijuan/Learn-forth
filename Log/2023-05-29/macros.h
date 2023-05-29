@@ -448,6 +448,10 @@ myLabel:   .string %str
 	  jal do_charplus
 	.end_macro
 
+	.macro CHARS
+	  jal do_chars
+	.end_macro
+
 
 
 	

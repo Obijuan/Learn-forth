@@ -4,7 +4,7 @@
 
 	.include "macros.h"
 
-  .global do_cell, do_cellplus, do_cells, do_charplus
+  .global do_cell, do_cellplus, do_cells, do_charplus, do_chars
 
 # ALIGNMENT AND PORTABILITY OPERATORS ===========
 # Many of these are synonyms for other words,
@@ -47,3 +47,10 @@ do_cells:
 #----------------------------------------------------
 do_charplus:
   j do_oneplus
+
+#----------------------------------------------------
+#-- CHARS    n1 -- n2            chars->adrs units
+#-- Indicar el tamaño en bytes de los caracteres indicados
+#----------------------------------------------------
+do_chars:
+  NEXT
