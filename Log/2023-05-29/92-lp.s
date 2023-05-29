@@ -111,7 +111,7 @@ user_area: #-- Botom of user area
     .word 0  #--
     .word 0  #-- LATEST: Last word in dict. Offset: 0x1C
     .word 0  #-- HP: HOLD Pointer. Offset: 0x20
-    .word 0  #-- LP: Leave-stack pointer
+    .word 0  #-- LP: Leave-stack pointer. Offset: 0x24
     .space 88
 
    #-----------------------
