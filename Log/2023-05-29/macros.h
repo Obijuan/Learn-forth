@@ -452,6 +452,10 @@ myLabel:   .string %str
 	  jal do_chars
 	.end_macro
 
+	.macro UINIT
+	  jal do_uinit
+	.end_macro
+
 
 
 	

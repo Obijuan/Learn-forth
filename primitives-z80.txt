@@ -104,13 +104,6 @@ reset:  ld hl,(6h)   ; BDOS address, rounded down
 ; so we don't need a DOES> clause to change it.
     head VARIABLE,8,VARIABLE,docolon
         DW CREATE,LIT,1,CELLS,ALLOT,EXIT
-; DOCREATE, code action of newly created words
-docreate: ; -- a-addr
-        pop hl     ; parameter field address
-        push bc    ; push old TOS
-        ld b,h     ; pfa = variable's adrs -> TOS
-        ld c,l
-        next
 
 ;C CONSTANT   n --      define a Forth constant
 ;   CREATE , DOES> (machine code fragment)
@@ -471,7 +464,4 @@ snext:  next
 
 *INCLUDE camel80d.azm   ; CPU Dependencies
 *INCLUDE camel80h.azm   ; High Level words
-lastword EQU link   ; nfa of last word in dict.
-enddict EQU $       ; user's code starts here
-        END
 

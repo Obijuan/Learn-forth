@@ -1,27 +1,6 @@
 ; LISTING 2.
 ;
 ; ===============================================
-; CamelForth for the Zilog Z80
-; Copyright (c) 1994,1995 Bradford J. Rodriguez
-;
-; This program is free software; you can redistribute it and/or modify
-; it under the terms of the GNU General Public License as published by
-; the Free Software Foundation; either version 3 of the License, or
-; (at your option) any later version.
-;
-; This program is distributed in the hope that it will be useful,
-; but WITHOUT ANY WARRANTY; without even the implied warranty of
-; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-; GNU General Public License for more details.
-;
-; You should have received a copy of the GNU General Public License
-; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-; Commercial inquiries should be directed to the author at 
-; 115 First St., #105, Collingwood, Ontario L9Y 4W3 Canada
-; or via email to bj@camelforth.com
-;
-; ===============================================
 ; CAMEL80H.AZM: High Level Words
 ;   Source code is for the Z80MR macro assembler.
 ;   Forth words are documented as follows:
@@ -113,14 +92,6 @@ TICKSOURCE: call douser         ; in name!
 ;Z r0       -- a-addr     end of return stack
     head R0,2,R0,douser
         dw 200h
-
-;Z uinit    -- addr  initial values for user area
-    head UINIT,5,UINIT,docreate
-        DW 0,0,10,0     ; reserved,>IN,BASE,STATE
-        DW enddict      ; DP
-        DW 0,0          ; SOURCE init'd elsewhere
-        DW lastword     ; LATEST
-        DW 0            ; HP init'd elsewhere
 
 ;Z #init    -- n    #bytes of user area init data
     head NINIT,5,#INIT,docon
