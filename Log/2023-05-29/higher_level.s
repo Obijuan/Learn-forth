@@ -6,7 +6,7 @@
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
-	.global do_l0, do_r0, do_space, do_spaces
+	.global do_l0, do_r0, do_space, do_spaces, do_cr
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -323,4 +323,16 @@ SPCS1:
 	ADDR(SPCS1)
 SPCS2:
 	DROP
+	EXIT
+
+#----------------------------------------------------
+# CR      --               output newline
+#  0D EMIT 0A EMIT ;
+#----------------------------------------------------
+do_cr:
+	DOCOLON
+	LIT(0xD)
+	EMIT
+	LIT(0XA)
+	EMIT
 	EXIT

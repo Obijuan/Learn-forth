@@ -157,11 +157,6 @@ MIN1:   dw DROP,EXIT
 
 ; INPUT/OUTPUT ==================================
 
-;C CR      --               output newline
-;   0D EMIT 0A EMIT ;
-    head CR,2,CR,docolon
-        dw lit,0dh,EMIT,lit,0ah,EMIT,EXIT
-
 ;Z umin     u1 u2 -- u      unsigned minimum
 ;   2DUP U> IF SWAP THEN DROP ;
     head UMIN,4,UMIN,docolon
