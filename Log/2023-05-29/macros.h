@@ -432,6 +432,10 @@ myLabel:   .string %str
 	  jal do_savekey
 	.end_macro
 
+	.macro CELLPLUS
+	  jal do_cellplus
+	.end_macro
+
 
 
 	

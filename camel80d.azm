@@ -28,13 +28,6 @@ noop:   next
     head ALIGNED,7,ALIGNED,docode
         jr noop
 
-;C CELL+    a-addr1 -- a-addr2      add cell size
-;   2 + ;
-    head CELLPLUS,5,CELL+,docode
-        inc bc
-        inc bc
-        next
-
 ;C CELLS    n1 -- n2            cells->adrs units
     head CELLS,5,CELLS,docode
         jp twostar
