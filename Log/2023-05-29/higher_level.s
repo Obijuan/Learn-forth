@@ -5,7 +5,7 @@
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
-	.global do_dp, do_ticksource
+	.global do_dp, do_ticksource, do_latest, do_hp
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -65,6 +65,21 @@ do_ticksource:
     DOUSER
     DW(0x14)
 
+#-------------------------------------------------------------
+# latest    -- a-addr     last word in dict.
+#  0x1C USER LATEST
+#-------------------------------------------------------------
+do_latest:
+    DOUSER
+    DW(0x1C)
+
+#-------------------------------------------------------------
+#  hp       -- a-addr     HOLD pointer
+#   20 USER HP
+#-------------------------------------------------------------
+do_hp:
+    DOUSER
+    DW(0x20)
 
 
 #----------------------------------------------------

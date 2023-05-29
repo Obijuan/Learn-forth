@@ -524,6 +524,14 @@ myStr: .byte %len,
 	  jal do_ticksource
 	.end_macro
 
+	.macro LATEST
+	  jal do_latest
+	.end_macro
+
+	.macro HP
+	  jal do_hp
+	.end_macro
+
 
 
 

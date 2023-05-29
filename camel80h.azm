@@ -12,16 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;Z latest    -- a-addr     last word in dict.
-;   14 USER LATEST
-    head LATEST,6,LATEST,douser
-        dw 14
-
-;Z hp       -- a-addr     HOLD pointer
-;   16 USER HP
-    head HP,2,HP,douser
-        dw 16
-
 ;Z LP       -- a-addr     Leave-stack pointer
 ;   18 USER LP
     head LP,2,LP,douser

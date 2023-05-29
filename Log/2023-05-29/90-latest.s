@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 89
+#-- INTERPRETE DE FORTH. Version 90
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  U0 .A >IN .A BASE .A STATE .A DP .A 'SOURCE .A
+#--  'SOURCE .A LATEST .A
 #--  
-#--  Resultado: 2114 2118 211C 2120 2124 2128  ok
+#--  Resultado: 2128 2130  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -147,9 +147,10 @@ user_area: #-- Botom of user area
     .word 0  #-- BASE: Conversion radix. Offset: 0x08
     .word 0  #-- STATE: Compiler state. Offset: 0x0C
     .word 0  #-- DP: Dictionary pointer. Offset: 0x10
-    .word 0  #-- 'SOURCE: Two cells: len, addrs
+    .word 0  #-- 'SOURCE: Two cells: len, addrs. Offset: 0x14
     .word 0  #--
-    .space 100
+    .word 0  #-- HP: HOLD Pointer. Offset: 0x1C
+    .space 96
 
 
 test:
@@ -210,17 +211,9 @@ start:
 
 	#-- Programa Forth:
     #-- U0 .A >IN .A
-    U0
-    DOTA
-    TOIN
-    DOTA
-    BASE
-    DOTA
-    STATE
-    DOTA
-    DP
-    DOTA
     TICKSOURCE
+    DOTA
+    LATEST
     DOTA
 
 	#-- Interprete de forth: Imprimir " ok"
