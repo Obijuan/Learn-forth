@@ -12,11 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;C STATE   -- a-addr       holds compiler state
-;  6 USER STATE
-    head STATE,5,STATE,douser
-        dw 6
-
 ;Z dp      -- a-addr       holds dictionary ptr
 ;  8 USER DP
     head DP,2,DP,douser
