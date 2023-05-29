@@ -4,13 +4,15 @@
 #------------------------------------------------
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
-	.global do_type, do_bl, do_tib, do_tibsize
+	.global do_type, do_bl, do_tib, do_tibsize,do_toin
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 
 	.include "macros.h"
 
 	.text
+
+# ========= SYSTEM VARIABLES & CONSTANTS ==================
 
 #-------------------------------------------------------------
 #- u0      -- a-addr       current user area adrs
@@ -19,6 +21,14 @@
 do_u0:
     DOUSER
     DW(0)
+
+#-------------------------------------------------------------
+#  >IN     -- a-addr        holds offset into TIB
+#  2 USER >IN
+#-------------------------------------------------------------
+do_toin:
+    DOUSER
+    DW(0x4)
 
 
 #----------------------------------------------------

@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 84
+#-- INTERPRETE DE FORTH. Version 85
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  tib .A tibsize .
+#--  U0 .A >IN .A
 #--  
-#--  Resultado: A A ok
+#--  Resultado: 2114 2118  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -204,11 +204,11 @@ start:
     la s2, user_area
 
 	#-- Programa Forth:
-    #-- tib .A tibsize .
-    TIB
+    #-- U0 .A >IN .A
+    U0
     DOTA
-    TIBSIZE
-    jal do_point
+    TOIN
+    DOTA
 
 	#-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")

@@ -504,6 +504,10 @@ myStr: .byte %len,
 	  jal do_tibsize
 	.end_macro
 
+	.macro TOIN
+	  jal do_toin
+	.end_macro
+
 
 
 	
