@@ -444,6 +444,10 @@ myLabel:   .string %str
 	  jal do_cells
 	.end_macro
 
+	.macro CHARPLUS
+	  jal do_charplus
+	.end_macro
+
 
 
 	

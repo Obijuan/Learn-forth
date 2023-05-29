@@ -4,7 +4,7 @@
 
 	.include "macros.h"
 
-  .global do_cell, do_cellplus, do_cells
+  .global do_cell, do_cellplus, do_cells, do_charplus
 
 # ALIGNMENT AND PORTABILITY OPERATORS ===========
 # Many of these are synonyms for other words,
@@ -40,3 +40,10 @@ do_cellplus:
 #----------------------------------------------------
 do_cells:
   j do_fourstar
+
+#----------------------------------------------------
+#-- CHAR+    c-addr1 -- c-addr2   add char size
+#-- Añadir el tamaño del tipo char a la direccion
+#----------------------------------------------------
+do_charplus:
+  j do_oneplus

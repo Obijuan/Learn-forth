@@ -28,10 +28,6 @@ noop:   next
     head ALIGNED,7,ALIGNED,docode
         jr noop
 
-;C CHAR+    c-addr1 -- c-addr2   add char size
-    head CHARPLUS,5,CHAR+,docode
-        jp oneplus
-
 ;C CHARS    n1 -- n2            chars->adrs units
     head CHARS,5,CHARS,docode
         jr noop
