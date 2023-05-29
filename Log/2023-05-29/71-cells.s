@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 70
+#-- INTERPRETE DE FORTH. Version 71
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  4 CELLS .
