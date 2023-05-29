@@ -12,16 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;C >IN     -- a-addr        holds offset into TIB
-;  2 USER >IN
-    head TOIN,3,>IN,douser
-        dw 2
-
-;C BASE    -- a-addr       holds conversion radix
-;  4 USER BASE
-    head BASE,4,BASE,douser
-        dw 4
-
 ;C STATE   -- a-addr       holds compiler state
 ;  6 USER STATE
     head STATE,5,STATE,douser

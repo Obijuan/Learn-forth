@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 85
+#-- INTERPRETE DE FORTH. Version 86
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  U0 .A >IN .A 
+#--  U0 .A >IN .A BASE .A
 #--  
-#--  Resultado: 2114 2118  ok
+#--  Resultado: 2114 2118 211C  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -144,7 +144,8 @@ enddict: #-- Aqui comienza el codigo del usuario
 user_area: #-- Botom of user area
     .word 0  #-- u0: Reservado.  Offset: 0x00
     .word 0  #-- >IN: Offset dentro de TIB. Offset: 0x04
-    .space 120
+    .word 0  #-- BASE: Conversion radix
+    .space 116
 
 
 test:
@@ -208,6 +209,8 @@ start:
     U0
     DOTA
     TOIN
+    DOTA
+    BASE
     DOTA
 
 	#-- Interprete de forth: Imprimir " ok"

@@ -508,6 +508,11 @@ myStr: .byte %len,
 	  jal do_toin
 	.end_macro
 
+	.macro BASE
+	  jal do_base
+	.end_macro
+
+
 
 
 	

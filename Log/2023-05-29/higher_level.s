@@ -4,7 +4,9 @@
 #------------------------------------------------
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
-	.global do_type, do_bl, do_tib, do_tibsize,do_toin
+	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base
+
+	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 
@@ -24,12 +26,19 @@ do_u0:
 
 #-------------------------------------------------------------
 #  >IN     -- a-addr        holds offset into TIB
-#  2 USER >IN
+#  4 USER >IN
 #-------------------------------------------------------------
 do_toin:
     DOUSER
     DW(0x4)
 
+#-------------------------------------------------------------
+#  BASE    -- a-addr       holds conversion radix
+#  4 USER BASE
+#-------------------------------------------------------------
+do_base:
+    DOUSER
+    DW(0x8)
 
 #----------------------------------------------------
 #--  #init    -- n    #bytes of user area init data
