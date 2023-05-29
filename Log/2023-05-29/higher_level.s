@@ -5,7 +5,8 @@
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
-	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0
+	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
+	.global do_l0, do_r0
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -97,6 +98,27 @@ do_s0:
     DOUSER
     DW(0x100)
 
+#-------------------------------------------------------------
+# PAD       -- a-addr    user PAD buffer
+#                         = end of hold area!
+#-------------------------------------------------------------
+do_pad:
+    DOUSER
+    DW(0x128)
+
+#-------------------------------------------------------------
+# l0       -- a-addr     bottom of Leave stack
+#-------------------------------------------------------------
+do_l0:
+    DOUSER
+    DW(0x180)
+
+#-------------------------------------------------------------
+# r0       -- a-addr     end of return stack
+#-------------------------------------------------------------
+do_r0:	
+	DOUSER
+    DW(0x200)
 
 #----------------------------------------------------
 #--  #init    -- n    #bytes of user area init data
