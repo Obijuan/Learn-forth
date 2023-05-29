@@ -469,6 +469,10 @@ myLabel:   .string %str
 	  jal do_ninit
 	.end_macro
 
+	.macro FILL
+	  jal do_fill
+	.end_macro
+
 
 
 	

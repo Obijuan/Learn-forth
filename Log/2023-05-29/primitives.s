@@ -12,7 +12,7 @@
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
-	.globl douser
+	.globl douser, do_fill
 					
 	.include "macros.h"
 	
@@ -1073,3 +1073,38 @@ do_execute:
 do_savekey:
 	DOVAR
 	DW(0)
+
+#-----------------------------------------------------
+#  FILL   c-addr u char --  fill memory with char
+#-----------------------------------------------------
+do_fill:
+	#-- t2 = Caracter a rellenar (char)
+	POP_T0
+	mv t2, t0
+
+	#-- t1 = Cantidad de caracterer (u)
+	POP_T0
+	mv t1,t0
+
+	#-- t0 = Direccion de comienzo (c-addr)
+	POP_T0
+
+fill_bucle:
+	#-- Si contador de caracteres a 0, terminamos
+	beq t1,zero, fill_end
+
+	#-- Guardar caracter en la posicion actual
+	sb t2, 0(t0)
+
+	#-- Decrementar contador de caracteres
+	addi t1,t1,-1
+
+	#-- Incrementar direccion
+	addi t0,t0,1
+
+	#-- Repetir
+	j fill_bucle
+
+fill_end:
+
+	NEXT

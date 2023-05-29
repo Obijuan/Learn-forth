@@ -303,27 +303,6 @@ udiv4:  rl e        ; rotate result bit into DE,
 
 ; BLOCK AND STRING OPERATIONS ===================
 
-;C FILL   c-addr u char --  fill memory with char
-    head FILL,4,FILL,docode
-        ld a,c          ; character in a
-        exx             ; use alt. register set
-        pop bc          ; count in bc
-        pop de          ; address in de
-        or a            ; clear carry flag
-        ld hl,0ffffh
-        adc hl,bc       ; test for count=0 or 1
-        jr nc,filldone  ;   no cy: count=0, skip
-        ld (de),a       ; fill first byte
-        jr z,filldone   ;   zero, count=1, done
-        dec bc          ; else adjust count,
-        ld h,d          ;   let hl = start adrs,
-        ld l,e
-        inc de          ;   let de = start adrs+1
-        ldir            ;   copy (hl)->(de)
-filldone: exx           ; back to main reg set
-        pop bc          ; pop new TOS
-        next
-
 ;X CMOVE   c-addr1 c-addr2 u --  move from bottom
 ; as defined in the ANSI optional String word set
 ; On byte machines, CMOVE and CMOVE> are logical
