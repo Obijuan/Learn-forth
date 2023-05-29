@@ -4,7 +4,7 @@
 #--  Implementación en ensamblador del programa Forth:
 #--  U0 .A
 #--  
-#--  Resultado: 2108  ok
+#--  Resultado: 2088  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -122,8 +122,9 @@ enddict: #-- Aqui comienza el codigo del usuario
 #-----------------------
 #-- USER AREA (128 bytes)
 #-----------------------
-    .space 128
 user_area: #-- Botom of user area
+    .space 128
+
 
 #---------------------------------------------------------------
 #-- CODIGO

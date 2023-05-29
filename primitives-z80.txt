@@ -154,10 +154,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         pop de
         next
 
-;Z SAVEKEY  -- addr  temporary storage for KEY?
-    head savekey,7,SAVEKEY,dovar
-        DW 0
-
 ;X KEY?     -- f    return true if char waiting
 ;   0FF 6 BDOS DUP SAVEKEY C! ;   rtns 0 or key
 ; must use BDOS function 6 to work with KEY

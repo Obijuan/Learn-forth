@@ -2,9 +2,14 @@
 #-- INTERPRETE DE FORTH. Version 73
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  5 CHARS .
+#--  UINIT .A UINIT 36 DUMP
 #--  
-#--  Resultado: 5  ok
+#--  Resultado: 
+#--  2060 
+#--  2060 00 00 00 00 00 00 00 00 0A 00 00 00 00 00 00 00 
+#--  2070 88 20 00 00 00 00 00 00 00 00 00 00 84 20 00 00 
+#--  2080 00 00 00 00 
+#--   ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!

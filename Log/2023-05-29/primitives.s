@@ -63,8 +63,8 @@ douser:
     #-- Leer el parametro en t0 (offset)
 	READLIT_T0
 
-    #-- Restar el offsert
-    sub t0, s2, t0
+    #-- añadir el offser a la direccion de la zona de usuario
+    add t0, s2, t0
 
 	#-- Meter direccion en la pila
 	PUSH_T0
