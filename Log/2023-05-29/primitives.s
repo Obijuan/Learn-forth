@@ -12,7 +12,7 @@
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
-	.globl douser, do_fill, do_cmove
+	.globl douser, do_fill, do_cmove, do_tuck
 					
 	.include "macros.h"
 	
@@ -1151,4 +1151,13 @@ cmove_bucle:
 
 cmove_end:
 	NEXT
+
+#-----------------------------------------------------
+#  TUCK   x1 x2 -- x2 x1 x2     per stack diagram
+#-----------------------------------------------------
+do_tuck:
+  DOCOLON
+  SWOP
+  OVER
+  EXIT
 
