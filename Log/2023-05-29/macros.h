@@ -556,6 +556,10 @@ myStr: .byte %len,
 	  jal do_tuck
 	.end_macro
 
+	.macro SPACE
+	  jal do_space
+	.end_macro
+
 
 
 

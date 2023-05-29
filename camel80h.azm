@@ -162,11 +162,6 @@ MIN1:   dw DROP,EXIT
     head CR,2,CR,docolon
         dw lit,0dh,EMIT,lit,0ah,EMIT,EXIT
 
-;C SPACE   --               output a space
-;   BL EMIT ;
-    head SPACE,5,SPACE,docolon
-        dw BL,EMIT,EXIT
-
 ;C SPACES   n --            output n spaces
 ;   BEGIN DUP WHILE SPACE 1- REPEAT DROP ;
     head SPACES,6,SPACES,docolon
