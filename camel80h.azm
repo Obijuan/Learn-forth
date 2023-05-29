@@ -222,11 +222,6 @@ MIN1:   dw DROP,EXIT
     head TWODROP,5,2DROP,docolon
         dw DROP,DROP,EXIT
 
-;C 2DUP   x1 x2 -- x1 x2 x1 x2   dup top 2 cells
-;   OVER OVER ;
-    head TWODUP,4,2DUP,docolon
-        dw OVER,OVER,EXIT
-
 ;C 2SWAP  x1 x2 x3 x4 -- x3 x4 x1 x2  per diagram
 ;   ROT >R ROT R> ;
     head TWOSWAP,5,2SWAP,docolon

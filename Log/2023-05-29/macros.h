@@ -485,6 +485,10 @@ myLabel:   .string %str
 	  jal do_count
 	.end_macro
 
+	.macro TWODUP
+	  jal do_twodup
+	.end_macro
+
 
 
 

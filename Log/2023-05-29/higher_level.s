@@ -3,7 +3,7 @@
 #--   palabras primitivas o de alto nivel
 #------------------------------------------------
 
-	.global do_u0, do_ninit, do_count
+	.global do_u0, do_ninit, do_count, do_twodup
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 	.include "macros.h"
@@ -38,7 +38,15 @@ do_count:
 	CFETCH
 	EXIT
 
-
+#----------------------------------------------------
+#-- 2DUP   x1 x2 -- x1 x2 x1 x2   dup top 2 cells
+#   OVER OVER ;
+#----------------------------------------------------
+do_twodup:
+	DOCOLON
+	OVER
+	OVER
+	EXIT
 
 #------------------------- PRUEBAS ------------------------------------------
 
