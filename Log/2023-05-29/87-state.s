@@ -144,8 +144,9 @@ enddict: #-- Aqui comienza el codigo del usuario
 user_area: #-- Botom of user area
     .word 0  #-- u0: Reservado.  Offset: 0x00
     .word 0  #-- >IN: Offset dentro de TIB. Offset: 0x04
-    .word 0  #-- BASE: Conversion radix
-    .space 116
+    .word 0  #-- BASE: Conversion radix. Offset: 0x08
+    .word 0  #-- STATE: Compiler state. Offset: 0x0C
+    .space 112
 
 
 test:
