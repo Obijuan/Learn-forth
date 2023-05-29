@@ -2,7 +2,7 @@
 #-- INTERPRETE DE FORTH. Version 90
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  'SOURCE .A LATEST .A HP .A
+#--  HP .A LP .A
 #--  
 #--  Resultado: 2128 2130  ok
 #--
@@ -51,36 +51,6 @@
 ptib:  #-- Puntero
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-
-   #-----------------------
-   #-- PILA de Datos
-   #----------------------	
-	.space 16  #-- Tamaño 4 palabras
-	.align 2
-stack:
-
-   #-- Otra Pila, para pruebas
-    .space 16
-    .align 2
-tstack:
-
-   #-----------------------
-   #-- PILA de retorno
-   #-- Elementos de 32 bits
-   #-----------------------
-    #-- Tamaño: 4 palabras
-    #-- Estan inicializadas para hacer pruebas
-    .word 0x01
-    .word 0x02
-    .word 0x03
-    .word 0x04
-rstack:
-    .word 0xFF  #-- Valor inicial. Usado para pruebas
-
-   #-- Otra Pila R, para pruebas
-   .space 16  #-- Tamaño: 4 palabras
-   .align 2
-rstack2:      #-- Dir: 0x2054
 
 #-------------------------
 #-- Diccionario
@@ -141,20 +111,38 @@ user_area: #-- Botom of user area
     .word 0  #--
     .word 0  #-- LATEST: Last word in dict. Offset: 0x1C
     .word 0  #-- HP: HOLD Pointer. Offset: 0x20
-    .space 92
+    .word 0  #-- LP: Leave-stack pointer
+    .space 88
 
+   #-----------------------
+   #-- PILA de Datos (Parameter stack. 128 bytes. Crece hacia abajo)
+   #----------------------	
+	.space 128  #-- Tamaño 32 palabras
+	.align 2
+stack:
 
+#--------------------------------
+#-- HOLD AREA 
+#-- 40 bytes. Crece hacia abajo
+#--------------------------------
+    .space 40
+    .align 2
+phold:
 
+#---------------------------------
+#-- PAD BUFFER
+#--  88 bytes
+#---------------------------------
+    .space 88
+    .align 2
+ppad:
 
-test:
-    .byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-    .byte 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F 
-    .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-    .byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-#-- Testing message
-msg: .byte 4 
-     .ascii "Holi"
+#-----------------------
+#-- PILA de retorno
+#-- 128 bytes. Crece hacia abajo
+#-----------------------
+    .space 128
+rstack:
 
 
 #---------------------------------------------------------------
@@ -203,12 +191,10 @@ start:
     la s2, user_area
 
 	#-- Programa Forth:
-    #-- 'SOURCE .A LATEST .A HP .A
-    TICKSOURCE
-    DOTA
-    LATEST
-    DOTA
+    #--HP .A LP .A
     HP
+    DOTA
+    LP
     DOTA
 
 	#-- Interprete de forth: Imprimir " ok"

@@ -5,7 +5,7 @@
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
-	.global do_dp, do_ticksource, do_latest, do_hp
+	.global do_dp, do_ticksource, do_latest, do_hp, do_lp
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -80,6 +80,15 @@ do_latest:
 do_hp:
     DOUSER
     DW(0x20)
+
+#-------------------------------------------------------------
+#  LP       -- a-addr     Leave-stack pointer
+#  24 USER LP
+#-------------------------------------------------------------
+do_lp:
+    DOUSER
+    DW(0x24)
+
 
 
 #----------------------------------------------------

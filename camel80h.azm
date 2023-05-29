@@ -12,11 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;Z LP       -- a-addr     Leave-stack pointer
-;   18 USER LP
-    head LP,2,LP,douser
-        dw 18
-
 ;Z s0       -- a-addr     end of parameter stack
     head S0,2,S0,douser
         dw 100h
