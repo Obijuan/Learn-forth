@@ -12,16 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;Z 'source  -- a-addr      two cells: len, adrs
-; 10 USER 'SOURCE
-;    head TICKSOURCE,7,'SOURCE,douser
-        DW link                 ; must expand
-        DB 0                    ; manually
-link    DEFL $                  ; because of
-        DB 7,27h,'SOURCE'       ; tick character
-TICKSOURCE: call douser         ; in name!
-        dw 10
-
 ;Z latest    -- a-addr     last word in dict.
 ;   14 USER LATEST
     head LATEST,6,LATEST,douser

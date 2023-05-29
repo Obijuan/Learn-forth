@@ -520,6 +520,10 @@ myStr: .byte %len,
 	  jal do_dp
 	.end_macro
 
+	.macro TICKSOURCE
+	  jal do_ticksource
+	.end_macro
+
 
 
 

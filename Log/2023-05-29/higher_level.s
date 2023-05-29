@@ -5,7 +5,7 @@
 
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
-	.global do_dp
+	.global do_dp, do_ticksource
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -56,6 +56,14 @@ do_state:
 do_dp:
     DOUSER
     DW(0x10)
+
+#-------------------------------------------------------------
+#  'source  -- a-addr      two cells: len, adrs
+# 0x14 USER 'SOURCE
+#-------------------------------------------------------------
+do_ticksource:
+    DOUSER
+    DW(0x14)
 
 
 
