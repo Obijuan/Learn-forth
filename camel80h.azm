@@ -162,13 +162,6 @@ MIN1:   dw DROP,EXIT
     head CR,2,CR,docolon
         dw lit,0dh,EMIT,lit,0ah,EMIT,EXIT
 
-;C SPACES   n --            output n spaces
-;   BEGIN DUP WHILE SPACE 1- REPEAT DROP ;
-    head SPACES,6,SPACES,docolon
-SPCS1:  DW DUP,qbranch,SPCS2
-        DW SPACE,ONEMINUS,branch,SPCS1
-SPCS2:  DW DROP,EXIT
-
 ;Z umin     u1 u2 -- u      unsigned minimum
 ;   2DUP U> IF SWAP THEN DROP ;
     head UMIN,4,UMIN,docolon

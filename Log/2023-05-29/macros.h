@@ -560,6 +560,11 @@ myStr: .byte %len,
 	  jal do_space
 	.end_macro
 
+	.macro SPACES
+	  jal do_spaces
+	.end_macro
+
+
 
 
 

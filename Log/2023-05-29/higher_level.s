@@ -6,7 +6,7 @@
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
-	.global do_l0, do_r0, do_space
+	.global do_l0, do_r0, do_space, do_spaces
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -306,3 +306,21 @@ do_space:
   BL
   EMIT
   EXIT
+
+#----------------------------------------------------
+# SPACES   n --            output n spaces
+#  BEGIN DUP WHILE SPACE 1- REPEAT DROP ;
+#----------------------------------------------------
+do_spaces:
+	DOCOLON
+SPCS1:
+	DUP
+	QBRANCH
+	ADDR(SPCS2)
+	SPACE
+	ONEMINUS
+	BRANCH
+	ADDR(SPCS1)
+SPCS2:
+	DROP
+	EXIT
