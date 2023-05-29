@@ -88,10 +88,6 @@ TICKSOURCE: call douser         ; in name!
     head R0,2,R0,douser
         dw 200h
 
-;Z #init    -- n    #bytes of user area init data
-    head NINIT,5,#INIT,docon
-        DW 18
-
 ; ARITHMETIC OPERATORS ==========================
 
 ;C S>D    n -- d          single -> double prec.

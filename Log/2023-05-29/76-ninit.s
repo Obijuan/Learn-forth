@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 75
+#-- INTERPRETE DE FORTH. Version 76
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  U0 .A
+#--  #init .
 #--  
-#--  Resultado: 2108  ok
+#--  Resultado: 36  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -172,9 +172,9 @@ start:
 
 
 	#-- Programa Forth:
-    #-- U0 .A
-    U0
-    DOTA
+    #-- #init .
+    NINIT
+    jal do_point
     
 	#-- Interprete de forth: Imprimir " ok"
 	PRINT_STRING (" ok\n")
