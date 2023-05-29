@@ -12,10 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;Z s0       -- a-addr     end of parameter stack
-    head S0,2,S0,douser
-        dw 100h
-
 ;X PAD       -- a-addr    user PAD buffer
 ;                         = end of hold area!
     head PAD,3,PAD,douser
