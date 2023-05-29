@@ -12,11 +12,6 @@
 
 ; SYSTEM VARIABLES & CONSTANTS ==================
 
-;Z dp      -- a-addr       holds dictionary ptr
-;  8 USER DP
-    head DP,2,DP,douser
-        dw 8
-
 ;Z 'source  -- a-addr      two cells: len, adrs
 ; 10 USER 'SOURCE
 ;    head TICKSOURCE,7,'SOURCE,douser

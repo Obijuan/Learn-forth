@@ -516,6 +516,10 @@ myStr: .byte %len,
 	  jal do_state
 	.end_macro
 
+	.macro DP
+	  jal do_dp
+	.end_macro
+
 
 
 

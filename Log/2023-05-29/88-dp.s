@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 87
+#-- INTERPRETE DE FORTH. Version 88
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  U0 .A >IN .A BASE .A STATE .A
+#--  U0 .A >IN .A BASE .A STATE .A DP .A
 #--  
-#--  Resultado: 2114 2118 211C 2120  ok
+#--  Resultado: 2114 2118 211C 2120 2124  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -215,6 +215,8 @@ start:
     BASE
     DOTA
     STATE
+    DOTA
+    DP
     DOTA
 
 	#-- Interprete de forth: Imprimir " ok"
