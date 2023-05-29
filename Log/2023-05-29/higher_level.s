@@ -3,7 +3,7 @@
 #--   palabras primitivas o de alto nivel
 #------------------------------------------------
 
-	.global do_u0, do_ninit, do_count, do_twodup
+	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
 
 	.include "macros.h"
@@ -47,6 +47,32 @@ do_twodup:
 	OVER
 	OVER
 	EXIT
+
+#----------------------------------------------------
+#-- (S")     -- c-addr u   run-time code for S"
+#--  R> COUNT 2DUP + ALIGNED >R  
+#--  Deja en la pila la direccion de la cadena y su longitud
+#----------------------------------------------------
+do_xsquote:
+    DOCOLON
+	
+    #-- Prólogo no Forth
+    #-- Meter a0 en la pila: Direccion de la counted cadena
+    mv t0, a0
+    PUSH_T0
+
+    #-- Codigo Forth ---
+    COUNT
+
+    #-- Como es un STC, las siguientes instrucciones
+    #-- no hace falta tenerlas
+    #-- TWODUP
+    #-- PLUS
+    #-- ALIGNED
+    #-- TOR
+
+	EXIT
+
 
 #------------------------- PRUEBAS ------------------------------------------
 

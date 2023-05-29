@@ -296,12 +296,6 @@ TYP3:   DW II,CFETCH,EMIT,XLOOP,TYP3
 TYP4:   DW DROP
 TYP5:   DW EXIT
 
-;Z (S")     -- c-addr u   run-time code for S"
-;   R> COUNT 2DUP + ALIGNED >R  ;
-    head XSQUOTE,4,(S"),docolon
-        DW RFROM,COUNT,TWODUP,PLUS,ALIGNED,TOR
-        DW EXIT
-
 ;C S"       --         compile in-line string
 ;   COMPILE (S")  [ HEX ]
 ;   22 WORD C@ 1+ ALIGNED ALLOT ; IMMEDIATE

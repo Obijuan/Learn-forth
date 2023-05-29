@@ -489,7 +489,14 @@ myLabel:   .string %str
 	  jal do_twodup
 	.end_macro
 
-
+	.macro XSQUOTE (%len, %str)
+	  .data 
+myStr: .byte %len,
+       .ascii %str
+	  .text
+	  la a0, myStr
+	  jal do_xsquote
+	.end_macro
 
 
 	
