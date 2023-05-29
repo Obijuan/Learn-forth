@@ -6,7 +6,7 @@
 	.global do_u0, do_ninit, do_count, do_twodup, do_xsquote
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
-	.global do_l0, do_r0, do_space, do_spaces, do_cr
+	.global do_l0, do_r0, do_space, do_spaces, do_cr, do_cold
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -336,3 +336,40 @@ do_cr:
 	LIT(0XA)
 	EMIT
 	EXIT
+
+
+
+
+
+#===================================================================
+#=              INCOMPLETOS.... TO-DO
+#===================================================================
+
+# ==================== UTILITY WORDS AND STARTUP =====================
+
+#----------------------------------------------------
+# COLD     --      cold start Forth system
+#  UINIT U0 #INIT CMOVE      init user area
+#  80 COUNT INTERPRET       interpret CP/M cmd
+#  ." Z80 CamelForth etc."
+#  ABORT ;
+#----------------------------------------------------
+do_cold:
+    DOCOLON
+
+    #-- Inicializar las variables de usuario
+    UINIT
+    U0
+    NINIT
+    CMOVE
+
+    #-------------- TODO 
+    #-- LIT(0X80)
+    #-- COUNT
+    #-- INTERPRET
+
+    XSQUOTE(35, "Z80 CamelForth v1.01  25 Jan 1995\n\r")
+    TYPE
+    #-- ABORT  (TODO)
+
+    EXIT

@@ -848,16 +848,3 @@ WDS1:   DW DUP,COUNT,TYPE,SPACE,NFATOLFA,FETCH
 DOTS1:  DW II,FETCH,UDOT,LIT,-2,XPLUSLOOP,DOTS1
 DOTS2:  DW EXIT
 
-;Z COLD     --      cold start Forth system
-;   UINIT U0 #INIT CMOVE      init user area
-;   80 COUNT INTERPRET       interpret CP/M cmd
-;   ." Z80 CamelForth etc."
-;   ABORT ;
-    head COLD,4,COLD,docolon
-        DW UINIT,U0,NINIT,CMOVE
-        DW LIT,80h,COUNT,INTERPRET
-        DW XSQUOTE
-        DB 35,'Z80 CamelForth v1.01  25 Jan 1995'
-        DB 0dh,0ah
-        DW TYPE,ABORT       ; ABORT never returns
-

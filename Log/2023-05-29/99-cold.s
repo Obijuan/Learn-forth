@@ -36,7 +36,7 @@
 
 	.include "macros.h"
 
-    .global dovar, docreate, enddict
+    .global dovar, docreate, enddict, do_uinit
 
 #---------------------------------
 #-- SEGMENTO DE DATOS
@@ -80,7 +80,11 @@ enddict: #-- Aqui comienza el codigo del usuario
 #-- HACK: En el rars en el segmento de datos NO SE PUEDE METER
 #--   codigo directamente en ensamblador, por lo que hay que ponerlo
 #--   directamente en codigo máquina (y lo ejecuta ok)
-#--   En el GNU-AS no hace falta. El codigo se puede poner directamente
+#--   En el GNU-AS no hace falta. El codigo se puede poner 
+#--   
+#--  Se deposita en la pila la direccion de los valores iniciales
+#--  del area de usuario
+#       -- addr 
 do_uinit:
     .word 0xFFC40413  #-- addi s0,s0,-4  | PUSH_RA
     .word 0x00142023  #-- sw ra,0(s0)    |
@@ -192,15 +196,10 @@ start:
 
     #-- Inicializacion del sistema
     #-- (COLD)
+    COLD
 
 	#-- Programa Forth:
-    #-- 65 EMIT 10 SPACES 65 EMIT
-    LIT(65)
-    EMIT
-    CR
-    LIT(65)
-    EMIT
-    CR
+    #-- 
 
 	#-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
