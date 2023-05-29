@@ -104,10 +104,8 @@ reset:  ld hl,(6h)   ; BDOS address, rounded down
 ; so we don't need a DOES> clause to change it.
     head VARIABLE,8,VARIABLE,docolon
         DW CREATE,LIT,1,CELLS,ALLOT,EXIT
-; DOVAR, code action of VARIABLE, entered by CALL
 ; DOCREATE, code action of newly created words
-docreate:
-dovar:  ; -- a-addr
+docreate: ; -- a-addr
         pop hl     ; parameter field address
         push bc    ; push old TOS
         ld b,h     ; pfa = variable's adrs -> TOS
