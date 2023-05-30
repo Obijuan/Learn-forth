@@ -624,6 +624,10 @@ myStr: .byte %len,
 	  jal do_udot
 	.end_macro
 
+	.macro SIGN
+	  jal do_sign
+	.end_macro
+
 
 	
 
