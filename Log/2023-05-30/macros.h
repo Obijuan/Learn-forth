@@ -181,7 +181,7 @@
 		#-- HACK: En realidad no es el literal exacto, esta
 		#--  dentro de la instruccion lui (en los 20-bits de mayor peso)
 		#-- Desplazar t0 >> 12  (12 bits a la derecha)
-		srli t0,t0,12
+		srai t0,t0,12
 	.end_macro
 
 	#-- Literal direccion
@@ -590,6 +590,10 @@ myStr: .byte %len,
 
 	.macro UDSLASHMOD
 	  jal do_umslashmod
+	.end_macro
+
+	.macro HOLD
+	  jal do_hold
 	.end_macro
 
 	
