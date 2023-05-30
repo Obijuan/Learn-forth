@@ -17,11 +17,6 @@
     head STOD,3,S>D,docolon
         dw DUP,ZEROLESS,EXIT
 
-;C ABS     n1 -- +n2     absolute value
-;   DUP ?NEGATE ;
-    head ABS,3,ABS,docolon
-        DW DUP,QNEGATE,EXIT
-
 ;X DNEGATE   d1 -- d2     negate double precision
 ;   SWAP INVERT SWAP INVERT 1 M+ ;
     head DNEGATE,7,DNEGATE,docolon

@@ -632,6 +632,10 @@ myStr: .byte %len,
 	  jal do_qnegate
 	.end_macro
 
+	.macro ABS
+	  jal do_abs
+	.end_macro
+
 
 	
 

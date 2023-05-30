@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 114
+#-- INTERPRETE DE FORTH. Version 115
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  -45 <# 0= IF 0x2D HOLD #> TYPE
+#--  -45 ABS . 45 ABS .
 #--  
-#--  Resultado: - ok
+#--  Resultado: 45 45  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -199,7 +199,7 @@ start:
     COLD
 
 	#-- Programa Forth:
-    #-- 
+    #-- -45 ABS . 45 ABS .
     LIT(-45)
     ABS
     jal do_point
