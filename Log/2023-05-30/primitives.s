@@ -13,6 +13,7 @@
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
 	.globl douser, do_fill, do_cmove, do_tuck, do_umstar, do_umslashmod
+	.globl do_greater
 					
 	.include "macros.h"
 	
@@ -463,6 +464,18 @@ do_uless:
  	PUSH_T0
  	
 	ret
+
+#----------------------------------------------
+# ;C >     n1 n2 -- flag         test n1>n2, signed
+#----------------------------------------------
+do_greater:
+	DOCOLON
+
+	SWOP
+	LESS
+
+	EXIT
+
 
 #----------------------------------------------
 # DUP      x -- x x     duplicate top of stack

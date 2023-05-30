@@ -1,4 +1,3 @@
->      n1 n2 -- flag           test n1>n2, signed
 CONSTANT   n --           define a Forth constant
 VARIABLE   --             define a Forth variable
 

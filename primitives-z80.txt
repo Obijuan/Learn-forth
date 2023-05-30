@@ -222,10 +222,6 @@ mplus1: pop de          ; restore saved IP
     head NOTEQUAL,2,<>,docolon
         DW EQUAL,ZEROEQUAL,EXIT
 
-;C >     n1 n2 -- flag         test n1>n2, signed
-    head GREATER,1,>,docolon
-        DW SWOP,LESS,EXIT
-
 ;X U>    u1 u2 -- flag     u1>u2 unsgd (not ANSI)
     head UGREATER,2,U>,docolon
         DW SWOP,ULESS,EXIT

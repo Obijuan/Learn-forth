@@ -1,19 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 104
+#-- INTERPRETE DE FORTH. Version 106
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  <# 0x21D8 17 DUMP 0x11 HOLD 0x21D8 17 DUMP 0x22 HOLD 0x21D8 17 DUMP 
+#--  8 3 > . 5 7 > .
 #--  
-#--  Resultado: 
-#--  21D8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-#--  21E8 00 
-#--  
-#--  21D8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 11 
-#--  21E8 00 
-#--  
-#--  21D8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 22 11 
-#--  21E8 00 
-#--   ok
+#--  Resultado: -1 0  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -208,35 +199,16 @@ start:
     COLD
 
 	#-- Programa Forth:
-    #-- <# 0x21D8 17 DUMP 0x11 HOLD 0x21D8 17 DUMP 0x22 HOLD 0x21D8 17 DUMP 
+    #-- 8 3 > . 5 7 > .
+    LIT(8)
+    LIT(3)
+    GREATER
+    jal do_point
 
-    LESSNUM
-
-    #-- Volcado inicial
-    #-- HP vale 0x21E8. Volcamos 16 bytes antes: Desde 0x21D8
-    LIT(0x21D8)
-    LIT(17)
-    DUMP
-
-    #-- Meter un valor en posicion 0x21E7
-    LIT(0x11)
-    HOLD
-
-    #-- Volcado
-    #-- HP vale 0x21E8. Volcamos 16 bytes antes: Desde 0x21D8
-    LIT(0x21D8)
-    LIT(17)
-    DUMP
-
-    #-- Meter un valor en posicion 0x21E6
-    LIT(0x22)
-    HOLD
-
-    #-- Dump----------
-    #-- HP vale 0x21E8. Volcamos 16 bytes antes: Desde 0x21D8
-    LIT(0x21D8)
-    LIT(17)
-    DUMP
+    LIT(5)
+    LIT(7)
+    GREATER
+    jal do_point
 
 	#-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
