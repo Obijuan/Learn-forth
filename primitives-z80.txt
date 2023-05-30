@@ -234,29 +234,6 @@ mplus1: pop de          ; restore saved IP
 
 ; MULTIPLY AND DIVIDE ===========================
 
-;C UM*     u1 u2 -- ud   unsigned 16x16->32 mult.
-    head UMSTAR,3,UM*,docode
-        push bc
-        exx
-        pop bc      ; u2 in BC
-        pop de      ; u1 in DE
-        ld hl,0     ; result will be in HLDE
-        ld a,17     ; loop counter
-        or a        ; clear cy
-umloop: rr h
-        rr l
-        rr d
-        rr e
-        jr nc,noadd
-        add hl,bc
-noadd:  dec a
-        jr nz,umloop
-        push de     ; lo result
-        push hl     ; hi result
-        exx
-        pop bc      ; put TOS back in BC
-        next
-
 ;C UM/MOD   ud u1 -- u2 u3   unsigned 32/16->16
     head UMSLASHMOD,6,UM/MOD,docode
         push bc
