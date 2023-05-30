@@ -628,6 +628,10 @@ myStr: .byte %len,
 	  jal do_sign
 	.end_macro
 
+	.macro QNEGATE
+	  jal do_qnegate
+	.end_macro
+
 
 	
 

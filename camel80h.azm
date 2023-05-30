@@ -17,12 +17,6 @@
     head STOD,3,S>D,docolon
         dw DUP,ZEROLESS,EXIT
 
-;Z ?NEGATE  n1 n2 -- n3  negate n1 if n2 negative
-;   0< IF NEGATE THEN ;        ...a common factor
-    head QNEGATE,7,?NEGATE,docolon
-        DW ZEROLESS,qbranch,QNEG1,NEGATE
-QNEG1:  DW EXIT
-
 ;C ABS     n1 -- +n2     absolute value
 ;   DUP ?NEGATE ;
     head ABS,3,ABS,docolon
