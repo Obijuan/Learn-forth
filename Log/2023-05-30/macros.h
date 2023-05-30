@@ -576,6 +576,10 @@ myStr: .byte %len,
 	  jal do_lessnum
 	.end_macro
 
+	.macro UMSTAR
+	  jal do_umstar
+	.end_macro
+
 
 
 

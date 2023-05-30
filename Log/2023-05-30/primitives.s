@@ -12,7 +12,7 @@
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
-	.globl douser, do_fill, do_cmove, do_tuck
+	.globl douser, do_fill, do_cmove, do_tuck, do_umstar
 					
 	.include "macros.h"
 	
@@ -1160,4 +1160,26 @@ do_tuck:
   SWOP
   OVER
   EXIT
+
+#============== MULTIPLY AND DIVIDE ===========================
+
+#-----------------------------------------------------
+#  C UM*     u1 u2 -- ud   unsigned 16x16->32 mult.
+#-----------------------------------------------------
+do_umstar:
+
+	#--- Obtener numero: t1 = u2
+	POP_T0
+	mv t1,t0
+
+	#--- Obtener el otro numero: t0 = u1
+	POP_T0
+
+	#-- Realizar la multiplicacion: t0 * t1
+	mul t0, t0, t1 
+
+	#-- Guardar resultado en la pila
+	PUSH_T0
+
+	NEXT
 
