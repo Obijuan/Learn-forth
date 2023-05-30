@@ -4,7 +4,7 @@
 #--  Implementación en ensamblador del programa Forth:
 #--  0x3AABB 0 0x8080 UM/MOD . .
 #--  
-#--  Resultado: 10043 7  ok
+#--  Resultado: 7 10043  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!

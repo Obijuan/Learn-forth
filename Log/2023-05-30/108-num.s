@@ -209,7 +209,7 @@ start:
     DUMP
 
     
-    LIT(2)
+    LIT(34)
     LIT(0)
     
 

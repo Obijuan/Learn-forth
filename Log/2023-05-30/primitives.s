@@ -1223,7 +1223,7 @@ do_udstar:
 
 #-----------------------------------------------------
 #   UM/MOD   ud u1 -- u2 u3   unsigned 32/16->16
-#   u2 = ud / u1, u3 = ud % u1
+#   u3 = ud / u1, u2 = ud % u1
 #-----------------------------------------------------
 do_umslashmod:
 	#--- Obtener numero t1 = u1
@@ -1244,11 +1244,11 @@ do_umslashmod:
 	rem t3, t0, t1
 
 	#-- Meter en la pila el resultado
-	mv t0, t2
+	mv t0, t3
 	PUSH_T0
 
 	#-- Meter el resto en la pila
-	mv t0, t3
+	mv t0, t2
 	PUSH_T0
 	
 
@@ -1258,6 +1258,8 @@ do_umslashmod:
 #-----------------------------------------------------
 #  UD/MOD   ud1 u2 -- u3 ud4   32/16->32 divide
 #    >R 0 R@ UM/MOD  ROT ROT R> UM/MOD ROT ;
+#
+#  u3 = resto, ud4 = cociente
 #-----------------------------------------------------
 do_udslashmod:
 	DOCOLON
