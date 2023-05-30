@@ -612,6 +612,10 @@ myStr: .byte %len,
 	  jal do_nums
 	.end_macro
 
+	.macro TWODROP
+	  jal do_twodrop
+	.end_macro
+
 	
 
 
