@@ -195,12 +195,6 @@ ACC5:   DW DROP,NIP,SWOP,MINUS,EXIT
 ; Some double-precision arithmetic operators are
 ; needed to implement ANSI numeric conversion.
 
-;C .     n --           display n signed
-;   <# DUP ABS 0 #S ROT SIGN #> TYPE SPACE ;
-    head DOT,1,'.',docolon
-        DW LESSNUM,DUP,ABS,LIT,0,NUMS
-        DW ROT,SIGN,NUMGREATER,TYPE,SPACE,EXIT
-
 ;C DECIMAL  --      set number base to decimal
 ;   10 BASE ! ;
     head DECIMAL,7,DECIMAL,docolon

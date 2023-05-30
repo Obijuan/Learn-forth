@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 114
+#-- INTERPRETE DE FORTH. Version 116
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  -45 <# 0= IF 0x2D HOLD #> TYPE
@@ -201,12 +201,8 @@ start:
 	#-- Programa Forth:
     #-- 
     LIT(-45)
-
-    LESSNUM
-      DUP
-      
-    NUMGREATER
-    TYPE
+    DOT
+    
 
 	#-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
