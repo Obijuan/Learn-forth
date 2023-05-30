@@ -212,4 +212,5 @@ start:
 	BYE
 	
 #-- TODO
-#  * DOTS
+#  * DECIMAL
+#  * HEX
