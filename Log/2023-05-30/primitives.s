@@ -13,7 +13,7 @@
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
 	.globl douser, do_fill, do_cmove, do_tuck, do_umstar, do_umslashmod
-	.globl do_greater, do_udslashmod
+	.globl do_greater, do_udslashmod, do_udstar
 					
 	.include "macros.h"
 	
@@ -1201,6 +1201,25 @@ do_umstar:
 	PUSH_T0
 
 	NEXT
+
+
+#-----------------------------------------------------
+# Z UD*      ud1 d2 -- ud3      32*16->32 multiply
+#    DUP >R UM* DROP  SWAP R> UM* ROT + ;
+#    head UDSTAR,3,UD*,docolon
+#-----------------------------------------------------
+do_udstar:
+	DOCOLON
+
+	#-- Eliminar la celda más significativa
+	#-- de ud1
+	SWOP
+	DROP
+
+	UMSTAR
+
+	EXIT
+
 
 #-----------------------------------------------------
 #   UM/MOD   ud u1 -- u2 u3   unsigned 32/16->16

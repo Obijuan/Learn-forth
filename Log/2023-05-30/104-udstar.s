@@ -2,9 +2,9 @@
 #-- INTERPRETE DE FORTH. Version 104
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  0xAABB 0x8000 UM* .
+#--  0xAABB 0 0x8000 UM* .
 #--  
-#--  Resultado: 1432190976  ok
+#--  Resultado: 0 1432190976  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -199,12 +199,15 @@ start:
     COLD
 
 	#-- Programa Forth:
-    #-- 0xAABB 0x8000 UM* .
+    #-- 0xAABB 0x8000 UM* . .
     LIT(0xAABB)
-    LIT(0X8000)
+    LIT(0)
+
+    LIT(0x8000)
+
     UDSTAR
     jal do_point
-
+    jal do_point
 
 	#-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")

@@ -581,7 +581,7 @@ myStr: .byte %len,
 	.end_macro
 
 	.macro UDSTAR
-	  jal do_umstar
+	  jal do_udstar
 	.end_macro
 
 	.macro UMSLASHMOD
