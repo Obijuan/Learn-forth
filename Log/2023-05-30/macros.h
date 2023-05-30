@@ -580,6 +580,10 @@ myStr: .byte %len,
 	  jal do_umstar
 	.end_macro
 
+	.macro UDSTAR
+	  jal do_umstar
+	.end_macro
+
 	.macro UMSLASHMOD
 	  jal do_umslashmod
 	.end_macro

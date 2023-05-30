@@ -211,12 +211,6 @@ ACC5:   DW DROP,NIP,SWOP,MINUS,EXIT
 ; Some double-precision arithmetic operators are
 ; needed to implement ANSI numeric conversion.
 
-;Z UD*      ud1 d2 -- ud3      32*16->32 multiply
-;   DUP >R UM* DROP  SWAP R> UM* ROT + ;
-    head UDSTAR,3,UD*,docolon
-        DW DUP,TOR,UMSTAR,DROP
-        DW SWOP,RFROM,UMSTAR,ROT,PLUS,EXIT
-
 ;C HOLD  char --        add char to output string
 ;   -1 HP +!  HP @ C! ;
     head HOLD,4,HOLD,docolon
