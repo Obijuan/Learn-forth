@@ -616,6 +616,11 @@ myStr: .byte %len,
 	  jal do_twodrop
 	.end_macro
 
+	.macro NUMGREATER
+	  jal do_numgreater
+	.end_macro
+
+
 	
 
 
