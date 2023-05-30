@@ -7,7 +7,7 @@
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
 	.global do_l0, do_r0, do_space, do_spaces, do_cr, do_cold, do_lessnum
-    .global do_hold, do_todigit
+    .global do_hold, do_todigit, do_num
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -248,6 +248,24 @@ do_lessnum:
     HP
     STORE
     EXIT
+
+
+#----------------------------------------------------
+#  #     ud1 -- ud2     convert 1 digit of output
+#  BASE @ UD/MOD ROT >digit HOLD ;
+#----------------------------------------------------
+do_num:
+    DOCOLON
+
+    BASE
+    FETCH
+    UDSLASHMOD
+    ROT
+    TODIGIT
+    HOLD
+
+    EXIT
+
 
 #------------------------- PRUEBAS ------------------------------------------
 

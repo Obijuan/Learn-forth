@@ -604,6 +604,10 @@ myStr: .byte %len,
 	  jal do_todigit
 	.end_macro
 
+	.macro NUM
+	  jal do_num
+	.end_macro
+
 	
 
 

@@ -2,10 +2,17 @@
 #-- INTERPRETE DE FORTH. Version 104
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  3 >digit emit 15 >digit emit
+#--  <# 0x21D8 17 DUMP  117 0 #  0x21D8 17 DUMP
 #--  
-#--  Resultado: 3 F ok
-#--
+#--  Resultado: 
+#--  Z80 CamelForth v1.01  25 Jan 1995
+#--  
+#--  21D8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+#--  21E8 00 
+#--  
+#--  21D8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 37 
+#--  21E8 00 
+#--   ok
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -199,7 +206,7 @@ start:
     COLD
 
 	#-- Programa Forth:
-    #-- <# 
+    #-- <# 0x21D8 17 DUMP  117 0 #  0x21D8 17 DUMP
     LESSNUM
 
     #-- Volcado inicial
@@ -209,16 +216,9 @@ start:
     DUMP
 
     
-    LIT(34)
+    LIT(117)
     LIT(0)
-    
-
-    BASE
-    FETCH
-    UDSLASHMOD
-    ROT
-    TODIGIT
-    HOLD
+    NUM
     
     #-- Volcado
     #-- HP vale 0x21E8. Volcamos 16 bytes antes: Desde 0x21D8
