@@ -1235,3 +1235,20 @@ do_umslashmod:
 
 	NEXT
 
+
+#-----------------------------------------------------
+#  UD/MOD   ud1 u2 -- u3 ud4   32/16->32 divide
+#    >R 0 R@ UM/MOD  ROT ROT R> UM/MOD ROT ;
+#-----------------------------------------------------
+do_udslashmod:
+	DOCOLON
+
+	UMSLASHMOD
+
+	#-- HACK!
+	#-- Añadir el byte de mayor peso del
+	#- resuldado: 0
+	mv t0,zero
+	PUSH_T0
+
+	EXIT
