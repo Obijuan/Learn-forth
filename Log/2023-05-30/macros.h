@@ -608,6 +608,10 @@ myStr: .byte %len,
 	  jal do_num
 	.end_macro
 
+	.macro NUMS
+	  jal do_nums
+	.end_macro
+
 	
 
 

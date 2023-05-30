@@ -7,7 +7,7 @@
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
 	.global do_l0, do_r0, do_space, do_spaces, do_cr, do_cold, do_lessnum
-    .global do_hold, do_todigit, do_num
+    .global do_hold, do_todigit, do_num, do_nums
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -266,6 +266,22 @@ do_num:
 
     EXIT
 
+#----------------------------------------------------
+#  #S    ud1 -- ud2     convert remaining digits
+#   BEGIN # 2DUP OR 0= UNTIL ;
+#----------------------------------------------------
+do_nums:
+    DOCOLON
+
+NUMS1:
+    NUM
+    TWODUP
+    LOR
+    ZEROEQUAL
+    QBRANCH
+    ADDR(NUMS1)
+
+    EXIT
 
 #------------------------- PRUEBAS ------------------------------------------
 
