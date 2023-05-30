@@ -229,11 +229,6 @@ ACC5:   DW DROP,NIP,SWOP,MINUS,EXIT
         DW LIT,-1,HP,PLUSSTORE
         DW HP,FETCH,CSTORE,EXIT
 
-;C <#    --             begin numeric conversion
-;   PAD HP ! ;          (initialize Hold Pointer)
-    head LESSNUM,2,<#,docolon
-        DW PAD,HP,STORE,EXIT
-
 ;Z >digit   n -- c      convert to 0..9A..Z
 ;   [ HEX ] DUP 9 > 7 AND + 30 + ;
     head TODIGIT,6,>DIGIT,docolon
