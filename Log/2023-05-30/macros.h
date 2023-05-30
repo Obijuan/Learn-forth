@@ -620,6 +620,10 @@ myStr: .byte %len,
 	  jal do_numgreater
 	.end_macro
 
+	.macro UDOT
+	  jal do_udot
+	.end_macro
+
 
 	
 

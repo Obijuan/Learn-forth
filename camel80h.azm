@@ -212,12 +212,6 @@ ACC5:   DW DROP,NIP,SWOP,MINUS,EXIT
         DW ZEROLESS,qbranch,SIGN1,LIT,2DH,HOLD
 SIGN1:  DW EXIT
 
-;C U.    u --           display u unsigned
-;   <# 0 #S #> TYPE SPACE ;
-    head UDOT,2,U.,docolon
-        DW LESSNUM,LIT,0,NUMS,NUMGREATER,TYPE
-        DW SPACE,EXIT
-
 ;C .     n --           display n signed
 ;   <# DUP ABS 0 #S ROT SIGN #> TYPE SPACE ;
     head DOT,1,'.',docolon

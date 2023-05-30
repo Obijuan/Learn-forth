@@ -8,6 +8,7 @@
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
 	.global do_l0, do_r0, do_space, do_spaces, do_cr, do_cold, do_lessnum
     .global do_hold, do_todigit, do_num, do_nums, do_twodrop, do_numgreater
+    .global do_udot
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -310,6 +311,22 @@ do_numgreater:
     PAD
     OVER
     MINUS
+
+    EXIT
+
+#----------------------------------------------------
+#  U.    u --           display u unsigned
+#   <# 0 #S #> TYPE SPACE ;
+#----------------------------------------------------
+do_udot:
+    DOCOLON
+
+    LESSNUM
+      LIT(0)
+      NUMS
+    NUMGREATER
+    TYPE
+    SPACE
 
     EXIT
 
