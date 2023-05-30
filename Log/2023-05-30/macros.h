@@ -589,7 +589,7 @@ myStr: .byte %len,
 	.end_macro
 
 	.macro UDSLASHMOD
-	  jal do_umslashmod
+	  jal do_udslashmod
 	.end_macro
 
 	.macro HOLD

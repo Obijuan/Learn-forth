@@ -2,7 +2,7 @@
 #-- INTERPRETE DE FORTH. Version 102
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  0x3AABB 0x8080 UM/MOD . .
+#--  0x3AABB 0 0x8080 UM/MOD . . .
 #--  
 #--  Resultado: 10043 7  ok
 #--
@@ -201,8 +201,11 @@ start:
 	#-- Programa Forth:
     #-- 0x3AABB 0x8080 UM/MOD . .
     LIT(0x3AABB)
+    LIT(0)
+
     LIT(0x8080)
     UDSLASHMOD
+    jal do_point
     jal do_point
     jal do_point
 
