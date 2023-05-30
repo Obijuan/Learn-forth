@@ -7,7 +7,7 @@
 	.global do_type, do_bl, do_tib, do_tibsize,do_toin, do_base, do_state
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
 	.global do_l0, do_r0, do_space, do_spaces, do_cr, do_cold, do_lessnum
-    .global do_hold
+    .global do_hold, do_todigit
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -356,6 +356,25 @@ do_cr:
 # ================== NUMERIC OUTPUT ================================
 # ; Numeric conversion is done l.s.digit first, so
 # ; the output buffer is built backwards in memory.
+
+#----------------------------------------------------
+#  >digit   n -- c      convert to 0..9A..Z
+#   [ HEX ] DUP 9 > 7 AND + 30 + ;
+#----------------------------------------------------
+do_todigit:
+    DOCOLON
+
+    DUP
+    LIT(9)
+    GREATER
+    LIT(7)
+    LAND
+    PLUS
+    LIT(0x30)
+    PLUS
+
+    EXIT
+
 
 #----------------------------------------------------
 #  HOLD  char --        add char to output string

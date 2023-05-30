@@ -600,6 +600,10 @@ myStr: .byte %len,
 	  jal do_greater
 	.end_macro
 
+	.macro TODIGIT
+	  jal do_todigit
+	.end_macro
+
 	
 
 
