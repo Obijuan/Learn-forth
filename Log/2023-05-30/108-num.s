@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 101
+#-- INTERPRETE DE FORTH. Version 104
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  0xAABB 0x8000 UM* . .
+#--  3 >digit emit 15 >digit emit
 #--  
-#--  Resultado: 0 1432190976  ok
+#--  Resultado: 3 F ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -199,26 +199,44 @@ start:
     COLD
 
 	#-- Programa Forth:
-    #-- 0xAABB 0x8000 UM* . .
-    LIT(0xAABB)
-    LIT(0X8000)
-    UMSTAR
-    jal do_point
-    jal do_point
+    #-- <# 
+    LESSNUM
+
+    #-- Volcado inicial
+    #-- HP vale 0x21E8. Volcamos 16 bytes antes: Desde 0x21D8
+    LIT(0x21D8)
+    LIT(17)
+    DUMP
+
+    
+    LIT(2)
+    LIT(0)
+    
+
+    BASE
+    FETCH
+    UDSLASHMOD
+    ROT
+    TODIGIT
+    HOLD
+    
+    #-- Volcado
+    #-- HP vale 0x21E8. Volcamos 16 bytes antes: Desde 0x21D8
+    LIT(0x21D8)
+    LIT(17)
+    DUMP
+
 
 	#-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
     TYPE
-	
+
 	#-- Terminar
 	BYE
 	
-
-
 #-- TODO
 #  * DOTS
 #  * UDOT
 #  * NUMS
 #    * NUM
-#      * UDSLASHMOD
 #  * NUMGREATER

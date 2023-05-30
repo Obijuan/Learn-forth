@@ -1194,6 +1194,12 @@ do_umstar:
 	#-- Guardar resultado en la pila
 	PUSH_T0
 
+	#-- HACK: Es un doble. Hay que guardar en la pila
+	#-- el más significativo (que será 0 ó -1 según el signo)
+	#-- Como en este caso es un unsigned lo rellenamos con 0
+	mv t0,zero
+	PUSH_T0
+
 	NEXT
 
 #-----------------------------------------------------
