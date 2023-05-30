@@ -584,6 +584,10 @@ myStr: .byte %len,
 	  jal do_umslashmod
 	.end_macro
 
+	.macro UDSLASHMOD
+	  jal do_umslashmod
+	.end_macro
+
 	
 
 
