@@ -1212,6 +1212,10 @@ do_umslashmod:
 	mv t1, t0
 
 	#-- Obtener el otro numero: t0 = ud
+	#-- HACK: Es un doble. Descartamos parte más significativa
+	POP_T0
+
+	#-- Nos quedamos con la de menor peso
 	POP_T0
 
 	#-- t2 = t0 / t1
