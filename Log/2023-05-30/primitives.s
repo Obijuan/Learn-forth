@@ -12,7 +12,7 @@
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
 	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
-	.globl douser, do_fill, do_cmove, do_tuck, do_umstar
+	.globl douser, do_fill, do_cmove, do_tuck, do_umstar, do_umslashmod
 					
 	.include "macros.h"
 	
@@ -1180,6 +1180,35 @@ do_umstar:
 
 	#-- Guardar resultado en la pila
 	PUSH_T0
+
+	NEXT
+
+#-----------------------------------------------------
+#   UM/MOD   ud u1 -- u2 u3   unsigned 32/16->16
+#   u2 = ud / u1, u3 = ud % u1
+#-----------------------------------------------------
+do_umslashmod:
+	#--- Obtener numero t1 = u1
+	POP_T0
+	mv t1, t0
+
+	#-- Obtener el otro numero: t0 = ud
+	POP_T0
+
+	#-- t2 = t0 / t1
+	div t2, t0, t1
+
+	#-- t3 = t0 % t1
+	rem t3, t0, t1
+
+	#-- Meter en la pila el resultado
+	mv t0, t2
+	PUSH_T0
+
+	#-- Meter el resto en la pila
+	mv t0, t3
+	PUSH_T0
+	
 
 	NEXT
 

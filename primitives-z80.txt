@@ -234,46 +234,6 @@ mplus1: pop de          ; restore saved IP
 
 ; MULTIPLY AND DIVIDE ===========================
 
-;C UM/MOD   ud u1 -- u2 u3   unsigned 32/16->16
-    head UMSLASHMOD,6,UM/MOD,docode
-        push bc
-        exx
-        pop bc      ; BC = divisor
-        pop hl      ; HLDE = dividend
-        pop de
-        ld a,16     ; loop counter
-        sla e
-        rl d        ; hi bit DE -> carry
-udloop: adc hl,hl   ; rot left w/ carry
-        jr nc,udiv3
-        ; case 1: 17 bit, cy:HL = 1xxxx
-        or a        ; we know we can subtract
-        sbc hl,bc
-        or a        ; clear cy to indicate sub ok
-        jr udiv4
-        ; case 2: 16 bit, cy:HL = 0xxxx
-udiv3:  sbc hl,bc   ; try the subtract
-        jr nc,udiv4 ; if no cy, subtract ok
-        add hl,bc   ; else cancel the subtract
-        scf         ;   and set cy to indicate
-udiv4:  rl e        ; rotate result bit into DE,
-        rl d        ; and next bit of DE into cy
-        dec a
-        jr nz,udloop
-        ; now have complemented quotient in DE,
-        ; and remainder in HL
-        ld a,d
-        cpl
-        ld b,a
-        ld a,e
-        cpl
-        ld c,a
-        push hl     ; push remainder
-        push bc
-        exx
-        pop bc      ; quotient remains in TOS
-        next
-
 ; BLOCK AND STRING OPERATIONS ===================
 
 ;X CMOVE>  c-addr1 c-addr2 u --  move from top

@@ -1,6 +1,5 @@
 >      n1 n2 -- flag           test n1>n2, signed
 CONSTANT   n --           define a Forth constant
-UM/MOD ud u1 -- u2 u3     unsigned 32/16->16 div.
 VARIABLE   --             define a Forth variable
 
                ANS Forth Extensions
