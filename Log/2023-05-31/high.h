@@ -46,6 +46,9 @@ myStr: .byte %len,
 	jal do_dots
 .end_macro
 
+.macro ABORT
+	jal do_abort
+.end_macro
 
 .macro COLD
 	jal do_cold

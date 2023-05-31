@@ -679,12 +679,57 @@ do_charplus:
   j do_oneplus
 
 
-# ========== UTILITY WORDS AND STARTUP =====================
+
+
+
+
 
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
 #===================================================================
+
+# ================== INTERPRETER ===================================
+# Note that NFA>LFA, NFA>CFA, IMMED?, and FIND
+# are dependent on the structure of the Forth
+# header.  This may be common across many CPUs,
+# or it may be different.
+
+#-------------------------------------------------------
+#  QUIT     --    R: i*x --    interpret from kbd
+#   L0 LP !  R0 RP!   0 STATE !
+#   BEGIN
+#       TIB DUP TIBSIZE ACCEPT  SPACE
+#       INTERPRET
+#       STATE @ 0= IF CR ." OK" THEN
+#   AGAIN ;
+#--------------------------------------------------------
+.global do_quit
+do_quit:
+    DOCOLON
+
+
+
+    EXIT
+
+
+#-------------------------------------------------------
+# ABORT    i*x --   R: j*x --   clear stk & QUIT
+#  S0 SP!  QUIT ;
+#--------------------------------------------------------
+.global do_abort
+do_abort:
+    DOCOLON
+
+    S0
+    SPSTORE
+
+    # QUIT    #-- Quit never returns
+
+    EXIT
+
+
+# ========== UTILITY WORDS AND STARTUP =====================
 
 
 #----------------------------------------------------
