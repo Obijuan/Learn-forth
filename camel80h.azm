@@ -434,11 +434,6 @@ QUIT1:  DW TIB,DUP,TIBSIZE,CPMACCEPT,SPACE
         DW TYPE
 QUIT2:  DW branch,QUIT1
 
-;C ABORT    i*x --   R: j*x --   clear stk & QUIT
-;   S0 SP!  QUIT ;
-    head ABORT,5,ABORT,docolon
-        DW S0,SPSTORE,QUIT   ; QUIT never returns
-
 ;Z ?ABORT   f c-addr u --      abort & print msg
 ;   ROT IF TYPE ABORT THEN 2DROP ;
     head QABORT,6,?ABORT,docolon

@@ -36,6 +36,7 @@ do_base:
 #  STATE   -- a-addr       holds compiler state
 #  0xC USER STATE
 #-------------------------------------------------------------
+.global do_state
 do_state:
     DOUSER
     DW(0xC)
@@ -76,6 +77,7 @@ do_hp:
 #  LP       -- a-addr     Leave-stack pointer
 #  24 USER LP
 #-------------------------------------------------------------
+.global do_lp
 do_lp:
     DOUSER
     DW(0x24)
@@ -100,6 +102,7 @@ do_pad:
 #-------------------------------------------------------------
 # l0       -- a-addr     bottom of Leave stack
 #-------------------------------------------------------------
+.global do_l0
 do_l0:
     DOUSER
     DW(0x180)
@@ -107,6 +110,7 @@ do_l0:
 #-------------------------------------------------------------
 # r0       -- a-addr     end of return stack
 #-------------------------------------------------------------
+.global do_r0
 do_r0:	
 	DOUSER
     DW(0x200)
@@ -181,6 +185,7 @@ do_bl:
 # HEX 82 CONSTANT TIB   CP/M systems: 126 bytes
 # HEX -80 USER TIB      others: below user area
 #----------------------------------------------------
+.global do_tib
 do_tib:
   DOCON
   DW(0x2000)
