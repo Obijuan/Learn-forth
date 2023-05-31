@@ -200,11 +200,6 @@ ACC5:   DW DROP,NIP,SWOP,MINUS,EXIT
     head DECIMAL,7,DECIMAL,docolon
         DW LIT,10,BASE,STORE,EXIT
 
-;X HEX     --       set number base to hex
-;   16 BASE ! ;
-    head HEX,3,HEX,docolon
-        DW LIT,16,BASE,STORE,EXIT
-
 ; DICTIONARY MANAGEMENT =========================
 
 ;C HERE    -- addr      returns dictionary ptr
