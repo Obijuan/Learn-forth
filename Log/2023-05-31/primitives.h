@@ -461,7 +461,9 @@
 	  jal do_decimal
 	.end_macro
 	
-
+.macro DOTHEX
+  jal do_dothex
+.end_macro
 
 
 

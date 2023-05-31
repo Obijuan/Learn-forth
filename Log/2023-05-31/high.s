@@ -264,6 +264,7 @@ do_numgreater:
 #  U.    u --           display u unsigned
 #   <# 0 #S #> TYPE SPACE ;
 #----------------------------------------------------
+.global do_udot
 do_udot:
     DOCOLON
 
@@ -399,6 +400,7 @@ SPCS2:
 # CR      --               output newline
 #  0D EMIT 0A EMIT ;
 #----------------------------------------------------
+.global do_cr
 do_cr:
 	DOCOLON
 	LIT(0xD)

@@ -590,11 +590,15 @@ do_rot:
 
 	ret
 
+# ============ DEBUG =============================
+
 #-------------------------
 #-- Palabra .
 #--
 #-- Sacar el ultimo elemento de la pila e
 #-- imprimirlo
+#-- Ventaja: Permite imprimir numeros de 32-bits
+#-- Util para hacer depuraciones
 #-------------------
 .global do_point
 do_point:
@@ -610,7 +614,28 @@ do_point:
 	PRINT_CHAR_T0
 	
 	ret
+
+#--------------------------------
+#-- Imprimir un numero de 32 bits
+#-- en Hexadecimal
+#-- Util para depurar
+#--------------------------------
+.global do_dothex
+do_dothex:
 	
+	#-- Sacar el elemento de la pila
+	POP_T0
+
+	#-- Imprimirlo en hex, llamando al Sistema operativo
+	mv a0, t0
+	li a7, 34  #-- PRINTINTHEX
+	ecall
+
+	#-- Imprimir un espacio
+	li t0, 32
+	PRINT_CHAR_T0
+
+	ret
 	
 #-----------------------------------
 #-- Meter un literal en la pila

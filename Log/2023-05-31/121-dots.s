@@ -2,20 +2,10 @@
 #-- INTERPRETE DE FORTH. Version 118
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  CR 0x0040 16 LSHIFT DUP .HEX 32 DUMP
-#--  CR 0x1001 16 LSHIFT DUP .HEX 32 DUMP
+#--  HEX 255 . DECIMAL 255 .
 #--  
-#--  Resultado: 
-#--  Z80 CamelForth v1.01  25 Jan 1995
-#--  
-#--  0x00400000 
-#--  0000 6F 00 C0 01 B3 02 10 00 13 01 C1 FF 23 20 51 00 
-#--  0010 83 20 04 00 13 04 44 00 67 80 00 00 17 01 C1 0F 
-#--  
-#--  0x10010000 
-#--  0000 AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-#--  0010 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-#--   ok
+#--  Resultado: FF 255  ok
+#--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -61,7 +51,7 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .word 0xAA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
 #-------------------------
@@ -221,34 +211,39 @@ start:
     COLD
 
 	#-- Programa Forth:
-    #-- CR 0x0040 16 LSHIFT DUP .HEX 32 DUMP
-    #-- CR 0x1001 16 LSHIFT DUP .HEX 32 DUMP
+    #--
+    SPFETCH
+    DOTA
 
-    #-- TODO: Pruebas de memoria y volcados...
-    #-- Dirección comienzo código: 0x00400000
-    #-- Direccion comienzo de datos: 0x10010000
+    LIT(2)
+    LIT(3)
+    LIT(5)
 
-    #--- Volcado del codigo
-    CR
-    LIT(0x40)
-    LIT(16)
-    LSHIFT  #-- Direccion: 0x00400000
-    DUP
-    DOTHEX 
+    SPFETCH
+    DOTA
+
+    #-- La diferencia entre S0 y SP indica el numero de elementos en la pila
+    SPFETCH
+    S0
+    MINUS
+    QBRANCH
+    ADDR(DOTS2)
     
-    LIT(32) #-- Datos a volcar
-    DUMP
+    SPFETCH #-- Limite
+    S0
+    LIT(4)
+    MINUS   #-- Indice: s0-4: Apuntar al primer elemento pila
 
-    #--- Volcado de los datos
-    CR
-    LIT(0x1001)
-    LIT(16)
-    LSHIFT  #-- Direccion: 0x10010000
-    DUP
-    DOTHEX
-
-    LIT(32)
-    DUMP
+    XDO  #-- i=s0-4 --> SP
+DOTS1:
+      II
+      FETCH
+      UDOT
+      LIT(-4)
+      XPLUSLOOP
+      ADDR(DOTS1)
+DOTS2:
+  
 
     #-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
