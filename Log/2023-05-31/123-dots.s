@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 118
+#-- INTERPRETE DE FORTH. Version 123
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  HEX 255 . DECIMAL 255 .
@@ -212,38 +212,41 @@ start:
 
 	#-- Programa Forth:
     #--
-    SPFETCH
+    S0    #-- 0x01C8
     DOTA
 
+    LIT(1)
     LIT(2)
     LIT(3)
-    LIT(5)
 
-    SPFETCH
+    SPFETCH  #-- 0x01BC
     DOTA
-
-    #-- La diferencia entre S0 y SP indica el numero de elementos en la pila
-    SPFETCH
-    S0
-    MINUS
-    QBRANCH
-    ADDR(DOTS2)
     
-    SPFETCH #-- Limite
+
+    SPFETCH       
+    S0
+    MINUS       #-- Tamaño de la pila en bytes
+
+    QBRANCH       #-- Terminar si el tamaño es 0
+    ADDR(DOTS2)
+
+    SPFETCH
     S0
     LIT(4)
-    MINUS   #-- Indice: s0-4: Apuntar al primer elemento pila
-
-    XDO  #-- i=s0-4 --> SP
+    MINUS     #-- s0-4 --> Apuntar al primer elemento (desde la base)
+              #-- 0x01C4
+    
+    XDO
 DOTS1:
-      II
-      FETCH
-      UDOT
+      II     #-- I = 0x01C4
+      FETCH 
+      UDOT  #-- Mostrar elemento de la pila
+
       LIT(-4)
       XPLUSLOOP
       ADDR(DOTS1)
+
 DOTS2:
-  
 
     #-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")

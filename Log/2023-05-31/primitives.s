@@ -1019,7 +1019,7 @@ do_xplusloop:
 
 	#-- Incremento negativo
 	#-- si index > limit --> saltar a DO
-	bgt t2, t1, xplusloop_repeat
+	bge t2, t1, xplusloop_repeat
 	j empty_rstack
 
 inc_pos:
