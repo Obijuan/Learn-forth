@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 123
+#-- INTERPRETE DE FORTH. Version 124
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  1 2 3 .S
