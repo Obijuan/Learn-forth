@@ -2,7 +2,8 @@
 #---- Palabras para hacer pruebas del kernel minimo
 #---- de Camelforth
 #---------------------------------------------------------
-.include "macros.h"
+    .include "macroCPU.h"
+    .include "primitives.h"
 
     .globl do_swab, do_lo, do_hi, do_tohex, do_dothh, do_dotb, do_dota
     .globl do_dump, do_zquit

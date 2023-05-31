@@ -3,7 +3,7 @@
 #----------------------------------------------------------------			
 	
 		
-	.globl do_1, do_plus, do_minus, do_point, do_and, do_lit, do_emit	
+	.globl do_1, do_plus, do_minus, do_and, do_lit, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
@@ -11,17 +11,17 @@
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
-	.globl do_unloop, do_bye, do_execute, docon, do_savekey, do_fourstar
-	.globl douser, do_fill, do_cmove, do_tuck, do_umstar, do_umslashmod
-	.globl do_greater, do_udslashmod, do_udstar
+	.globl do_unloop, do_execute, do_savekey, do_fourstar
+	.globl douser, do_fill, do_umstar
 					
-	.include "macros.h"
+	.include "macroCPU.h"
 	
 	.text
 
 #---------------------------------------------------
 #-- DOCON, code action of CONSTANT
 #---------------------------------------------------
+.global docon
 docon:
 	#-- Leer la constante en t0
 	READLIT_T0
@@ -466,18 +466,6 @@ do_uless:
 	ret
 
 #----------------------------------------------
-# ;C >     n1 n2 -- flag         test n1>n2, signed
-#----------------------------------------------
-do_greater:
-	DOCOLON
-
-	SWOP
-	LESS
-
-	EXIT
-
-
-#----------------------------------------------
 # DUP      x -- x x     duplicate top of stack
 #----------------------------------------------
 do_dup:
@@ -608,6 +596,7 @@ do_rot:
 #-- Sacar el ultimo elemento de la pila e
 #-- imprimirlo
 #-------------------
+.global do_point
 do_point:
 	
 	#-- Sacar el elemento de la pila
@@ -1056,6 +1045,7 @@ do_unloop:
 #---------------------------------------------------
 # BYE     i*x --    return to OS
 #---------------------------------------------------
+.global do_bye
 do_bye:
 	OS_EXIT
 
@@ -1126,6 +1116,7 @@ fill_end:
 #  X CMOVE   c-addr1 c-addr2 u --  move from bottom
 #  Copiar u bytes desdde addr1 hasta addr2 (src-->dst)
 #-----------------------------------------------------
+.global do_cmove
 do_cmove:
 
 	#-- t2 = Numero de caracteres a copiar (u)
@@ -1165,14 +1156,7 @@ cmove_bucle:
 cmove_end:
 	NEXT
 
-#-----------------------------------------------------
-#  TUCK   x1 x2 -- x2 x1 x2     per stack diagram
-#-----------------------------------------------------
-do_tuck:
-  DOCOLON
-  SWOP
-  OVER
-  EXIT
+
 
 #============== MULTIPLY AND DIVIDE ===========================
 
@@ -1203,28 +1187,14 @@ do_umstar:
 	NEXT
 
 
-#-----------------------------------------------------
-# Z UD*      ud1 d2 -- ud3      32*16->32 multiply
-#    DUP >R UM* DROP  SWAP R> UM* ROT + ;
-#    head UDSTAR,3,UD*,docolon
-#-----------------------------------------------------
-do_udstar:
-	DOCOLON
 
-	#-- Eliminar la celda más significativa
-	#-- de ud1
-	SWOP
-	DROP
-
-	UMSTAR
-
-	EXIT
 
 
 #-----------------------------------------------------
 #   UM/MOD   ud u1 -- u2 u3   unsigned 32/16->16
 #   u3 = ud / u1, u2 = ud % u1
 #-----------------------------------------------------
+.global do_umslashmod
 do_umslashmod:
 	#--- Obtener numero t1 = u1
 	POP_T0
@@ -1251,25 +1221,6 @@ do_umslashmod:
 	mv t0, t2
 	PUSH_T0
 	
-
 	NEXT
 
 
-#-----------------------------------------------------
-#  UD/MOD   ud1 u2 -- u3 ud4   32/16->32 divide
-#    >R 0 R@ UM/MOD  ROT ROT R> UM/MOD ROT ;
-#
-#  u3 = resto, ud4 = cociente
-#-----------------------------------------------------
-do_udslashmod:
-	DOCOLON
-
-	UMSLASHMOD
-
-	#-- HACK!
-	#-- Añadir el byte de mayor peso del
-	#- resuldado: 0
-	mv t0,zero
-	PUSH_T0
-
-	EXIT

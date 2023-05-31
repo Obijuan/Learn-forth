@@ -2,9 +2,10 @@
 #-- CPU and Model Dependencies
 #---------------------------------------------------------
 
-	.include "macros.h"
+	.include "macroCPU.h"
+  .include "primitives.h"
 
-  .global do_cell, do_cellplus, do_cells, do_charplus, do_chars
+  .global do_cell, do_cellplus, do_cells, do_chars
 
 # ALIGNMENT AND PORTABILITY OPERATORS ===========
 # Many of these are synonyms for other words,
@@ -41,12 +42,6 @@ do_cellplus:
 do_cells:
   j do_fourstar
 
-#----------------------------------------------------
-#-- CHAR+    c-addr1 -- c-addr2   add char size
-#-- Añadir el tamaño del tipo char a la direccion
-#----------------------------------------------------
-do_charplus:
-  j do_oneplus
 
 #----------------------------------------------------
 #-- CHARS    n1 -- n2            chars->adrs units
@@ -54,3 +49,5 @@ do_charplus:
 #----------------------------------------------------
 do_chars:
   NEXT
+
+last:
