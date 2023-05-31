@@ -8,7 +8,7 @@
 	.global do_dp, do_ticksource, do_latest, do_hp, do_lp, do_s0, do_pad
 	.global do_l0, do_r0, do_space, do_spaces, do_cr, do_cold, do_lessnum
     .global do_hold, do_todigit, do_num, do_nums, do_twodrop, do_numgreater
-    .global do_udot, do_sign, do_qnegate, do_abs, do_dot, do_hex
+    .global do_udot, do_sign, do_qnegate, do_abs, do_dot, do_hex, do_decimal
 
 	
 	.global do_add3, do_home, do_test_rfetch, do_test_rpfetch
@@ -554,6 +554,18 @@ do_hex:
     STORE
     EXIT
 
+#----------------------------------------------------
+#  DECIMAL  --      set number base to decimal
+#   10 BASE ! ;
+#----------------------------------------------------
+do_decimal:
+    DOCOLON
+
+    LIT(10)
+    BASE
+    STORE
+
+    EXIT
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO

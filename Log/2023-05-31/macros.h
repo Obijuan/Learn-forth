@@ -644,6 +644,10 @@ myStr: .byte %len,
 	.macro HEX
 	  jal do_hex
 	.end_macro
+
+	.macro DECIMAL
+	  jal do_decimal
+	.end_macro
 	
 
 
