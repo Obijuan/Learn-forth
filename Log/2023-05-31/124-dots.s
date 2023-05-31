@@ -2,9 +2,9 @@
 #-- INTERPRETE DE FORTH. Version 123
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  HEX 255 . DECIMAL 255 .
+#--  1 2 3 .S
 #--  
-#--  Resultado: FF 255  ok
+#--  Resultado: 1 2 3  ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -211,42 +211,12 @@ start:
     COLD
 
 	#-- Programa Forth:
-    #--
-    S0    #-- 0x01C8
-    DOTA
+    #-- 1 2 3 .S
 
     LIT(1)
     LIT(2)
     LIT(3)
-
-    SPFETCH  #-- 0x01BC
-    DOTA
-    
-
-    SPFETCH       
-    S0
-    MINUS       #-- Tamaño de la pila en bytes
-
-    QBRANCH       #-- Terminar si el tamaño es 0
-    ADDR(DOTS2)
-
-    SPFETCH
-    S0
-    LIT(4)
-    MINUS     #-- s0-4 --> Apuntar al primer elemento (desde la base)
-              #-- 0x01C4
-    
-    XDO
-DOTS1:
-      II     #-- I = 0x01C4
-      FETCH 
-      UDOT  #-- Mostrar elemento de la pila
-
-      LIT(-4)
-      XPLUSLOOP
-      ADDR(DOTS1)
-
-DOTS2:
+    DOTS
 
     #-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")

@@ -574,9 +574,41 @@ TYP5:
 
 # ==================== UTILITY WORDS AND STARTUP =====================
 
+#-----------------------------------------------------
+#  .S      --           print stack contents
+#   SP@ S0 - IF
+#       SP@ S0 2 - DO I @ U. -2 +LOOP
+#   THEN ;
+#-----------------------------------------------------
+.global do_dots
+do_dots:
+	DOCOLON
 
+    SPFETCH       
+    S0
+    MINUS       #-- Tamaño de la pila en bytes
 
+    QBRANCH       #-- Terminar si el tamaño es 0
+    ADDR(DOTS2)
 
+    SPFETCH
+    S0
+    LIT(4)
+    MINUS     #-- s0-4 --> Apuntar al primer elemento (desde la base)
+
+    XDO
+DOTS1:
+      II   
+      FETCH 
+      UDOT  #-- Mostrar elemento de la pila
+
+      LIT(-4) #-- Siguiente elemento de la pila
+      XPLUSLOOP
+      ADDR(DOTS1)
+
+DOTS2:
+
+    EXIT
 
 #------------------------------------------------------
 #-- LIMPIEZA......................
