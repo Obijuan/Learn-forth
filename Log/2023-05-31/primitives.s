@@ -992,6 +992,10 @@ end_xloop:
 #-- (+loop)   n --   R: sys1 sys2 --  | sys1 sys2
 #-- sys1: limite
 #-- sys2: indice
+#-----------------------------------------------
+#-- Esta implementacion es "cutre"
+#-- En camelforth usan otro truco, sin tantos casos
+#-- TODO: estudiar...
 #-------------------------------------------------
 do_xplusloop:
 	#-- Leer el indice. t2 = indice
@@ -1008,8 +1012,21 @@ do_xplusloop:
 	#-- Incrementar el indice
 	add t2,t2,t0
 
+	#-- La condicion de salto depende del signo del incremento
+	#-- Si incremento +, la condición de salto es <
+	#-- Si incremento -, la condicion de salto es >
+	bge t0,zero,inc_pos  #-- inc >= 0 (positivo)
+
+	#-- Incremento negativo
+	#-- si index > limit --> saltar a DO
+	bgt t2, t1, xplusloop_repeat
+	j empty_rstack
+
+inc_pos:
 	#-- si index < limit --> saltar a DO
 	blt t2, t1, xplusloop_repeat
+
+empty_rstack:
 
 	#-- Hemos terminado. Vaciar la pila R
 	POPR_T0
