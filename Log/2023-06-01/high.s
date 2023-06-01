@@ -20,6 +20,7 @@ do_u0:
 #  >IN     -- a-addr        holds offset into TIB
 #  4 USER >IN
 #-------------------------------------------------------------
+.global do_toin
 do_toin:
     DOUSER
     DW(0x4)
@@ -118,6 +119,24 @@ do_r0:
 
 #============ DOUBLE OPERATORS ==============================
 
+
+#--------------------------------------------------------
+# 2@    a-addr -- x1 x2    fetch 2 cells
+#  DUP CELL+ @ SWAP @ ;
+#  the lower address will appear on top of stack
+#---------------------------------------------------------
+.global do_twofetch
+do_twofetch:
+    DOCOLON
+
+    DUP
+    CELLPLUS
+    FETCH
+    SWOP
+    FETCH
+    EXIT
+
+
 #----------------------------------------------------
 #  2!    x1 x2 a-addr --    store 2 cells
 #   SWAP OVER ! CELL+ ! ;
@@ -193,6 +212,7 @@ do_abs:
 #----------------------------------------------------
 #-- BL      -- char            an ASCII space
 #----------------------------------------------------
+.global do_bl
 do_bl:
   DOCON
   DW(0x20)

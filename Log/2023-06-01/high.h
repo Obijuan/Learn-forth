@@ -18,6 +18,11 @@
 	jal do_twostore
 .end_macro
 
+.macro TWOFETCH
+	jal do_twofetch
+.end_macro
+
+
 .macro CMOVE
 	jal do_cmove
 .end_macro
