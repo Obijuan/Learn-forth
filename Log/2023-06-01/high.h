@@ -42,6 +42,10 @@
 	jal do_here
 .end_macro
 
+.macro TOCOUNTED
+	jal do_tocounted
+.end_macro
+
 .macro SLASHSTRING
 	jal do_slashstring
 .end_macro

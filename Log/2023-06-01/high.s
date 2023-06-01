@@ -791,6 +791,7 @@ do_tuck:
 #-- CHAR+    c-addr1 -- c-addr2   add char size
 #-- Añadir el tamaño del tipo char a la direccion
 #----------------------------------------------------
+.global do_charplus
 do_charplus:
   j do_oneplus
 
@@ -800,6 +801,21 @@ do_charplus:
 # are dependent on the structure of the Forth
 # header.  This may be common across many CPUs,
 # or it may be different.
+
+#--------------------------------------------------------
+#  >counted  src n dst --     copy to counted str
+#   2DUP C! CHAR+ SWAP CMOVE ;
+#---------------------------------------------------------
+.global do_tocounted
+do_tocounted:
+    DOCOLON
+    
+    TWODUP
+    CSTORE   #-- Guardar el tamaño primero en zona usuario
+    CHARPLUS #-- Incrementar la direccion (TOS) en un caracter
+    SWOP
+    CMOVE    #-- Copiar la cadena a continuacion de la longitud
+    EXIT
 
 #--------------------------------------------------------
 #  /STRING  a u n -- a+n u-n   trim string

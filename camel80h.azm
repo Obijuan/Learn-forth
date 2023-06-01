@@ -176,11 +176,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;Z >counted  src n dst --     copy to counted str
-;   2DUP C! CHAR+ SWAP CMOVE ;
-    head TOCOUNTED,8,>COUNTED,docolon
-        DW TWODUP,CSTORE,CHARPLUS,SWOP,CMOVE,EXIT
-
 ;C WORD   char -- c-addr n   word delim'd by char
 ;   DUP  SOURCE >IN @ /STRING   -- c c adr n
 ;   DUP >R   ROT SKIP           -- c adr' n'
