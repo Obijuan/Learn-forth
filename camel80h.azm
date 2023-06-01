@@ -396,24 +396,6 @@ INTER9: DW DROP,EXIT
         DW RFROM,TOIN,STORE,RFROM,RFROM
         DW TICKSOURCE,TWOSTORE,EXIT
 
-;C QUIT     --    R: i*x --    interpret from kbd
-;   L0 LP !  R0 RP!   0 STATE !
-;   BEGIN
-;       TIB DUP TIBSIZE ACCEPT  SPACE
-;       INTERPRET
-;       STATE @ 0= IF CR ." OK" THEN
-;   AGAIN ;
-    head QUIT,4,QUIT,docolon
-        DW L0,LP,STORE
-        DW R0,RPSTORE,LIT,0,STATE,STORE
-QUIT1:  DW TIB,DUP,TIBSIZE,CPMACCEPT,SPACE
-        DW INTERPRET
-        DW STATE,FETCH,ZEROEQUAL,qbranch,QUIT2
-        DW CR,XSQUOTE
-        DB 3,'ok '
-        DW TYPE
-QUIT2:  DW branch,QUIT1
-
 ;Z ?ABORT   f c-addr u --      abort & print msg
 ;   ROT IF TYPE ABORT THEN 2DROP ;
     head QABORT,6,?ABORT,docolon

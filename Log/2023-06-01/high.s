@@ -782,8 +782,42 @@ accept_end:
 do_quit:
     DOCOLON
 
+   #-- Inicializar leaf-stack para que apunte a la base (L0)
+    L0
+    LP 
+    STORE
 
+    #-- Inicializar la pila R
+    R0   #-- Base de la pila R
+    RPSTORE
 
+    #-- Inicializar el estado del compilador
+    LIT(0)
+    STATE
+    STORE
+
+QUIT1:
+    TIB
+    DUP
+    TIBSIZE
+    ACCEPT
+    SPACE
+
+    #-- INTERPRET (TODO)
+    STATE
+    FETCH
+    ZEROEQUAL
+    QBRANCH
+    ADDR(QUIT2)
+    #CR
+    XSQUOTE(3,"ok ")
+    TYPE
+    CR
+
+QUIT2:
+    BRANCH
+    ADDR(QUIT1)
+    
     EXIT
 
 
@@ -798,7 +832,7 @@ do_abort:
     S0
     SPSTORE
 
-    # QUIT    #-- Quit never returns
+    # QUIT    #-- Quit never returns (TODO)
 
     EXIT
 

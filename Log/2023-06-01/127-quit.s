@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 126
+#-- INTERPRETE DE FORTH. Version 127
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  S0 .hex  sp! .hex  1 2  sp! .hex  abort  sp! .hex
@@ -208,33 +208,14 @@ start:
 
     #-- Inicializacion del sistema
     #-- (COLD)
+    #-- COLD llama a quit, pero de momento lo hacemos manualmente
     COLD
+
+    #-- Si queremos que arranque el interprete
+    QUIT
 
 	#-- Programa Forth:
     #-- 
-
-    #-- Inicializar leaf-stack para que apunte a la base (L0)
-    L0
-    LP 
-    STORE
-
-
-
-    #-- Inicializar la pila R
-    R0   #-- Base de la pila R
-    RPSTORE
-
-    #-- Inicializar el estado del compilador
-    LIT(0)
-    STATE
-    STORE
-
-    TIB
-    DUP
-    TIBSIZE
-    DOTS
-    
-    
 
 
     #-- Interprete de forth: Imprimir " ok"

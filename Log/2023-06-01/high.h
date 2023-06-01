@@ -54,6 +54,10 @@ myStr: .byte %len,
 	jal do_accept
 .end_macro
 
+.macro QUIT
+	jal do_quit
+.end_macro
+
 .macro COLD
 	jal do_cold
 .end_macro
