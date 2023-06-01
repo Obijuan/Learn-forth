@@ -809,7 +809,7 @@ do_charplus:
 .global do_tocounted
 do_tocounted:
     DOCOLON
-    
+
     TWODUP
     CSTORE   #-- Guardar el tamaño primero en zona usuario
     CHARPLUS #-- Incrementar la direccion (TOS) en un caracter
@@ -901,6 +901,60 @@ accept_end:
 
     EXIT
 
+#--------------------------------------------------------
+#  WORD   char -- c-addr     word delim'd by char
+#   DUP  SOURCE >IN @ /STRING   -- c c adr n
+#   DUP >R   ROT SKIP           -- c adr' n'
+#   OVER >R  ROT SCAN           -- adr" n"
+#   DUP IF CHAR- THEN        skip trailing delim.
+#   R> R> ROT -   >IN +!        update >IN offset
+#   TUCK -                      -- adr' N
+#   HERE >counted               --
+#   HERE                        -- a
+#   BL OVER COUNT + C! ;    append trailing blank
+#---------------------------------------------------------
+.global do_word
+do_word:
+    DOCOLON
+
+    DUP
+    SOURCE  #-- Direccion a cadena en buffer, y su longitud (lo pone en la pila)
+    TOIN    #-- Obtener la variable TOIN (que no sabemos todavia para que es)
+    FETCH
+    SLASHSTRING  #--- Recortar (inicialmente se queda igual porque >IN es 0)
+    DUP
+    TOR
+    ROT     #-- En la pila tenemos address long y 32 (espacio)
+    SKIP
+    OVER
+    TOR
+    ROT
+    SCAN
+    DUP
+    QBRANCH
+    ADDR(WORD1)
+    ONEMINUS
+
+WORD1:
+
+    RFROM  #-- Recuperar direccion original
+    RFROM #-- Recuperar tamaño original
+    ROT
+    MINUS
+    TOIN
+    PLUSSTORE
+    TUCK
+    MINUS  #-- Direccion inicial y tamaño de la palabra en la pila
+    HERE
+    TOCOUNTED
+    HERE
+    
+    BL
+    OVER
+    COUNT
+    PLUS
+    CSTORE
+    EXIT
 
 
 

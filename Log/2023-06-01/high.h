@@ -42,6 +42,10 @@
 	jal do_here
 .end_macro
 
+.macro WORD
+	jal do_word
+.end_macro
+
 .macro TOCOUNTED
 	jal do_tocounted
 .end_macro
