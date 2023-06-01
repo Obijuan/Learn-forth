@@ -46,6 +46,7 @@ do_state:
 #  dp      -- a-addr       holds dictionary ptr
 #  0x10 USER DP
 #-------------------------------------------------------------
+.global do_dp
 do_dp:
     DOUSER
     DW(0x10)
@@ -672,6 +673,19 @@ TYP4:
 TYP5:
 	EXIT
 
+# ================ DICTIONARY MANAGEMENT =========================
+
+#-----------------------------------------------------
+#  HERE    -- addr      returns dictionary ptr
+#   DP @ ;
+#-----------------------------------------------------
+.global do_here
+do_here:
+  DOCOLON
+    DP
+    FETCH
+  EXIT
+
 
 # ==================== UTILITY WORDS AND STARTUP =====================
 
@@ -765,6 +779,7 @@ do_greater:
 #-----------------------------------------------------
 #  TUCK   x1 x2 -- x2 x1 x2     per stack diagram
 #-----------------------------------------------------
+.global do_tuck
 do_tuck:
   DOCOLON
   SWOP

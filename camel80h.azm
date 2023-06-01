@@ -152,11 +152,6 @@ UMAX1:  DW DROP,EXIT
 
 ; DICTIONARY MANAGEMENT =========================
 
-;C HERE    -- addr      returns dictionary ptr
-;   DP @ ;
-    head HERE,4,HERE,docolon
-        dw DP,FETCH,EXIT
-
 ;C ALLOT   n --         allocate n bytes in dict
 ;   DP +! ;
     head ALLOT,5,ALLOT,docolon

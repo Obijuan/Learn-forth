@@ -38,6 +38,10 @@
 	jal do_debug
 .end_macro
 
+.macro HERE
+	jal do_here
+.end_macro
+
 .macro SLASHSTRING
 	jal do_slashstring
 .end_macro
