@@ -122,12 +122,6 @@ MIN1:   dw DROP,EXIT
     head TWOFETCH,2,2@,docolon
         dw DUP,CELLPLUS,FETCH,SWOP,FETCH,EXIT
 
-;C 2!    x1 x2 a-addr --    store 2 cells
-;   SWAP OVER ! CELL+ ! ;
-;   the top of stack is stored at the lower adrs
-    head TWOSTORE,2,2!,docolon
-        dw SWOP,OVER,STORE,CELLPLUS,STORE,EXIT
-
 ;C 2SWAP  x1 x2 x3 x4 -- x3 x4 x1 x2  per diagram
 ;   ROT >R ROT R> ;
     head TWOSWAP,5,2SWAP,docolon

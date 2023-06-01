@@ -206,6 +206,7 @@ dump1:
       DOTB
     XLOOP
     ADDR(dump2)
+    DROP
 
     # CR
     LIT(10)

@@ -6,8 +6,16 @@
 	jal do_u0
 .end_macro
 
+.macro TICKSOURCE
+	jal do_ticksource
+.end_macro
+
 .macro NINIT
 	jal do_ninit
+.end_macro
+
+.macro TWOSTORE
+	jal do_twostore
 .end_macro
 
 .macro CMOVE

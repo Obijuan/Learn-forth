@@ -53,6 +53,7 @@ do_dp:
 #  'source  -- a-addr      two cells: len, adrs
 # 0x14 USER 'SOURCE
 #-------------------------------------------------------------
+.global do_ticksource
 do_ticksource:
     DOUSER
     DW(0x14)
@@ -115,6 +116,22 @@ do_r0:
 	DOUSER
     DW(0x200)
 
+#============ DOUBLE OPERATORS ==============================
+
+#----------------------------------------------------
+#  2!    x1 x2 a-addr --    store 2 cells
+#   SWAP OVER ! CELL+ ! ;
+#   the top of stack is stored at the lower adrs
+#----------------------------------------------------
+.global do_twostore
+do_twostore:
+	DOCOLON
+    SWOP   #-- Almacenar x2
+    OVER
+    STORE
+    CELLPLUS #-- Almacenar x1
+    STORE
+    EXIT
 
 #----------------------------------------------------
 #-- 2DUP   x1 x2 -- x1 x2 x1 x2   dup top 2 cells
