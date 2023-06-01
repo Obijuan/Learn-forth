@@ -22,6 +22,10 @@
 	jal do_twofetch
 .end_macro
 
+.macro TWOSWAP
+	jal do_twoswap
+.end_macro
+
 
 .macro CMOVE
 	jal do_cmove

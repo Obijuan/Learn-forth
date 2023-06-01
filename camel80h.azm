@@ -116,11 +116,6 @@ MIN1:   dw DROP,EXIT
 
 ; DOUBLE OPERATORS ==============================
 
-;C 2SWAP  x1 x2 x3 x4 -- x3 x4 x1 x2  per diagram
-;   ROT >R ROT R> ;
-    head TWOSWAP,5,2SWAP,docolon
-        dw ROT,TOR,ROT,RFROM,EXIT
-
 ;C 2OVER  x1 x2 x3 x4 -- x1 x2 x3 x4 x1 x2
 ;   >R >R 2DUP R> R> 2SWAP ;
     head TWOOVER,5,2OVER,docolon

@@ -174,6 +174,21 @@ do_twodrop:
     
     EXIT
 
+#----------------------------------------------------
+#  2SWAP  x1 x2 x3 x4 -- x3 x4 x1 x2  per diagram
+#   ROT >R ROT R> ;
+#----------------------------------------------------
+.global do_twoswap
+do_twoswap:
+    DOCOLON
+
+    ROT
+    TOR
+    ROT
+    RFROM
+    
+    EXIT
+
 #=========== ARITHMETIC OPERATORS ==========================
 
 #----------------------------------------------------
