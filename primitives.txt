@@ -12,8 +12,6 @@ PC!    c p-addr --            output char to port
 PC@    p-addr -- c           input char from port
 SCAN   c-addr1 u1 c -- c-addr2 u2
                                find matching char
-SKIP   c-addr1 u1 c -- c-addr2 u2
-                              skip matching chars
 S=     c-addr1 c-addr2 u -- n      string compare
                n<0: s1<s2, n=0: s1=s2, n>0: s1>s2
 USER   n --              define user variable 'n'

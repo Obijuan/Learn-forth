@@ -242,34 +242,6 @@ umovedone: exx
         pop bc      ; pop new TOS
         next
 
-;Z SKIP   c-addr u c -- c-addr' u'
-;Z                          skip matching chars
-; Although SKIP, SCAN, and S= are perhaps not the
-; ideal factors of WORD and FIND, they closely
-; follow the string operations available on many
-; CPUs, and so are easy to implement and fast.
-    head skip,4,SKIP,docode
-        ld a,c      ; skip character
-        exx
-        pop bc      ; count
-        pop hl      ; address
-        ld e,a      ; test for count=0
-        ld a,b
-        or c
-        jr z,skipdone
-        ld a,e
-skiploop: cpi
-        jr nz,skipmis   ; char mismatch: exit
-        jp pe,skiploop  ; count not exhausted
-        jr skipdone     ; count 0, no mismatch
-skipmis: inc bc         ; mismatch!  undo last to
-        dec hl          ;  point at mismatch char
-skipdone: push hl   ; updated address
-        push bc     ; updated count
-        exx
-        pop bc      ; TOS in bc
-        next
-
 ;Z SCAN    c-addr u c -- c-addr' u'
 ;Z                      find matching char
     head scan,4,SCAN,docode

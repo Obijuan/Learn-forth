@@ -58,6 +58,10 @@
     jal do_store
 .end_macro
 
+.macro SKIP
+    jal do_skip
+.end_macro
+
 .macro PLUS
     jal do_plus
 .end_macro

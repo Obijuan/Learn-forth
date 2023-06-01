@@ -590,6 +590,58 @@ do_rot:
 
 	ret
 
+#----------------------------------------------
+#   SKIP   c-addr u c -- c-addr' u'
+#                            skip matching chars
+#  Although SKIP, SCAN, and S= are perhaps not the
+#  ideal factors of WORD and FIND, they closely
+#  follow the string operations available on many
+#  CPUs, and so are easy to implement and fast.
+#----------------------------------------------
+.global do_skip
+do_skip:
+
+	#-- t2 = Caracter a saltar
+	POP_T0
+	mv t2, t0
+
+	#-- t1 = Longitud cadena
+	POP_T0
+	mv t1, t0
+
+	#-- t0 = Direccion de la cadena
+	POP_T0
+
+skip_loop:
+	#-- Si la longitud cadena es 0, terminamos
+	beq t1,zero, skip_end
+
+	#-- Leer caracter actual
+	lb t3, 0(t0)
+
+	#-- Si es distinto al caracter a saltar, terminamos
+	bne t3, t2, skip_end
+
+	#-- Son iguales. Lo saltamos
+	addi t0,t0,1  #-- Pasar a la siguiente direccion
+	addi t1,t1,-1 #-- La cadena tiene un caracter menos
+
+	#-- repetir
+	j skip_loop
+
+	#-- Depositar argumentos de salida
+skip_end:
+
+	#-- Direccion cadena
+	PUSH_T0
+
+	#-- Nueva longitud
+	mv t0, t1
+	PUSH_T0
+
+	NEXT
+
+
 # ============ DEBUG =============================
 
 #-------------------------

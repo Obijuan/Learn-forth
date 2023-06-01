@@ -181,11 +181,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;X /STRING  a u n -- a+n u-n   trim string
-;   ROT OVER + ROT ROT - ;
-    head SLASHSTRING,7,/STRING,docolon
-        DW ROT,OVER,PLUS,ROT,ROT,MINUS,EXIT
-
 ;Z >counted  src n dst --     copy to counted str
 ;   2DUP C! CHAR+ SWAP CMOVE ;
     head TOCOUNTED,8,>COUNTED,docolon
