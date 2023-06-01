@@ -156,10 +156,27 @@ do_twostore:
 #-- 2DUP   x1 x2 -- x1 x2 x1 x2   dup top 2 cells
 #   OVER OVER ;
 #----------------------------------------------------
+.global do_twodup
 do_twodup:
 	DOCOLON
 	OVER
 	OVER
+	EXIT
+
+#----------------------------------------------------
+#  2OVER  x1 x2 x3 x4 -- x1 x2 x3 x4 x1 x2
+#   >R >R 2DUP R> R> 2SWAP ;
+#----------------------------------------------------
+.global do_twoover
+do_twoover:
+	DOCOLON
+    
+	TOR
+    TOR
+    TWODUP
+    RFROM
+    RFROM
+    TWOSWAP
 	EXIT
 
 #----------------------------------------------------

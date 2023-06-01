@@ -26,6 +26,10 @@
 	jal do_twoswap
 .end_macro
 
+.macro TWOOVER
+	jal do_twoover
+.end_macro
+
 
 .macro CMOVE
 	jal do_cmove
