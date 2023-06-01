@@ -181,11 +181,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;C SOURCE   -- adr n    current input buffer
-;   'SOURCE 2@ ;        length is at lower adrs
-    head SOURCE,6,SOURCE,docolon
-        DW TICKSOURCE,TWOFETCH,EXIT
-
 ;X /STRING  a u n -- a+n u-n   trim string
 ;   ROT OVER + ROT ROT - ;
     head SLASHSTRING,7,/STRING,docolon

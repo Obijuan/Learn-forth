@@ -10,6 +10,10 @@
 	jal do_ticksource
 .end_macro
 
+.macro SOURCE
+	jal do_source
+.end_macro
+
 .macro NINIT
 	jal do_ninit
 .end_macro

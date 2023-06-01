@@ -117,6 +117,8 @@ do_r0:
 	DOUSER
     DW(0x200)
 
+
+
 #============ DOUBLE OPERATORS ==============================
 
 
@@ -170,7 +172,7 @@ do_twodup:
 .global do_twoover
 do_twoover:
 	DOCOLON
-    
+
 	TOR
     TOR
     TWODUP
@@ -770,6 +772,19 @@ do_charplus:
 # are dependent on the structure of the Forth
 # header.  This may be common across many CPUs,
 # or it may be different.
+
+#--------------------------------------------------------
+# SOURCE   -- adr n    current input buffer
+#   'SOURCE 2@ ;        length is at lower adrs
+#---------------------------------------------------------
+.global do_source
+do_source:
+    DOCOLON
+
+    TICKSOURCE
+    TWOFETCH
+
+    EXIT
 
 #---------------------------------------------------
 #-- ACCEPT: c-addr +n1 -- +n2
