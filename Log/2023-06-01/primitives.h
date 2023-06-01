@@ -62,6 +62,10 @@
     jal do_skip
 .end_macro
 
+.macro SCAN
+    jal do_scan
+.end_macro
+
 .macro PLUS
     jal do_plus
 .end_macro

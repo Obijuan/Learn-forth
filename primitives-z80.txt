@@ -242,28 +242,6 @@ umovedone: exx
         pop bc      ; pop new TOS
         next
 
-;Z SCAN    c-addr u c -- c-addr' u'
-;Z                      find matching char
-    head scan,4,SCAN,docode
-        ld a,c      ; scan character
-        exx
-        pop bc      ; count
-        pop hl      ; address
-        ld e,a      ; test for count=0
-        ld a,b
-        or c
-        jr z,scandone
-        ld a,e
-        cpir        ; scan 'til match or count=0
-        jr nz,scandone  ; no match, BC & HL ok
-        inc bc          ; match!  undo last to
-        dec hl          ;   point at match char
-scandone: push hl   ; updated address
-        push bc     ; updated count
-        exx
-        pop bc      ; TOS in bc
-        next
-
 ;Z S=    c-addr1 c-addr2 u -- n   string compare
 ;Z             n<0: s1<s2, n=0: s1=s2, n>0: s1>s2
     head sequal,2,S=,docode

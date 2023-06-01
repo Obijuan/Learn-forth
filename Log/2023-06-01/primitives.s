@@ -642,6 +642,54 @@ skip_end:
 	NEXT
 
 
+#----------------------------------------------
+#  SCAN    c-addr u c -- c-addr' u'
+#                       find matching char
+#----------------------------------------------
+.global do_scan
+do_scan:
+
+	#-- t2 = Caracter a encontrar
+	POP_T0
+	mv t2, t0
+
+	#-- t1 = Longitud cadena
+	POP_T0
+	mv t1, t0
+
+	#-- t0 = Direccion de la cadena
+	POP_T0
+
+scan_loop:
+	#-- Si la longitud cadena es 0, terminamos
+	beq t1,zero, scan_end
+
+	#-- Leer caracter actual
+	lb t3, 0(t0)
+
+	#-- Si el caracter es igual al buscado, terminamos
+	beq t3, t2, scan_end
+
+	#-- Son distintos. Lo saltamos
+	addi t0,t0,1  #-- Pasar a la siguiente direccion
+	addi t1,t1,-1 #-- La cadena tiene un caracter menos
+
+	#-- repetir
+	j scan_loop
+
+	#-- Depositar argumentos de salida
+scan_end:
+
+	#-- Direccion cadena
+	PUSH_T0
+
+	#-- Nueva longitud
+	mv t0, t1
+	PUSH_T0
+
+	NEXT
+
+
 # ============ DEBUG =============================
 
 #-------------------------
