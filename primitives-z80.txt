@@ -161,17 +161,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
         DW LIT,0FFH,LIT,06H,BDOS
         DW DUP,SAVEKEY,CSTORE,EXIT
 
-;Z CPMACCEPT  c-addr +n -- +n'  get line of input
-;   SWAP 2 - TUCK C!      max # of characters
-;   DUP 0A BDOS DROP      CP/M Get Console Buffer
-;   1+ C@  0A EMIT ;      get returned count
-; Note: requires the two locations before c-addr
-; to be available for use.
-    head CPMACCEPT,9,CPMACCEPT,docolon
-        DW SWOP,LIT,2,MINUS,TUCK,CSTORE
-        DW DUP,LIT,0Ah,BDOS,DROP
-        DW ONEPLUS,CFETCH,LIT,0Ah,EMIT,EXIT
-
 ; STACK OPERATIONS ==============================
 
 ;X NIP    x1 x2 -- x2           per stack diagram

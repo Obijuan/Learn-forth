@@ -153,26 +153,6 @@ UMIN1:  DW DROP,EXIT
         DW TWODUP,ULESS,QBRANCH,UMAX1,SWOP
 UMAX1:  DW DROP,EXIT
 
-;C ACCEPT  c-addr +n -- +n'  get line from term'l
-;   OVER + 1- OVER      -- sa ea a
-;   BEGIN KEY           -- sa ea a c
-;   DUP 0D <> WHILE
-;       DUP EMIT        -- sa ea a c
-;       DUP 8 = IF  DROP 1-    >R OVER R> UMAX
-;             ELSE  OVER C! 1+ OVER UMIN
-;       THEN            -- sa ea a
-;   REPEAT              -- sa ea a c
-;   DROP NIP SWAP - ;
-    head ACCEPT,6,ACCEPT,docolon
-        DW OVER,PLUS,ONEMINUS,OVER
-ACC1:   DW KEY,DUP,LIT,0DH,NOTEQUAL,QBRANCH,ACC5
-        DW DUP,EMIT,DUP,LIT,8,EQUAL,QBRANCH,ACC3
-        DW DROP,ONEMINUS,TOR,OVER,RFROM,UMAX
-        DW BRANCH,ACC4
-ACC3:   DW OVER,CSTORE,ONEPLUS,OVER,UMIN
-ACC4:   DW BRANCH,ACC1
-ACC5:   DW DROP,NIP,SWOP,MINUS,EXIT
-
 ;C S"       --         compile in-line string
 ;   COMPILE (S")  [ HEX ]
 ;   22 WORD C@ 1+ ALIGNED ALLOT ; IMMEDIATE
