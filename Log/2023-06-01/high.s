@@ -394,6 +394,19 @@ do_ninit:
 
 #------------------------- PRUEBAS ------------------------------------------
 
+#----------------------------------------------------
+#--  DEBUG   i*x --- i*x  Mostrar la pila actual
+#--  .S CR
+#----------------------------------------------------
+.global do_debug 
+do_debug:
+    DOCOLON
+
+    DOTS
+    CR
+
+    EXIT
+
 #--------------------------------
 #-- Palabras de nivel superior	
 #--------------------------------
@@ -772,6 +785,24 @@ do_charplus:
 # are dependent on the structure of the Forth
 # header.  This may be common across many CPUs,
 # or it may be different.
+
+#--------------------------------------------------------
+#  /STRING  a u n -- a+n u-n   trim string
+#   ROT OVER + ROT ROT - ;
+#---------------------------------------------------------
+.global do_slashstring
+do_slashstring:
+    DOCOLON
+
+    ROT
+    OVER
+    PLUS  #-- Incrementar la direccion en n caracteres
+ 
+    ROT
+    ROT
+    MINUS  #-- Decrementar el numero de caracteres en n (u-n)
+
+    EXIT
 
 #--------------------------------------------------------
 # SOURCE   -- adr n    current input buffer

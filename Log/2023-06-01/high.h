@@ -34,6 +34,14 @@
 	jal do_twoover
 .end_macro
 
+.macro DEBUG
+	jal do_debug
+.end_macro
+
+.macro SLASHSTRING
+	jal do_slashstring
+.end_macro
+
 
 .macro CMOVE
 	jal do_cmove
