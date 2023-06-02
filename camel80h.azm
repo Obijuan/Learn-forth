@@ -176,33 +176,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;C FIND   c-addr -- c-addr 0   if not found
-;C                  xt  1      if immediate
-;C                  xt -1      if "normal"
-;   LATEST @ BEGIN             -- a nfa
-;       2DUP OVER C@ CHAR+     -- a nfa a nfa n+1
-;       S=                     -- a nfa f
-;       DUP IF
-;           DROP
-;           NFA>LFA @ DUP      -- a link link
-;       THEN
-;   0= UNTIL                   -- a nfa  OR  a 0
-;   DUP IF
-;       NIP DUP NFA>CFA        -- nfa xt
-;       SWAP IMMED?            -- xt iflag
-;       0= 1 OR                -- xt 1/-1
-;   THEN ;
-    head FIND,4,FIND,docolon
-        DW LATEST,FETCH
-FIND1:  DW TWODUP,OVER,CFETCH,CHARPLUS
-        DW SEQUAL,DUP,qbranch,FIND2
-        DW DROP,NFATOLFA,FETCH,DUP
-FIND2:  DW ZEROEQUAL,qbranch,FIND1
-        DW DUP,qbranch,FIND3
-        DW NIP,DUP,NFATOCFA
-        DW SWOP,IMMEDQ,ZEROEQUAL,LIT,1,OR
-FIND3:  DW EXIT
-
 ;C LITERAL  x --        append numeric literal
 ;   STATE @ IF ['] LIT ,XT , THEN ; IMMEDIATE
 ; This tests STATE so that it can also be used

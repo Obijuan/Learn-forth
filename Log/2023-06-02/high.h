@@ -111,6 +111,10 @@ myStr: .byte %len,
 	jal do_immedq
 .end_macro
 
+.macro FIND
+	jal do_find
+.end_macro
+
 .macro NIP
 	jal do_nip
 .end_macro

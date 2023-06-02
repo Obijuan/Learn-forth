@@ -1113,6 +1113,82 @@ WORD1:
 # or it may be different.
 
 #-------------------------------------------------------
+# FIND   c-addr -- c-addr 0   if not found
+#                  xt  1      if immediate
+#                  xt -1      if "normal"
+#
+#  La direccion de entrada apunta a una counted string
+#
+#  LATEST @ BEGIN             -- a nfa
+#      2DUP OVER C@ CHAR+     -- a nfa a nfa n+1
+#      S=                     -- a nfa f
+#      DUP IF
+#          DROP
+#          NFA>LFA @ DUP      -- a link link
+#      THEN
+#  0= UNTIL                   -- a nfa  OR  a 0
+#  DUP IF
+#      NIP DUP NFA>CFA        -- nfa xt
+#      SWAP IMMED?            -- xt iflag
+#      0= 1 OR                -- xt 1/-1
+#  THEN ;
+#--------------------------------------------------------
+.global do_find
+do_find:
+    DOCOLON
+
+FIND1:
+    TWODUP
+    OVER
+    CFETCH
+    CHARPLUS
+
+    SEQUAL #-- Comprobar si la palabra esta en la entrada actual
+           #-- del dicionario
+
+    DUP         #-- Saltar a FIND2 si la hemos encontrado
+    QBRANCH      
+    ADDR(FIND2)
+
+    #--- Apuntar a la siguiente palabra del diccionario (TODO)
+    DROP
+
+    #-- Obtener direccion a la siguiente palabra
+    NFATOLFA
+    FETCH
+
+    #-- Comprobar si es la primera palabra (su link apunta a 0)
+    DUP
+
+FIND2:
+    ZEROEQUAL
+    QBRANCH      #--- NO es la primera, comprobar la siguiente
+    ADDR(FIND1)
+
+    DUP
+    QBRANCH    #-- pALABRA NO encontrada
+    ADDR(FIND3)
+
+    #-- Palabra en el direccionario!!
+
+    #-- En la pila se deja solo la direccion de la
+    #-- palabra encontrada
+    NIP
+    DUP
+
+    #-- Obtener el CFA (Code field Address)
+    NFATOCFA
+    SWOP
+    IMMEDQ
+    ZEROEQUAL
+    LIT(1)
+    LOR
+
+FIND3:
+    #-- Terminar
+    EXIT
+
+#-------------------------------------------------------
 #  QUIT     --    R: i*x --    interpret from kbd
 #   L0 LP !  R0 RP!   0 STATE !
 #   BEGIN
