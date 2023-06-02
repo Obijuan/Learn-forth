@@ -10,6 +10,4 @@ U>     u1 u2 -- flag         test u1>u2, unsigned
 BDOS   DE C -- A                   call CP/M BDOS
 PC!    c p-addr --            output char to port
 PC@    p-addr -- c           input char from port
-S=     c-addr1 c-addr2 u -- n      string compare
-               n<0: s1<s2, n=0: s1=s2, n>0: s1>s2
 USER   n --              define user variable 'n'

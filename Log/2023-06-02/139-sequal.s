@@ -1,10 +1,20 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 127
+#-- INTERPRETE DE FORTH. Version 137
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  S0 .hex  sp! .hex  1 2  sp! .hex  abort  sp! .hex
+#--  tib tib 2 + 2 S= debug cr
+#--  tib tib 4 + 2 S= debug cr
+#--  tib tib 6 + 2 S= debug cr
 #--  
-#--  Resultado: 0x100101c8 0x100101c8 0x100101c0 0x100101c8  ok
+#--  Resultado: 
+#--  Z80 CamelForth v1.01  25 Jan 1995
+#--  268500992 268500994 2 
+#--  -1 
+#--  268500992 268500996 2 
+#--  1 
+#--  268500992 268500998 2 
+#--  0 
+#--   ok
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -51,8 +61,10 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte 'H', 'I', 'H','O'
+    .byte 'H', '0','H','I'
+    .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
+    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
 
 #-------------------------
 #-- Diccionario
@@ -63,16 +75,23 @@ ptib:  #-- Puntero
 link0:          #-- Enlace a esta palabra
       .byte 4   #-- Longitud
       .ascii "EXIT" #-- Nombre
-exit: #-- jal exit #-- Codigo Forth
+exit: .word -1  #-- jal exit #-- Codigo Forth
 
+#-- Palabra 1
     .align 2
-
-#-- Nota: Debe valer link (enlace a la ultima palabra del diccionario)
-#-- Pero de momento ponemos su valor a 0
-lastword: .word 0   # nfa of last word in dict. 
+    .word link0
+    .byte 0
+link1:
+lastword: # nfa of last word in dict. 
+    .byte 3
+    .ascii "lit"
+lit: .word do_lit  #-- Direccion al codigo
 
 #-- Fin del diccionario
 enddict: #-- Aqui comienza el codigo del usuario
+
+#--- NOTA: Reservar espacio para el usuario!!!
+    .space 1024
 
 #--------------------------------
 #-- Valores iniciales para el area de usuario
@@ -107,7 +126,7 @@ uinit_params:
     .word 0,0,10,0  # reserved, >IN, BASE, STATE
     .word enddict   # DP
     .word 0,0       # SOURCE init'd elsewhere
-    .word lastword  # LATEST
+    .word lastword   # LATEST
     .word 0         # HP init'd elsewhere
 
 
@@ -215,11 +234,46 @@ start:
     #QUIT
 
 	#-- Programa Forth:
-    #-- 
+    #-- tib tib 2 + 2 S= debug cr
+    #-- tib tib 4 + 2 S= debug cr
+    #-- tib tib 6 + 2 S= debug cr
+ 
+    #-- Direccion de la primera cadena en la pila
+    TIB
 
-    TICKSOURCE
-    FETCH
+    #-- Direccion de la segunda cadena en la pila
+    TIB
+    LIT(2)
+    PLUS
+
+    #-- Meter el contador de caracteres
+    LIT(2)
+    DEBUG
+
+    #-- Comparar y mostrar el resultado
+    SEQUAL
     DOT
+    CR
+
+    TIB
+    TIB
+    LIT(4)
+    PLUS
+    LIT(2)
+    DEBUG
+    SEQUAL
+    DOT
+    CR
+
+    TIB
+    TIB
+    LIT(6)
+    PLUS
+    LIT(2)
+    DEBUG
+    SEQUAL
+    DOT
+    CR
 
     #-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
