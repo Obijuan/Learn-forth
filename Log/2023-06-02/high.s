@@ -872,6 +872,20 @@ do_charplus:
 # or it may be different.
 
 #--------------------------------------------------------
+#  IMMED?    nfa -- f      fetch immediate flag
+#   1- C@ ;                     nonzero if immed
+#--------------------------------------------------------
+.global do_immedq
+do_immedq:
+    DOCOLON
+
+    ONEMINUS
+    CFETCH
+
+    EXIT
+
+
+#--------------------------------------------------------
 #  NFA>LFA   nfa -- lfa    name adr -> link field
 #   5 - ;
 #
@@ -911,7 +925,7 @@ do_nfatolfa:
 .global do_nfatocfa
 do_nfatocfa:
     DOCOLON
-    
+
     COUNT
     LIT(0x7F)
     LAND

@@ -176,11 +176,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;Z IMMED?    nfa -- f      fetch immediate flag
-;   1- C@ ;                     nonzero if immed
-    head IMMEDQ,6,IMMED?,docolon
-        DW ONEMINUS,CFETCH,EXIT
-
 ;C FIND   c-addr -- c-addr 0   if not found
 ;C                  xt  1      if immediate
 ;C                  xt -1      if "normal"
