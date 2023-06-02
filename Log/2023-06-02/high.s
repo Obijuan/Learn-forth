@@ -385,6 +385,43 @@ SIGN1:
 
 
 # =========== OTRAS ========================================
+
+#----------------------------------------------------
+#--  ?ALIGN   addr --- a-addr  
+#--  3 AND 0= IF 0 INVERT ELSE 0 THEN ;
+#--
+#--  Devolver una direccion alineada
+#--  Si addr ya estaba alineada, se deja igual
+#----------------------------------------------------
+.global do_qalign
+do_qalign:
+    DOCOLON
+    
+    #-- Obtener los 2 bits de menor peso
+    LIT(3)
+    LAND
+
+    #-- Si son 0, es una direccion alineada
+    #-- Comprobar si son 0
+    ZEROEQUAL
+    QBRANCH
+    ADDR(no_aligned)
+
+    #-- Direccion alineada
+    LIT(0)
+    INVERT
+    BRANCH
+    ADDR(qalign_end)
+
+
+no_aligned:
+    #-- Direccion no alineada
+    LIT(0)
+
+qalign_end:
+    EXIT
+
+
 #----------------------------------------------------
 #--  #init    -- n    #bytes of user area init data
 #----------------------------------------------------

@@ -107,6 +107,10 @@ myStr: .byte %len,
 	jal do_nip
 .end_macro
 
+.macro QALIGN
+	jal do_qalign
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro
