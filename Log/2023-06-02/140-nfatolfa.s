@@ -2,14 +2,12 @@
 #-- INTERPRETE DE FORTH. Version 137
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  #-- HERE 16 DUMP   WORD   HERE 16 DUMP
+#--  LATEST @  NFA2LFA DUP .HEX 16 DUMP
 #--  
 #--  Resultado: 
 #--  Z80 CamelForth v1.01  25 Jan 1995
-#--  
-#--  0094 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-#--  
-#--  0094 02 31 32 20 00 00 00 00 00 00 00 00 00 00 00 00 
+#--  0x10010090 
+#--  0090 85 00 01 10 00 03 6C 69 74 00 00 00 20 05 40 00 
 #--   ok
 #--
 #--------------------------------------------------------------------
@@ -230,7 +228,7 @@ start:
     #QUIT
 
 	#-- Programa Forth:
-    #-- 
+    #-- LATEST @  NFA2LFA DUP .HEX 16 DUMP
  
     #--- NFA de la ultima palabra
     LATEST
