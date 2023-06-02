@@ -163,10 +163,6 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
 
 ; STACK OPERATIONS ==============================
 
-;X NIP    x1 x2 -- x2           per stack diagram
-    head NIP,3,NIP,docolon
-        DW SWOP,DROP,EXIT
-
 ; MEMORY AND I/O OPERATIONS =====================
 
 ;Z PC!     char c-addr --    output char to port

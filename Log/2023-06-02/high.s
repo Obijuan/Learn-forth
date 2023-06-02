@@ -828,6 +828,18 @@ do_nfatolfa:
     EXIT
 
 #--------------------------------------------------------
+#  NIP    x1 x2 -- x2           per stack diagram
+#   SWAP DROP ;
+#---------------------------------------------------------
+.global do_nip
+do_nip:
+    DOCOLON
+
+    SWOP
+    DROP
+    EXIT
+
+#--------------------------------------------------------
 #  >counted  src n dst --     copy to counted str
 #   2DUP C! CHAR+ SWAP CMOVE ;
 #---------------------------------------------------------
