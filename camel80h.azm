@@ -176,11 +176,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;Z NFA>LFA   nfa -- lfa    name adr -> link field
-;   3 - ;
-    head NFATOLFA,7,NFA>LFA,docolon
-        DW LIT,3,MINUS,EXIT
-
 ;Z NFA>CFA   nfa -- cfa    name adr -> code field
 ;   COUNT 7F AND + ;       mask off 'smudge' bit
     head NFATOCFA,7,NFA>CFA,docolon

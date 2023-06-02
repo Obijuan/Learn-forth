@@ -99,6 +99,10 @@ myStr: .byte %len,
 	jal do_accept
 .end_macro
 
+.macro NFATOLFA
+	jal do_nfatolfa
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro

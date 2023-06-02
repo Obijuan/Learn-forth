@@ -804,6 +804,30 @@ do_charplus:
 # or it may be different.
 
 #--------------------------------------------------------
+#  NFA>LFA   nfa -- lfa    name adr -> link field
+#   5 - ;
+#
+#  NFA = Name Field Address. Direccion de la celula del
+#        diccionario que contiene el nombre de la palabra
+#        (el nombre es una cadena contadora)
+#
+#  LFA = Link Field Address. Direccion de la celula del 
+#        diccionario que contiene el enlace a la palabra
+#        siguiente
+#
+#  En esta implementacion hay que ir 5 bytes atras  
+#  para obtener el campo del enlace
+#--------------------------------------------------------
+.global do_nfatolfa
+do_nfatolfa:
+    DOCOLON
+
+    LIT(5)
+    MINUS
+
+    EXIT
+
+#--------------------------------------------------------
 #  >counted  src n dst --     copy to counted str
 #   2DUP C! CHAR+ SWAP CMOVE ;
 #---------------------------------------------------------
