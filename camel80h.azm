@@ -176,11 +176,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;Z NFA>CFA   nfa -- cfa    name adr -> code field
-;   COUNT 7F AND + ;       mask off 'smudge' bit
-    head NFATOCFA,7,NFA>CFA,docolon
-        DW COUNT,LIT,07FH,AND,PLUS,EXIT
-
 ;Z IMMED?    nfa -- f      fetch immediate flag
 ;   1- C@ ;                     nonzero if immed
     head IMMEDQ,6,IMMED?,docolon

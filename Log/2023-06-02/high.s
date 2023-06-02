@@ -896,6 +896,30 @@ do_nfatolfa:
     EXIT
 
 #--------------------------------------------------------
+#  NFA>CFA   nfa -- cfa    name adr -> code field
+#  COUNT 7F AND + ALIGN ;  mask off 'smudge' bit
+#
+#  NFA = Name Field Address. Direccion de la celula del
+#        diccionario que contiene el nombre de la palabra
+#        (el nombre es una cadena contadora)
+#
+#  cFA = Code Field Address. Direccion de la celula del 
+#        diccionario que contiene el codigo de la palabra
+#        (En esta implementación contiene la dirección
+#         al codigo)
+#--------------------------------------------------------
+.global do_nfatocfa
+do_nfatocfa:
+    DOCOLON
+    
+    COUNT
+    LIT(0x7F)
+    LAND
+    PLUS
+    ALIGN
+    EXIT
+
+#--------------------------------------------------------
 #  NIP    x1 x2 -- x2           per stack diagram
 #   SWAP DROP ;
 #---------------------------------------------------------

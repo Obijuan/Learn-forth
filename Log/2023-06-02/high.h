@@ -103,6 +103,10 @@ myStr: .byte %len,
 	jal do_nfatolfa
 .end_macro
 
+.macro NFATOCFA
+	jal do_nfatocfa
+.end_macro
+
 .macro NIP
 	jal do_nip
 .end_macro
