@@ -58,7 +58,7 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .byte 3, 'l', 'i', 't'
+    .byte '1', ' ', ' ', 't'
     .byte 3, 't', 'e', 's'
     .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
@@ -176,7 +176,6 @@ ppad:
     .space 128
 rstack:
 
-
 #---------------------------------------------------------------
 #-- CODIGO
 #---------------------------------------------------------------
@@ -231,34 +230,79 @@ start:
     #QUIT
 
 	#-- Programa Forth:
-    #-- TIB LATEST @ DEBUG  FIN  SWAP .HEX . CR        (Palabra en diccionario)
-    #-- TIB 4 PLUS LATEST @ DEBUG FIND SWAP .HEX . CR  (Palabra NO en dicionario)
- 
+    #-- HERE 16 DUMP   WORD   HERE 16 DUMP
+    #-- Direccion del buffer y longitud del texto
     TIB
-    LATEST    #-- Palabra en diccionario
-    FETCH     #--> Dir_palabra  Dir_ultima_del_dict
+    DUP     #-- Debug
+    DOTHEX  #-- Debug
+    CR      #-- Debug
+    LIT(10)
+
+#--------------------------------------------------------
+#   INTERPRET    i*x c-addr u -- j*x
+#                        interpret given buffer
+#  c-addr -> Direccion del buffer con el texto a interpretar
+#  u -> Tamaño del texto
+#
+#  This is a common factor of EVALUATE and QUIT.
+#  ref. dpANS-6, 3.4 The Forth Text Interpreter
+#    'SOURCE 2!  0 >IN !
+#    BEGIN
+#    BL WORD DUP C@ WHILE        -- textadr
+#        FIND                    -- a 0/1/-1
+#        ?DUP IF                 -- xt 1/-1
+#            1+ STATE @ 0= OR    immed or interp?
+#            IF EXECUTE ELSE ,XT THEN
+#        ELSE                    -- textadr
+#            ?NUMBER
+#            IF POSTPONE LITERAL     converted ok
+#            ELSE COUNT TYPE 3F EMIT CR ABORT  err
+#            THEN
+#        THEN
+#    REPEAT DROP ;
+#---------------------------------------------------------
+
+    #-- Debug: Imprimir valores iniciales
     DEBUG
 
+    #-- Almacenar direccion y longitud en 'SOURCE
+    #-- Primero esta la longitud, y luego la direccion
+    TICKSOURCE
+    TWOSTORE
+
+    LIT(0)
+    TOIN
+    STORE
+
+INTER1:
+    BL       #-- Obtener siguiente palabra a interpretar
+    WORD     #-- Delimitada por un espacio en blanco
+
+    DUP      #-- Leer la longitud de la palabra
+    CFETCH
+    DEBUG    #--- Direccion longitud
+
+    QBRANCH       #-- Si la palabra tiene 0 caracteres--> Terminar
+    ADDR(INTER9)
+
+    #-- Hay una palabra no nula en el buffer
+    DUP
+    LIT(16)
+    DUMP
+
+    #-- Debug... FIND PETA.... ni idea de porqué...
+
     FIND
-
-    SWAP
-    DOTHEX
-    DOT
-    CR
-
-    TIB      #-- Palabra que no esta en diccionario
-    LIT(4)
-    PLUS
-    LATEST
-    FETCH
-    DEBUG
-
-    FIND
-
-    SWAP
-    DOTHEX
-    DOT
-    CR
+    DEBUG 
+    # LIT(66)
+    # EMIT
+    # DEBUG
+   
+    BYE
+    
+    #-- Terminar
+INTER9:
+    #-- DROP
 
     #-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
