@@ -6,7 +6,7 @@
 	.globl do_1, do_plus, do_minus, do_and, do_lit, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
-	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_uless, do_dup
+	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_dup
 	.globl do_qdup, do_drop, do_swop, do_over, do_rot, do_fetch, do_cfetch
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
@@ -442,7 +442,8 @@ do_less:
 
 #----------------------------------------------------
 #  U<    u1 u2 -- flag       test u1<n2, unsigned
-#----------------------------------------------------									
+#----------------------------------------------------	
+.global do_uless								
 do_uless:
 
 	#-- Obtener TOS en  t1 (t1 = n2)

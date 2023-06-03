@@ -185,17 +185,6 @@ UMAX1:  DW DROP,EXIT
         DW LIT,LIT,COMMAXT,COMMA
 LITER1: DW EXIT
 
-;Z DIGIT?   c -- n -1   if c is a valid digit
-;Z            -- x  0   otherwise
-;   [ HEX ] DUP 39 > 100 AND +     silly looking
-;   DUP 140 > 107 AND -   30 -     but it works!
-;   DUP BASE @ U< ;
-    head DIGITQ,6,DIGIT?,docolon
-        DW DUP,LIT,39H,GREATER,LIT,100H,AND,PLUS
-        DW DUP,LIT,140H,GREATER,LIT,107H,AND
-        DW MINUS,LIT,30H,MINUS
-        DW DUP,BASE,FETCH,ULESS,EXIT
-
 ;C >NUMBER  ud adr u -- ud' adr' u'
 ;C                      convert string to number
 ;   BEGIN

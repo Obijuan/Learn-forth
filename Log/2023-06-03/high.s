@@ -29,6 +29,7 @@ do_toin:
 #  BASE    -- a-addr       holds conversion radix
 #  8 USER BASE
 #-------------------------------------------------------------
+.global do_base
 do_base:
     DOUSER
     DW(0x8)
@@ -838,6 +839,7 @@ do_udslashmod:
 #----------------------------------------------
 # ;C >     n1 n2 -- flag         test n1>n2, signed
 #----------------------------------------------
+.global do_greater
 do_greater:
 	DOCOLON
 
@@ -1151,6 +1153,44 @@ WORD1:
 # are dependent on the structure of the Forth
 # header.  This may be common across many CPUs,
 # or it may be different.
+
+
+#-------------------------------------------------------------
+#  DIGIT?   c -- n -1   if c is a valid digit
+#             -- x  0   otherwise
+#   [ HEX ] DUP 39 > 100 AND +     silly looking
+#   DUP 140 > 107 AND -   30 -     but it works!
+#   DUP BASE @ U< ;
+#-------------------------------------------------------------
+.global do_digitq
+do_digitq:
+    DOCOLON
+
+    DUP
+    LIT(0x39)  #-- '9'
+    GREATER
+    LIT(0x100)
+    LAND
+    PLUS
+
+    DUP
+    LIT(0x140)
+    GREATER
+    LIT(0x107)
+    LAND
+
+    MINUS
+    LIT(0X30)
+    MINUS
+
+    #--- Valor del digito calculado
+    DUP
+    BASE
+    FETCH
+    ULESS
+
+    EXIT
+
 
 #-------------------------------------------------------
 # FIND   c-addr -- c-addr 0   if not found

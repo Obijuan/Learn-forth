@@ -131,6 +131,10 @@ myStr: .byte %len,
 	jal do_qsign
 .end_macro
 
+.macro DIGITQ
+	jal do_digitq
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro
