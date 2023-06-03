@@ -196,19 +196,6 @@ LITER1: DW EXIT
         DW MINUS,LIT,30H,MINUS
         DW DUP,BASE,FETCH,ULESS,EXIT
 
-;Z ?SIGN   adr n -- adr' n' f  get optional sign
-;Z  advance adr/n if sign; return NZ if negative
-;   OVER C@                 -- adr n c
-;   2C - DUP ABS 1 = AND    -- +=-1, -=+1, else 0
-;   DUP IF 1+               -- +=0, -=+2
-;       >R 1 /STRING R>     -- adr' n' f
-;   THEN ;
-    head QSIGN,5,?SIGN,docolon
-        DW OVER,CFETCH,LIT,2CH,MINUS,DUP,ABS
-        DW LIT,1,EQUAL,AND,DUP,qbranch,QSIGN1
-        DW ONEPLUS,TOR,LIT,1,SLASHSTRING,RFROM
-QSIGN1: DW EXIT
-
 ;C >NUMBER  ud adr u -- ud' adr' u'
 ;C                      convert string to number
 ;   BEGIN

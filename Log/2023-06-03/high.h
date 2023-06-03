@@ -127,6 +127,10 @@ myStr: .byte %len,
 	jal do_align
 .end_macro
 
+.macro QSIGN
+	jal do_qsign
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro

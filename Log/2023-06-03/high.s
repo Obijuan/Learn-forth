@@ -231,6 +231,7 @@ QNEG1:
 # ABS     n1 -- +n2     absolute value
 #  DUP ?NEGATE ;
 #----------------------------------------------------
+.global do_abs
 do_abs: 
     DOCOLON
 
@@ -870,6 +871,45 @@ do_charplus:
 # are dependent on the structure of the Forth
 # header.  This may be common across many CPUs,
 # or it may be different.
+
+
+#--------------------------------------------------------
+#  ?SIGN   adr n -- adr' n' f  get optional sign
+#   advance adr/n if sign; return NZ if negative
+#   OVER C@                 -- adr n c
+#   2C - DUP ABS 1 = AND    -- +=-1, -=+1, else 0
+#   DUP IF 1+               -- +=0, -=+2
+#       >R 1 /STRING R>     -- adr' n' f
+#   THEN ;
+#--------------------------------------------------------
+.global do_qsign
+do_qsign:
+    DOCOLON
+
+    OVER
+    CFETCH
+    LIT(0x2C)
+    MINUS
+    DUP
+    ABS
+    LIT(1)
+    EQUAL
+    LAND
+    DUP
+    QBRANCH
+    ADDR(QSIGN1)
+
+    #-- Numero negativo
+    ONEPLUS
+    TOR
+    LIT(1)
+    SLASHSTRING
+    RFROM
+
+QSIGN1:
+
+    EXIT
+
 
 #--------------------------------------------------------
 #  IMMED?    nfa -- f      fetch immediate flag
