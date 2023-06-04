@@ -188,6 +188,7 @@ do_twoover:
 #  2DROP  x1 x2 --          drop 2 cells
 #   DROP DROP ;
 #----------------------------------------------------
+.global do_twodrop
 do_twodrop:
     DOCOLON
 
@@ -1153,6 +1154,80 @@ WORD1:
 # are dependent on the structure of the Forth
 # header.  This may be common across many CPUs,
 # or it may be different.
+
+
+#-------------------------------------------------------------
+#  ?NUMBER  c-addr -- n -1      string->number
+#                  -- c-addr 0  if convert error
+#
+#  La cadena es una counted string
+#
+#   DUP  0 0 ROT COUNT      -- ca ud adr n
+#   ?SIGN >R  >NUMBER       -- ca ud adr' n'
+#   IF   R> 2DROP 2DROP 0   -- ca 0   (error)
+#   ELSE 2DROP NIP R>
+#       IF NEGATE THEN  -1  -- n -1   (ok)
+#   THEN ;
+#-------------------------------------------------------------
+.global do_qnumber
+do_qnumber:
+    DOCOLON
+
+    DUP
+    LIT(0)
+    DUP
+    ROT
+
+    #-- Convertir counted a addr/len
+    COUNT  #-- addr1 0 0  addr2 u
+
+    #-- Comprobar si es positivo o negativo
+    #-- flag 0: Positivo
+    #-- flag >0: Negativo
+    QSIGN  #-- addr1 0 0  addr2 u flag
+
+    #-- Llevar flag a la pila R (Signo)
+    TOR    #-- addr1 0 0  addr2 u  R: flag
+
+    #-- Convertir a numero
+    TONUMBER  #--addr1 ud addr2 u  R: flag
+
+    #-- Saltar si la conversion es correcta
+    QBRANCH
+    ADDR(QNUM1)
+
+    #-- Conversion no correcta
+             #-- addr1 ud addr2  R:flag
+    RFROM    #-- addr1 ud addr2  flag
+    TWODROP  #-- addr1 ud 
+    TWODROP  #-- addr1
+    LIT(0)   #-- addr1 0
+
+    #-- Terminar
+    BRANCH
+    ADDR(QNUM3)
+
+QNUM1:   #-- addr1 ud addr2  R: flag
+    #-- Conversion correcta
+    TWODROP  #-- addr1 n  R: flag
+    NIP   #-- n   R: flag
+
+    #-- Recuperar el flag de signo de la pila R
+    RFROM    #-- n flag
+    QBRANCH  #-- Saltar Si es numero positivo
+    ADDR(QNUM2)
+
+    #-- Es un numero negativo
+    NEGATE #-- n
+
+QNUM2:     #-- n )
+
+    #-- Conversion correcta
+    LIT(-1)
+
+    #-- Terminar
+QNUM3:
+    EXIT
 
 
 #-------------------------------------------------------------

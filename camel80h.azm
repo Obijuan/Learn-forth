@@ -185,23 +185,6 @@ UMAX1:  DW DROP,EXIT
         DW LIT,LIT,COMMAXT,COMMA
 LITER1: DW EXIT
 
-;Z ?NUMBER  c-addr -- n -1      string->number
-;Z                 -- c-addr 0  if convert error
-;   DUP  0 0 ROT COUNT      -- ca ud adr n
-;   ?SIGN >R  >NUMBER       -- ca ud adr' n'
-;   IF   R> 2DROP 2DROP 0   -- ca 0   (error)
-;   ELSE 2DROP NIP R>
-;       IF NEGATE THEN  -1  -- n -1   (ok)
-;   THEN ;
-    head QNUMBER,7,?NUMBER,docolon
-        DW DUP,LIT,0,DUP,ROT,COUNT
-        DW QSIGN,TOR,TONUMBER,qbranch,QNUM1
-        DW RFROM,TWODROP,TWODROP,LIT,0
-        DW branch,QNUM3
-QNUM1:  DW TWODROP,NIP,RFROM,qbranch,QNUM2,NEGATE
-QNUM2:  DW LIT,-1
-QNUM3:  DW EXIT
-
 ;Z INTERPRET    i*x c-addr u -- j*x
 ;Z                      interpret given buffer
 ; This is a common factor of EVALUATE and QUIT.
