@@ -3,7 +3,6 @@ VARIABLE   --             define a Forth variable
 <>     x1 x2 -- flag               test not equal 
 CMOVE> c-addr1 c-addr2 u --         move from top
 KEY?   -- flag        return true if char waiting
-M+     d1 n -- d2            add single to double
 NIP    x1 x2 -- x2              per stack diagram
 U>     u1 u2 -- flag         test u1>u2, unsigned 
 ><     x1 -- x2                        swap bytes 

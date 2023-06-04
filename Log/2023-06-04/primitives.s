@@ -1447,3 +1447,34 @@ do_umslashmod:
 	NEXT
 
 
+#-----------------------------------------------------
+#  M+       d n -- d         add single to double
+#-----------------------------------------------------
+.global do_mplus
+do_mplus:
+
+
+	#-- Leer n.  t2 = n
+    POP_T0
+    mv t2, t0
+
+	#-- Leer d (byte alto). t1 = dh
+    POP_T0
+    mv t1, t0
+    slli t1,t1,16  #-- Desplazar 16 bits a la izquierda
+
+    #-- Leer d (byte bajo). t0 = dl
+    POP_T0
+
+    #-- Sumar la parte baja
+    add t3, t2, t0  #-- t3 = n + dl
+
+    #-- Sumar la parte alta
+    add t3, t3, t1  #-- t3 = n + dl + 0x10000 * dh
+
+    #-- Depositar resultado en la pila
+    mv t0,t3
+    PUSH_T0
+
+	NEXT
+
