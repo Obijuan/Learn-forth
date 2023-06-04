@@ -185,25 +185,6 @@ UMAX1:  DW DROP,EXIT
         DW LIT,LIT,COMMAXT,COMMA
 LITER1: DW EXIT
 
-;C >NUMBER  ud adr u -- ud' adr' u'
-;C                      convert string to number
-;   BEGIN
-;   DUP WHILE
-;       OVER C@ DIGIT?
-;       0= IF DROP EXIT THEN
-;       >R 2SWAP BASE @ UD*
-;       R> M+ 2SWAP
-;       1 /STRING
-;   REPEAT ;
-    head TONUMBER,7,>NUMBER,docolon
-TONUM1: DW DUP,qbranch,TONUM3
-        DW OVER,CFETCH,DIGITQ
-        DW ZEROEQUAL,qbranch,TONUM2,DROP,EXIT
-TONUM2: DW TOR,TWOSWAP,BASE,FETCH,UDSTAR
-        DW RFROM,MPLUS,TWOSWAP
-        DW LIT,1,SLASHSTRING,branch,TONUM1
-TONUM3: DW EXIT
-
 ;Z ?NUMBER  c-addr -- n -1      string->number
 ;Z                 -- c-addr 0  if convert error
 ;   DUP  0 0 ROT COUNT      -- ca ud adr n

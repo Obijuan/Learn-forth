@@ -1476,5 +1476,10 @@ do_mplus:
     mv t0,t3
     PUSH_T0
 
+	#-- (Se devuelve un doble)
+	#-- Poner a 0 el de mayor peso
+	mv t0,zero
+	PUSH_T0
+
 	NEXT
 

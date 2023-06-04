@@ -1191,6 +1191,93 @@ do_digitq:
 
     EXIT
 
+#-------------------------------------------------------------
+#  >NUMBER  ud adr u -- ud' adr' u'
+#                       convert string to number
+#
+#  ud es el numero calculado previamente
+#  Si es el primero, hay que ponerlo a 0
+#  Sirve para encadenar conversiones
+#
+#   BEGIN
+#   DUP WHILE
+#       OVER C@ DIGIT?
+#       0= IF DROP EXIT THEN
+#       >R 2SWAP BASE @ UD*
+#       R> M+ 2SWAP
+#       1 /STRING
+#   REPEAT ;
+#-------------------------------------------------------------
+.global do_tonumber
+do_tonumber:
+    DOCOLON
+
+TONUM1:
+    DUP       #--- Si longitud es 0, terminar (nada que convertir)
+    QBRANCH
+    ADDR(TONUM3)
+
+    #--- Hay una cadena con almenos un caracter
+    #-- Leer primer caracter
+    OVER
+    CFETCH   #-- ud addr u car
+
+    #-- Convertirlo a numero
+    #-- Si la conversion es correcta, flag = -1
+    #-- Si la conversion falla, flag = 0
+    DIGITQ   #-- ud addr u digito flag
+
+    #-- Falla la conversion?
+    #-- flag: 0 --> NO. Todo ok
+    #-- flag: -1 --> Si
+    ZEROEQUAL   #-- 0 0 addr u digito flag2
+
+    #-- Saltar si numero ok
+    QBRANCH
+    ADDR(TONUM2)
+
+    #-- Conversion incorrecta
+    DROP
+
+    #-- EXIT
+    BRANCH
+    ADDR(TONUM3)
+
+TONUM2:
+    #-- Conversion del digito actual es correcta
+    #-- Estado de la pila:  ud addr u digito
+    
+    #-- Guardar el digito en pila R
+    TOR  #-- ud addr u  (R: digito)
+
+    TWOSWAP #-- addr u ud  (R: digito)
+
+    #-- Leer la base
+    BASE
+    FETCH  #-- addr u ud base
+
+    #-- Calcular peso del digito actual 
+    UDSTAR #-- addr u ud*base (R: digito)
+   
+    #-- Recuperar digito de la pila
+    RFROM  #-- addr u ud*base digito
+    
+    #-- Sumar el digito
+    MPLUS  #-- addr u (ud*base + digito)
+    TWOSWAP #-- (ud*base + digito) addr u
+
+    #-- Trim string
+    #-- Avanzar puntero una posicion
+    LIT(1)
+    SLASHSTRING  #-- (ud*base + digito) addr u
+
+    #-- Repetir: Convertir el siguiente digito
+    BRANCH
+    ADDR(TONUM1)
+
+TONUM3:
+    EXIT
+
 
 #-------------------------------------------------------
 # FIND   c-addr -- c-addr 0   if not found
