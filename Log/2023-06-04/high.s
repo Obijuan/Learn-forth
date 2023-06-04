@@ -1472,74 +1472,6 @@ LITER1:
     EXIT
 
 
-
-#-------------------------------------------------------
-#  QUIT     --    R: i*x --    interpret from kbd
-#   L0 LP !  R0 RP!   0 STATE !
-#   BEGIN
-#       TIB DUP TIBSIZE ACCEPT  SPACE
-#       INTERPRET
-#       STATE @ 0= IF CR ." OK" THEN
-#   AGAIN ;
-#--------------------------------------------------------
-.global do_quit
-do_quit:
-    DOCOLON
-
-   #-- Inicializar leaf-stack para que apunte a la base (L0)
-    L0
-    LP 
-    STORE
-
-    #-- Inicializar la pila R
-    R0   #-- Base de la pila R
-    RPSTORE
-
-    #-- Inicializar el estado del compilador
-    LIT(0)
-    STATE
-    STORE
-
-QUIT1:
-    TIB
-    DUP
-    TIBSIZE
-    ACCEPT
-    SPACE
-
-    #-- INTERPRET (TODO)
-    STATE
-    FETCH
-    ZEROEQUAL
-    QBRANCH
-    ADDR(QUIT2)
-    #CR
-    XSQUOTE(3,"ok ")
-    TYPE
-    CR
-
-QUIT2:
-    BRANCH
-    ADDR(QUIT1)
-    
-    EXIT
-
-
-#-------------------------------------------------------
-# ABORT    i*x --   R: j*x --   clear stk & QUIT
-#  S0 SP!  QUIT ;
-#--------------------------------------------------------
-.global do_abort
-do_abort:
-    DOCOLON
-
-    S0
-    SPSTORE
-
-    # QUIT    #-- Quit never returns (TODO)
-
-    EXIT
-
 #-------------------------------------------------------
 #  INTERPRET    i*x c-addr u -- j*x
 #                       interpret given buffer
@@ -1641,6 +1573,84 @@ INTER6:
     #-- Terminar
 INTER9:
     DROP
+
+    EXIT
+
+
+#-------------------------------------------------------
+#  QUIT     --    R: i*x --    interpret from kbd
+#   L0 LP !  R0 RP!   0 STATE !
+#   BEGIN
+#       TIB DUP TIBSIZE ACCEPT  SPACE
+#       INTERPRET
+#       STATE @ 0= IF CR ." OK" THEN
+#   AGAIN ;
+#--------------------------------------------------------
+.global do_quit
+do_quit:
+    DOCOLON
+
+   #-- Inicializar leaf-stack para que apunte a la base (L0)
+    L0
+    LP 
+    STORE
+
+    #-- Inicializar la pila R
+    R0   #-- Base de la pila R
+    RPSTORE
+
+    #-- Inicializar el estado del compilador
+    LIT(0)
+    STATE
+    STORE
+
+QUIT1:
+    TIB
+    DUP
+    TIBSIZE
+    ACCEPT
+    SPACE
+
+                #-- Pila:  address longitud
+    INTERPRET   #--        Numero
+
+    #-- Leer el estado del compilador
+    STATE
+    FETCH #-- numero state
+    
+
+    #-- ¿Estado del compilador 0? (Interpretacion)
+    ZEROEQUAL #-- Numero flag (-1 si es 0, 0 si compilacion)
+
+    #-- Saltar si estamos en modo compilacion
+    QBRANCH
+    ADDR(QUIT2)
+
+    #-- Estamos enmodo intérprete
+    #CR
+    XSQUOTE(3,"ok ")
+    TYPE
+    CR
+    DEBUG
+
+QUIT2:
+    #-- MODO COMPILACION
+    BRANCH
+    ADDR(QUIT1)
+
+
+#-------------------------------------------------------
+# ABORT    i*x --   R: j*x --   clear stk & QUIT
+#  S0 SP!  QUIT ;
+#--------------------------------------------------------
+.global do_abort
+do_abort:
+    DOCOLON
+
+    S0
+    SPSTORE
+
+    # QUIT    #-- Quit never returns (TODO)
 
     EXIT
 
