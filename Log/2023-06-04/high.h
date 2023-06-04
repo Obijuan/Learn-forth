@@ -143,6 +143,10 @@ myStr: .byte %len,
 	jal do_literal
 .end_macro
 
+.macro INTERPRET
+	jal do_interpret
+.end_macro
+
 .macro TONUMBER
 	jal do_tonumber
 .end_macro

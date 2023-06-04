@@ -1540,6 +1540,110 @@ do_abort:
 
     EXIT
 
+#-------------------------------------------------------
+#  INTERPRET    i*x c-addr u -- j*x
+#                       interpret given buffer
+# This is a common factor of EVALUATE and QUIT.
+# ref. dpANS-6, 3.4 The Forth Text Interpreter
+#   'SOURCE 2!  0 >IN !
+#   BEGIN
+#   BL WORD DUP C@ WHILE        -- textadr
+#       FIND                    -- a 0/1/-1
+#       ?DUP IF                 -- xt 1/-1
+#           1+ STATE @ 0= OR    immed or interp?
+#           IF EXECUTE ELSE ,XT THEN
+#       ELSE                    -- textadr
+#           ?NUMBER
+#           IF POSTPONE LITERAL     converted ok
+#           ELSE COUNT TYPE 3F EMIT CR ABORT  err
+#           THEN
+#       THEN
+#   REPEAT DROP ;
+#--------------------------------------------------------
+.global do_interpret
+do_interpret:
+    DOCOLON
+
+    #-- Almacenar direccion y longitud en 'SOURCE
+    #-- Primero esta la longitud, y luego la direccion
+    TICKSOURCE
+    TWOSTORE
+
+    LIT(0)
+    TOIN
+    STORE
+
+INTER1:
+    #-- Interpretar siguiente palabra
+    #-- Pila vacia
+    BL       #-- Obtener siguiente palabra a interpretar
+    WORD     #-- Delimitada por un espacio en blanco
+             #-- Pila: addr del buffer
+
+    DUP      #-- Leer la longitud de la palabra
+    CFETCH   #-- Pila: Dirección longitud
+
+    QBRANCH       #-- Si la palabra tiene 0 caracteres--> Terminar
+    ADDR(INTER9)
+
+    #-- Hay una palabra no nula en el buffer
+    #-- Buscar palabra en diccionario
+    #-- 0: No encontrada
+    #-- -1: Encontrada
+    FIND  #-- Dirección flag
+
+    #-- Duplicar si palabra encontrada
+    QDUP
+    
+    #-- Saltar si no encontrada
+    QBRANCH
+    ADDR(INTER4)
+
+    #-- Palabra en el diccionario
+    BYE #-- TODO
+    #
+#         DW ONEPLUS,STATE,FETCH,ZEROEQUAL,OR
+#         DW qbranch,INTER2
+#         DW EXECUTE,branch,INTER3
+# INTER2: DW COMMAXT
+# INTER3: DW branch,INTER8
+
+INTER4:
+    #--- Palabra no encontrada en el diccionario
+    #-- Pila: addr
+
+    #-- Comprobar si es un numero
+    QNUMBER #--  n flag
+
+    #-- Saltar si NO es un numero
+    QBRANCH
+    ADDR(INTER5)
+
+    #-- Es un numero
+    #-- Pila:  n 
+    LITERAL
+
+    #-- Interpretar siguiente palabra
+    BRANCH
+    ADDR(INTER6)
+
+INTER5:
+    #-- No es un numero
+    #-- TODO
+    LIT(65)
+    EMIT
+
+INTER6:
+    #-- Interpretar siguiente palabra
+    BRANCH
+    ADDR(INTER1)
+
+    #-- Terminar
+INTER9:
+    DROP
+
+    EXIT
+
 
 # ========== UTILITY WORDS AND STARTUP =====================
 
