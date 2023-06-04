@@ -139,6 +139,10 @@ myStr: .byte %len,
 	jal do_qnumber
 .end_macro
 
+.macro LITERAL
+	jal do_literal
+.end_macro
+
 .macro TONUMBER
 	jal do_tonumber
 .end_macro

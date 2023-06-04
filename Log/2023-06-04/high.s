@@ -1433,6 +1433,46 @@ FIND3:
     #-- Terminar
     EXIT
 
+
+#-------------------------------------------------------
+#   LITERAL  x --        append numeric literal
+#    STATE @ IF ['] LIT ,XT , THEN ; IMMEDIATE
+#  This tests STATE so that it can also be used
+#  interpretively.  (ANSI doesn't require this.)
+#--------------------------------------------------------
+#-- TODO!!! INCOMPLETO!!
+.global do_literal
+do_literal:
+    DOCOLON
+
+    #-- Obtener el estado del compilador
+    #-- 0: Interpretando
+    #-- 1: Compilando (¿? Check!!)
+    STATE
+    FETCH
+
+    #-- Saltar si interpretando
+    QBRANCH
+    ADDR(LITER1)
+
+    #-- Modo de compilacion
+    #-- TODO
+    #LIT
+    #LIT
+    #COMAXT
+    #COMMA
+    LIT(65)
+    EMIT
+    BYE
+
+LITER1:
+    #-- Modo interpretando
+    #-- Pila:  n  (Literal en la pila)
+    #-- Terminar
+    EXIT
+
+
+
 #-------------------------------------------------------
 #  QUIT     --    R: i*x --    interpret from kbd
 #   L0 LP !  R0 RP!   0 STATE !
