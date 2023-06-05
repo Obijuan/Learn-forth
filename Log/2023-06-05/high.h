@@ -91,6 +91,11 @@ myStr: .byte %len,
 	jal do_dots
 .end_macro
 
+.macro ALLOT
+	jal do_allot
+.end_macro
+
+
 .macro ABORT
 	jal do_abort
 .end_macro
