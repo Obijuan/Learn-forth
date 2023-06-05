@@ -1652,11 +1652,9 @@ QUIT1:
     ADDR(QUIT2)
 
     #-- Estamos enmodo intérprete
-    #CR
     XSQUOTE(3,"ok ")
     TYPE
     CR
-    DEBUG
 
 QUIT2:
     #-- MODO COMPILACION

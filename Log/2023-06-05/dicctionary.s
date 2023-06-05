@@ -33,11 +33,20 @@ bye: .word do_bye
     .align 2
     .word link2
     .byte 0
-lastword: # nfa of last word in dict. 
 link3:
     .byte 1
     .ascii "+"
-plus: .word do_plus
+    .word do_plus
+
+#-- Palabra 4
+    .align 2
+    .word link3
+    .byte 0
+lastword: # nfa of last word in dict. 
+link4:
+    .byte 1
+    .ascii "."
+    .word do_dot
 
 
 
