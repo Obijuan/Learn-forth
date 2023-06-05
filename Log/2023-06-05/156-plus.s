@@ -207,21 +207,29 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- 1 2 LATEST @ ALIGN @  DUP .HEX EXECUTE .S 65 EMIT CR
+    #-- 1 2 LATEST @ DUP .HEX NFATOCFA DUP .HEX EXECUTE .S 
 	
+    #-- Valores a sumar
     LIT(1)
     LIT(2)
 
+    #-- Obtener el NFA de la ultima palabra
+    #-- (que con el diccionario actual es +)
     LATEST
     FETCH
 
+    #--- Debug: Imprimir la direccion
     DUP
     DOTHEX
 
+    #-- Obtener el CFA a partir del NFA
+    #-- Es decir, la direccion de la rutina
+    #-- con el programa a ejecutar la instruccion forth
     NFATOCFA
     DUP
     DOTHEX
 
+    #-- Ejecutar la instruccion (que es una suma)
     EXECUTE
 
     DOTS

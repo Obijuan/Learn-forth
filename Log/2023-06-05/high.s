@@ -1548,8 +1548,6 @@ INTER1:
 
     #-- Modo interprete
     EXECUTE
-    LIT(67)
-    EMIT
     BRANCH
     ADDR(INTER3)
 
