@@ -152,18 +152,9 @@ UMAX1:  DW DROP,EXIT
 
 ; DICTIONARY MANAGEMENT =========================
 
-;C ALLOT   n --         allocate n bytes in dict
-;   DP +! ;
-    head ALLOT,5,ALLOT,docolon
-        dw DP,PLUSSTORE,EXIT
-
 ; Note: , and C, are only valid for combined
 ; Code and Data spaces.
 
-;C ,    x --           append cell to dict
-;   HERE ! 1 CELLS ALLOT ;
-    head COMMA,1,',',docolon
-        dw HERE,STORE,lit,1,CELLS,ALLOT,EXIT
 
 ;C C,   char --        append char to dict
 ;   HERE C! 1 CHARS ALLOT ;

@@ -1158,6 +1158,25 @@ do_allot:
 
     EXIT
 
+#-------------------------------------------------------------
+#  ,    x --           append cell to dict
+#    HERE ! 1 CELLS ALLOT ;
+#-------------------------------------------------------------
+.global do_comma
+do_comma:
+    DOCOLON
+
+    #-- Almacenar valor en la celula actual
+    HERE
+    STORE
+
+    #-- Añadir una celda nueva
+    LIT(1)
+    CELLS
+    ALLOT
+
+    EXIT
+
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
 #===================================================================

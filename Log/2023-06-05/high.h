@@ -95,6 +95,9 @@ myStr: .byte %len,
 	jal do_allot
 .end_macro
 
+.macro COMMA
+	jal do_comma
+.end_macro
 
 .macro ABORT
 	jal do_abort
