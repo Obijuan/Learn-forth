@@ -12,6 +12,19 @@
 # and so are defined as CODE words
 
 #----------------------------------------------------
+#  >BODY    xt -- a-addr      adrs of param field
+#   4 + ;                     
+#----------------------------------------------------
+.global do_tobody
+do_tobody:
+  DOCOLON
+
+  LIT(4)
+  PLUS
+
+  EXIT
+
+#----------------------------------------------------
 #-- CELL     -- n                 size of one cell
 #----------------------------------------------------
 do_cell:

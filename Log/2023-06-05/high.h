@@ -99,6 +99,10 @@ myStr: .byte %len,
 	jal do_comma
 .end_macro
 
+.macro TOBODY
+	jal do_tobody
+.end_macro
+
 .macro ABORT
 	jal do_abort
 .end_macro
