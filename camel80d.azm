@@ -28,11 +28,6 @@ noop:   next
     head ALIGNED,7,ALIGNED,docode
         jr noop
 
-;C >BODY    xt -- a-addr      adrs of param field
-;   3 + ;                     Z80 (3 byte CALL)
-    head TOBODY,5,>BODY,docolon
-        DW LIT,3,PLUS,EXIT
-
 ;X COMPILE,  xt --         append execution token
 ; I called this word ,XT before I discovered that
 ; it is defined in the ANSI standard as COMPILE,.
