@@ -156,11 +156,6 @@ UMAX1:  DW DROP,EXIT
 ; Code and Data spaces.
 
 
-;C C,   char --        append char to dict
-;   HERE C! 1 CHARS ALLOT ;
-    head CCOMMA,2,'C,',docolon
-        dw HERE,CSTORE,lit,1,CHARS,ALLOT,EXIT
-
 ; INTERPRETER ===================================
 ; Note that NFA>LFA, NFA>CFA, IMMED?, and FIND
 ; are dependent on the structure of the Forth
