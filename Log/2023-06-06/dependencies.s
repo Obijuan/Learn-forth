@@ -4,6 +4,7 @@
 
 	.include "macroCPU.h"
   .include "primitives.h"
+  .include "high.h"
 
   .global do_cell, do_cellplus, do_cells, do_chars
 
@@ -66,7 +67,7 @@ do_chars:
 last:
 
 #----------------------------------------------------
-#  !CF    adrs cfa --   set code action of a word
+#  !CF    cfa addr--   set code action of a word
 #   0CD OVER C!         store 'CALL adrs' instr
 #   1+ ! ;              Z80 VERSION
 # Depending on the implementation this could
@@ -77,7 +78,24 @@ do_storecf:
   DOCOLON
   
   #-- Guardar CFA
-  SWOP
   STORE
 
   EXIT  
+
+#----------------------------------------------------
+#  ,CF    adrs --       append a code field
+#   HERE !CF 3 ALLOT ;  Z80 VERSION (3 bytes)
+#----------------------------------------------------
+.global do_commacf
+do_commacf:
+  DOCOLON
+
+  #-- Almacenar CFA
+  HERE
+  STORECF
+
+  #-- Incrementar diccionario en 4 palabras
+  LIT(4)
+  ALLOT
+
+  EXIT

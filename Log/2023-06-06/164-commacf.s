@@ -1,10 +1,10 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 163
+#-- INTERPRETE DE FORTH. Version 161
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  HERE DUP .HEX  LATEST @ NFATOCFA  DUP .HEX  !CF  HERE @ .HEX
+#--  LATEST @ NFATOCFA DUP .HEX  TOBODY  .HEX
 #--  
-#--  Resultado: 0x100100c8 0x00400e74 0x00400e74  ok
+#--  Resultado: 0x00400e60 0x00400e64  ok
 #--  
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -202,7 +202,8 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- HERE DUP .HEX  LATEST @ NFATOCFA  DUP .HEX  !CF  HERE @ .HEX
+    #-- LATEST @ NFATOCFA DUP .HEX  TOBODY  .HEX
+
 
 
     #-- Obtener un token de ejecución (dirección de la instrucción)
@@ -214,15 +215,18 @@ start:
     DUP
     DOTHEX
 
-    #-- Obtener direccion libre
-    HERE
-    DUP
-    DOTHEX
+    #-- Meter el Code Field address en el diccionario
+    COMMACF
 
-    STORECF
+    #-- Comprobar que se ha añadido
+    #-- Puntero al diccionario
+    DP
+    FETCH
 
-    #-- Comprobar que se ha guardado
-    HERE
+    #-- Apuntar a la celula anterior
+    #-- y mostrar su contenido (debe terner 5)
+    LIT(4)
+    MINUS
     FETCH
     DOTHEX
 

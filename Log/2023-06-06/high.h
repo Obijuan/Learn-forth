@@ -171,6 +171,9 @@ myStr: .byte %len,
 	jal do_storecf
 .end_macro
 
+.macro COMMACF
+	jal do_commacf
+.end_macro
 
 .macro QUIT
 	jal do_quit
