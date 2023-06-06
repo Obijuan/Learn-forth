@@ -167,6 +167,10 @@ myStr: .byte %len,
 	jal do_tonumber
 .end_macro
 
+.macro STORECF
+	jal do_storecf
+.end_macro
+
 
 .macro QUIT
 	jal do_quit

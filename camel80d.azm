@@ -16,27 +16,6 @@
 ;       addresses are byte-aligned.
 ; ===============================================
 
-; ALIGNMENT AND PORTABILITY OPERATORS ===========
-; Many of these are synonyms for other words,
-; and so are defined as CODE words.
-
-;C ALIGN    --                         align HERE
-    head ALIGN,5,ALIGN,docode
-noop:   next
-
-;C ALIGNED  addr -- a-addr       align given addr
-    head ALIGNED,7,ALIGNED,docode
-        jr noop
-
-;Z !CF    adrs cfa --   set code action of a word
-;   0CD OVER C!         store 'CALL adrs' instr
-;   1+ ! ;              Z80 VERSION
-; Depending on the implementation this could
-; append CALL adrs or JUMP adrs.
-    head STORECF,3,!CF,docolon
-        DW LIT,0CDH,OVER,CSTORE
-        DW ONEPLUS,STORE,EXIT
-
 ;Z ,CF    adrs --       append a code field
 ;   HERE !CF 3 ALLOT ;  Z80 VERSION (3 bytes)
     head COMMACF,3,',CF',docolon

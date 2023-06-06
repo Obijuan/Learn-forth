@@ -64,3 +64,20 @@ do_chars:
   NEXT
 
 last:
+
+#----------------------------------------------------
+#  !CF    adrs cfa --   set code action of a word
+#   0CD OVER C!         store 'CALL adrs' instr
+#   1+ ! ;              Z80 VERSION
+# Depending on the implementation this could
+# append CALL adrs or JUMP adrs.
+#----------------------------------------------------
+.global do_storecf
+do_storecf:
+  DOCOLON
+  
+  #-- Guardar CFA
+  SWOP
+  STORE
+
+  EXIT  
