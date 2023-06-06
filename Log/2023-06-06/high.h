@@ -175,6 +175,10 @@ myStr: .byte %len,
 	jal do_commacf
 .end_macro
 
+.macro CCOMMA
+	jal do_ccomma
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro

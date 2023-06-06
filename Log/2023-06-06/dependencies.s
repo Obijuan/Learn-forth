@@ -99,3 +99,22 @@ do_commacf:
   ALLOT
 
   EXIT
+
+#-------------------------------------------------
+#  C,   char --        append char to dict
+#   HERE C! 1 CHARS ALLOT ;
+#-------------------------------------------------
+.global do_ccomma
+do_ccomma:
+  DOCOLON
+
+  HERE
+  CSTORE
+
+  LIT(1)
+  CHARS
+  ALLOT
+
+  EXIT
+
+  
