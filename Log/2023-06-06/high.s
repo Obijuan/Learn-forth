@@ -1247,6 +1247,27 @@ do_hide:
 
     EXIT
 
+#-------------------------------------------------------------
+#   REVEAL   --      "reveal" latest definition
+#    LATEST @ DUP C@ 7F AND SWAP C! ;
+#-------------------------------------------------------------
+.global do_reveal
+do_reveal:
+    DOCOLON
+
+    LATEST
+    FETCH
+    DUP
+    CFETCH
+    LIT(0x7F)
+    LAND
+    SWOP
+    CSTORE
+
+    EXIT
+
+
+
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
 #===================================================================

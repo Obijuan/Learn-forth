@@ -183,6 +183,10 @@ myStr: .byte %len,
 	jal do_hide
 .end_macro
 
+.macro REVEAL
+	jal do_reveal
+.end_macro
+
 .macro CREATE
 	jal do_create
 .end_macro

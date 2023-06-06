@@ -291,12 +291,6 @@ TICK:   call docolon
     head RIGHTBRACKET,1,],docolon
         DW LIT,-1,STATE,STORE,EXIT
 
-;Z REVEAL   --      "reveal" latest definition
-;   LATEST @ DUP C@ 7F AND SWAP C! ;
-    head REVEAL,6,REVEAL,docolon
-        DW LATEST,FETCH,DUP,CFETCH,LIT,7FH,AND
-        DW SWOP,CSTORE,EXIT
-
 ;C IMMEDIATE   --   make last def'n immediate
 ;   1 LATEST @ 1- C! ;   set immediate flag
     head IMMEDIATE,9,IMMEDIATE,docolon
