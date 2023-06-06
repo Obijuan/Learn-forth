@@ -47,7 +47,7 @@ link3:
     .align 2
     .word link3
     .byte 0
-lastword: # nfa of last word in dict. 
+lastword:
 link4:
     .byte 1
     .ascii "."
@@ -55,6 +55,19 @@ link4:
 
 
 
+#-- Palabra 5
+#     .align 2
+#     .word link4
+#     .byte 0
+# lastword: # nfa of last word in dict. 
+# link5:
+#     .byte 2
+#     .ascii ".S"
+#     .word do_dots
+
+
+
 
 #-- Fin del diccionario
+.align 2
 enddict: #-- Aqui comienza el codigo del usuario
