@@ -1267,6 +1267,20 @@ do_reveal:
     EXIT
 
 
+#-------------------------------------------------------------
+#  [        --      enter interpretive state
+#   0 STATE ! ; IMMEDIATE
+#-------------------------------------------------------------
+.global do_leftbracket
+do_leftbracket:
+    DOCOLON
+
+    LIT(0)
+    STATE
+    STORE
+
+    EXIT
+
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO

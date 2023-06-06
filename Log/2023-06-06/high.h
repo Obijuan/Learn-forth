@@ -187,6 +187,10 @@ myStr: .byte %len,
 	jal do_reveal
 .end_macro
 
+.macro LEFTBRACKET
+	jal do_leftbracket
+.end_macro
+
 .macro CREATE
 	jal do_create
 .end_macro

@@ -281,11 +281,6 @@ TICK:   call docolon
     immed RECURSE,7,RECURSE,docolon
         DW LATEST,FETCH,NFATOCFA,COMMAXT,EXIT
 
-;C [        --      enter interpretive state
-;   0 STATE ! ; IMMEDIATE
-    immed LEFTBRACKET,1,[,docolon
-        DW LIT,0,STATE,STORE,EXIT
-
 ;C ]        --      enter compiling state
 ;   -1 STATE ! ;
     head RIGHTBRACKET,1,],docolon
