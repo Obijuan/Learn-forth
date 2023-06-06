@@ -291,12 +291,6 @@ TICK:   call docolon
     head RIGHTBRACKET,1,],docolon
         DW LIT,-1,STATE,STORE,EXIT
 
-;Z HIDE     --      "hide" latest definition
-;   LATEST @ DUP C@ 80 OR SWAP C! ;
-    head HIDE,4,HIDE,docolon
-        DW LATEST,FETCH,DUP,CFETCH,LIT,80H,OR
-        DW SWOP,CSTORE,EXIT
-
 ;Z REVEAL   --      "reveal" latest definition
 ;   LATEST @ DUP C@ 7F AND SWAP C! ;
     head REVEAL,6,REVEAL,docolon

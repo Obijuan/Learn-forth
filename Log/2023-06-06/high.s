@@ -1228,7 +1228,24 @@ do_create:
 
     EXIT
 
+#-------------------------------------------------------------
+#   HIDE     --      "hide" latest definition
+#    LATEST @ DUP C@ 80 OR SWAP C! ;
+#-------------------------------------------------------------
+.global do_hide
+do_hide:
+    DOCOLON
 
+    LATEST
+    FETCH
+    DUP
+    CFETCH
+    LIT(0x80)
+    LOR
+    SWOP
+    CSTORE
+
+    EXIT
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO

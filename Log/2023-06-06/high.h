@@ -179,6 +179,10 @@ myStr: .byte %len,
 	jal do_ccomma
 .end_macro
 
+.macro HIDE
+	jal do_hide
+.end_macro
+
 .macro CREATE
 	jal do_create
 .end_macro
