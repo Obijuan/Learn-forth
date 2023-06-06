@@ -1177,6 +1177,59 @@ do_comma:
 
     EXIT
 
+# ===========  COMPILER ======================================
+
+#-------------------------------------------------------------
+#  CREATE   --      create an empty definition
+#   LATEST @ , 0 C,         link & immed field
+#   HERE LATEST !           new "latest" link
+#   BL WORD C@ 1+ ALLOT         name field
+#   docreate ,CF                code field
+#-------------------------------------------------------------
+.global do_create
+do_create:
+    DOCOLON
+
+    #--- Obtener la dir. de la ultima palabra
+    LATEST
+    FETCH
+
+    #-- Añadir el link
+    COMMA
+
+    #-- Añadir campo inmediato
+    LIT(0)
+    CCOMMA
+
+    #-- Actualizar el latest link
+    HERE
+    LATEST
+    STORE
+
+    #-- Añadir el campo nombre
+    #-- Copiar el nombre del buffer de entrada
+    #-- indicado por SOURCE
+    BL
+    WORD
+
+    #-- Leer el tamaño y sumar 1
+    CFETCH
+    ONEPLUS
+
+    #-- Reserver tamaño+1 byes (para que el contador tambien esté)
+    ALLOT
+
+    #-- Añadir el code field
+    #-- TODO
+    #-- Se mete un valor de prueba
+    la t0, do_dots
+    PUSH_T0    
+    COMMACF
+
+    EXIT
+
+
+
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
 #===================================================================

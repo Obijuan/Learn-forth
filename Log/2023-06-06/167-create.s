@@ -1,11 +1,18 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 161
+#-- INTERPRETE DE FORTH. Version 167
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  LATEST @ NFATOCFA DUP .HEX  TOBODY  .HEX
+#--  CREATE  LATEST FETCH  NFATOLFA DUP CR .HEX 16 DUMP QUIT
 #--  
-#--  Resultado: 0x00400e60 0x00400e64  ok
+#--  Resultado: 
+#--  Z80 CamelForth v1.01  25 Jan 1995
 #--  
+#--  0x100100c8 
+#--  00C8 C1 00 01 10 00 02 2E 53 AC 0F 40 00 00 00 00 00 
+#--   ok
+#--  
+#--  Y tras esto se entra en el modo interactivo. La nueva
+#--  palabra ".S" ya esta disponible disponible...
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -202,53 +209,11 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- 
+    #-- CREATE  LATEST FETCH  NFATOLFA DUP CR .HEX 16 DUMP QUIT
 
-    #--- Obtener la dir. de la ultima palabra
-    LATEST
-    FETCH
-    DUP
-    DOTHEX
+    CREATE
 
-    DUP
-    LIT(16)
-    DUMP
-
-    #-- Añadir el link
-    DUP
-    COMMA
-
-    LIT(16)
-    DUMP
-
-    #-- Añadir campo inmediato
-    LIT(0)
-    CCOMMA
-
-    #-- Actualizar el latest link
-    HERE
-    LATEST
-    STORE
-
-    #-- Añadir el campo nombre
-    #-- Copiar el nombre del buffer de entrada
-    #-- indicado por SOURCE
-    BL
-    WORD
-
-    #-- Leer el tamaño y sumar 1
-    CFETCH
-    ONEPLUS
-
-    #-- Reserver tamaño+1 byes (para que el contador tambien esté)
-    ALLOT
-
-    #-- Añadir el code field
-    li t0, 0x004010D8
-    PUSH_T0    
-    COMMACF
-
-#-- DEBUG: Volcado de la ultima palabra
+    #-- DEBUG: Volcado de la ultima palabra
     LATEST
     FETCH
     #-- Direccion del campo del link

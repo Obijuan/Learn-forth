@@ -260,17 +260,6 @@ TICK:   call docolon
         DW LIT,29H,WORD,DROP,EXIT
 
 ; COMPILER ======================================
-
-;C CREATE   --      create an empty definition
-;   LATEST @ , 0 C,         link & immed field
-;   HERE LATEST !           new "latest" link
-;   BL WORD C@ 1+ ALLOT         name field
-;   docreate ,CF                code field
-    head CREATE,6,CREATE,docolon
-        DW LATEST,FETCH,COMMA,LIT,0,CCOMMA
-        DW HERE,LATEST,STORE
-        DW BL,WORD,CFETCH,ONEPLUS,ALLOT
-        DW LIT,docreate,COMMACF,EXIT
         
 ;Z (DOES>)  --      run-time action of DOES>
 ;   R>              adrs of headless DOES> def'n
