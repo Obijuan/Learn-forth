@@ -16,11 +16,6 @@
 ;       addresses are byte-aligned.
 ; ===============================================
 
-;Z ,CF    adrs --       append a code field
-;   HERE !CF 3 ALLOT ;  Z80 VERSION (3 bytes)
-    head COMMACF,3,',CF',docolon
-        DW HERE,STORECF,LIT,3,ALLOT,EXIT
-
 ;Z !COLON   --      change code field to docolon
 ;   -3 ALLOT docolon-adrs ,CF ;
 ; This should be used immediately after CREATE.
