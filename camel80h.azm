@@ -281,11 +281,6 @@ TICK:   call docolon
     immed RECURSE,7,RECURSE,docolon
         DW LATEST,FETCH,NFATOCFA,COMMAXT,EXIT
 
-;C ]        --      enter compiling state
-;   -1 STATE ! ;
-    head RIGHTBRACKET,1,],docolon
-        DW LIT,-1,STATE,STORE,EXIT
-
 ;C IMMEDIATE   --   make last def'n immediate
 ;   1 LATEST @ 1- C! ;   set immediate flag
     head IMMEDIATE,9,IMMEDIATE,docolon

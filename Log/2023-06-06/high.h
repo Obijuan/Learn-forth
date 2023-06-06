@@ -191,6 +191,10 @@ myStr: .byte %len,
 	jal do_leftbracket
 .end_macro
 
+.macro RIGHTBRACKET
+	jal do_rightbracket
+.end_macro
+
 .macro CREATE
 	jal do_create
 .end_macro

@@ -1281,6 +1281,20 @@ do_leftbracket:
 
     EXIT
 
+#-------------------------------------------------------------
+#   ]        --      enter compiling state
+#    -1 STATE ! ;
+#-------------------------------------------------------------
+.global do_rightbracket
+do_rightbracket:
+    DOCOLON
+
+    LIT(-1)
+    STATE
+    STORE
+
+    EXIT
+
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
