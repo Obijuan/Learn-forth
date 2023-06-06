@@ -28,14 +28,6 @@ noop:   next
     head ALIGNED,7,ALIGNED,docode
         jr noop
 
-;X COMPILE,  xt --         append execution token
-; I called this word ,XT before I discovered that
-; it is defined in the ANSI standard as COMPILE,.
-; On a DTC Forth this simply appends xt (like , )
-; but on an STC Forth this must append 'CALL xt'.
-    head COMMAXT,8,'COMPILE,',docode
-        jp COMMA
-
 ;Z !CF    adrs cfa --   set code action of a word
 ;   0CD OVER C!         store 'CALL adrs' instr
 ;   1+ ! ;              Z80 VERSION
