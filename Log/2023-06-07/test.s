@@ -331,9 +331,48 @@ do_dotwinfo:
 
     EXIT
 
+
 #---------------------------------------------------------
-#-- .NULL    --   No hacer nada...
-#-- : NULL ;
+#-- .WCODE   addr u --   Mostrar codigo maquina de la palabra
+#--  addr es la direccion de la palabra en el diccionario
+#---------------------------------------------------------
+.global do_dotwcode
+do_dotwcode:
+    DOCOLON
+
+    #-- Obtener direccion del codigo de la palabra
+    SWOP
+    NFATOCFA
+    FETCH     #--  addr
+  
+    #-- Repetir u veces
+    SWOP
+    LIT(0)
+    XDO
+wcode1:
+      DUP       #--  addr addr
+      DOTHEX    #--  addr
+      LIT(0x3A)
+      EMIT
+      SPACE
+  
+      DUP       #-- addr addr
+      FETCH     #-- addr code
+      DOTHEX    #-- addr
+      CR
+      LIT(4)    #-- addr 4
+      PLUS      #-- addr+4
+      
+    XLOOP
+    ADDR(wcode1)
+
+    EXIT
+
+
+
+#---------------------------------------------------------
+#-- NOP    --   No hacer nada...
+#-- : NOP ;
 #---------------------------------------------------------
 .global do_null
 do_null:

@@ -204,8 +204,20 @@ start:
     #-- Programa Forth: 
     #-- 
 
-    #NULL
-    #NULL
+# #-- Do COLON
+# 0xffc40413  addi s0,s0,-4 
+# 0x00142023  sw ra,0(s0)
+
+
+# #-- EXIT
+# 0x00042083  lw ra,0(s0)
+# 0x00440413  addi s0,s0,4
+# 0x00008067  ret
+
+
+
+
+    # NOP
 
     LATEST
     FETCH

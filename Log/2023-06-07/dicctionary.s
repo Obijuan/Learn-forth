@@ -58,11 +58,22 @@ link4:
     .align 2
     .word link4
     .byte 0
-lastword:
 link5:
     .byte 2
     .ascii ".S"
     .word do_dots
+
+
+#-- Palabra 6
+    .align 2
+    .word link5
+    .byte 0
+lastword:
+link6:
+    .byte 3
+    .ascii "NOP"
+    .word do_null
+
 
 
 
