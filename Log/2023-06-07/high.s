@@ -1255,9 +1255,9 @@ do_create:
     ALLOT
 
     #-- Añadir el code field
-    #-- TODO
     #-- Se mete un valor de prueba
     la t0, do_dots
+    #la t0, do_null
     PUSH_T0    
     COMMACF
 

@@ -1,10 +1,24 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 171
+#-- INTERPRETE DE FORTH. Version 174
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  ] STATE @ .HEX
+#--  LATEST @ .WINFO CR  CREATE  LATEST @ .WINFO CR
 #--  
-#--  Resultado: 0xffffffff  ok
+#--  Resultado:
+#--  Z80 CamelForth v1.01  25 Jan 1995
+#--  
+#--  0x100100c8  Link: 0x100100c1 
+#--  0x100100cc  Inmd: 0 
+#--  0x100100cd  NLen: 2 
+#--  0x100100ce  Name: .S
+#--  0x100100d0  CFA:  0x00400fa8 
+#--  
+#--  
+#--  0x100100d4  Link: 0x100100cd 
+#--  0x100100d8  Inmd: 0 
+#--  0x100100d9  NLen: 2 
+#--  0x100100da  Name: ..
+#--  0x100100dc  CFA:  0x00400fa8
 #--  
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -51,8 +65,8 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .byte '.', '.', ' ', 't'
-    .byte 3, 't', 'e', 's'
+    .byte '.', '.', ' ', ' '
+    .byte ' ', 't', 'e', 's'
     .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
 
@@ -202,260 +216,27 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- 
+    #-- LATEST @ .WINFO CR  CREATE  LATEST @ .WINFO CR
 
-    DP
+    #-- Mostrar la ultima palabra del diccionario
+    LATEST
     FETCH
-    DOTHEX
+    DOTWINFO
     CR
-   
 
-    #-- COLON
+    #-- Crear una entrada nueva
+    #-- (se llama a .DOTS)
     CREATE
-    HIDE
-    RIGHTBRACKET
 
-    DP
-    FETCH
-    DOTHEX
-    CR
-    BYE
-
-    #-- Cambiar el code field a campo colon
+    #-- Mostrar la nueva palabra creada
     LATEST
     FETCH
-
-    COUNT
-    LIT(0x7F)
-    LAND
-    PLUS
-    ALIGN
-
-    DUP
-    #-- Puntero a la siguiente direccion (donde esta el codigo)
-    DUP
-    LIT(4)
-    PLUS
-    SWOP
-    STORE
-
-    #-- Almacenar el codigo correspondiente a docolon
-    LIT(4)
-    PLUS
-    DUP
-    LIT(4)
-    PLUS
-    SWOP
-    DUP
-    DOTS
+    DOTWINFO
     CR
-
-    li t0, 0xFFC40413
-    PUSH_T0
-    SWOP
-    DOTS
-    CR
-    STORE
-    DOTS
-    CR
-
-    FETCH
-    DOTHEX
-    CR
-
-    #-- Codigo a guardar
-    #0xFFC40413   #-- addi s0,s0,-4
-    #0x00142023   #-- sw x1,0(x8)
-
-    DOTS
-    CR
-
-    DUP
-    li t0, 0x00142023
-    PUSH_T0
-    SWOP
-    STORE
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instrucción de salto
-    #-- Guardar jal do_dot
-    
-    #-- De momento NO está optimizado
-    #-- Hay que generar este código máquina:
-    # 0x12345337  lui t1,0x12345 (1)
-    # 0x00fec2b7  lui t0,0xFEC (2)
-    # 0x00c2d293  srli t0,t0,12 (3)
-    # 0x00536333  or t1,t1,t0 (4)
-    # 0x00030067  jalr zero,t1,0 (5)
-
-    #-- Generamos el código máquina
-    lui t0, %hi(do_dot)
-	lui t1, 0x337
-	srli t1,t1,12
-	or t1,t0,t1      #-- Generar primera instruccion
-
-    DUP
-    POP_T0
-    sw t1,0(t0)  #-- Guardar primera instruccion
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-
-    #-- Generar la segunda instruccion
-	addi t0, zero, %lo(do_dot)
-	slli t0,t0,12
-	lui t1, 0x2b7
-	srli t1,t1,12
-	or t1,t0,t1
-
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-	
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-	#-- Generar la Tercera instruccion
-	lui t0,0x00c2d
-	addi t1,t0,0x293
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-	#-- Cuarta instruccion
-	lui t0, 0x00536
-	addi t1,t0,0x333
-
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-	LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-	#-- Quinta instruccion
-	lui t0, 0x00030
-	addi t1,t0,0x067
-
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-    
-    #-- Meter el EXIT
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instruccion: 0x00042083 lw ra,0(s0)
-	lui t0, 0x00042
-	addi t1,t0,0x083
-
-    #-- Guardar instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instruccion:  0x00440413  addi x8,x8,4
-	lui t0, 0x00044
-	addi t1,t0,0x413
-
-     #-- Guardar instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instruccion:  0x00008067  jalr x0,x1,0
-	lui t0, 0x00008
-	addi t1,t0,0x067
-    
-    #-- Guardar instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-     
-
-    #-- Volcar la ultima palabra creada
-    LATEST
-    FETCH
-    LIT(48)
-    DUMP
-
-    #-------------------------------------
-    #-- Terminar
-    REVEAL
-    #CEXIT
-    LEFTBRACKET
-
 
     #-- Fin ejecución directa
     XSQUOTE(4," ok\n")
     TYPE
-
-    jal do_dot
-    CR
 
     QUIT
 

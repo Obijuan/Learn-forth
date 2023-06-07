@@ -207,6 +207,10 @@ myStr: .byte %len,
 	jal do_dotwinfo
 .end_macro
 
+.macro NULL
+	jal do_null
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro

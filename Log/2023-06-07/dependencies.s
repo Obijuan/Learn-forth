@@ -84,7 +84,7 @@ do_storecf:
 
 #----------------------------------------------------
 #  ,CF    adrs --       append a code field
-#   HERE !CF 3 ALLOT ;  Z80 VERSION (3 bytes)
+#   HERE !CF 4 ALLOT ;  
 #----------------------------------------------------
 .global do_commacf
 do_commacf:
