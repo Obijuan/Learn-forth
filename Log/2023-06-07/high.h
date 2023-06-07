@@ -203,6 +203,10 @@ myStr: .byte %len,
 	jal do_words
 .end_macro
 
+.macro DOTWINFO
+	jal do_dotwinfo
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro

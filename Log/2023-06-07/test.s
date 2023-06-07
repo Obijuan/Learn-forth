@@ -4,6 +4,7 @@
 #---------------------------------------------------------
     .include "macroCPU.h"
     .include "primitives.h"
+    .include "high.h"
 
     .globl do_swab, do_lo, do_hi, do_tohex, do_dothh, do_dotb, do_dota
     .globl do_dump, do_zquit
@@ -260,3 +261,72 @@ zquit1:
 
 	#-- Devolver control
 	EXIT
+
+#---------------------------------------------------------
+#-- .WINFO   addr --   Mostrar informacion de la palabra
+#---------------------------------------------------------
+.global do_dotwinfo
+do_dotwinfo:
+    DOCOLON
+
+    DUP     #--- addr addr  (Direccion del nombre de la palabra)
+
+    #-- Mostrar el campo LFA
+    CR
+    NFATOLFA #--- addr lfa
+    DUP      #--- addr lfa lfa
+    DOTHEX   #-- addr lfa   --> Direccion de LFA
+    FETCH    #-- addr link  --> Contenido de LFA: Dir a la sig palabra
+    SPACE
+    XSQUOTE(6,"Link: ")
+    TYPE
+    DOTHEX   #-- addr
+    CR
+
+    #-- Mostrar el campo inmediato
+    DUP      #-- addr addr
+    LIT(-1)  #-- Apuntar al campo inmediato
+    PLUS     #-- addr inmed  (Direccion del campo inmediato)
+    DUP      #-- addr inmed inmed
+    DOTHEX   #-- addr inmed  (Imprimir direccion)
+    CFETCH   #-- addr vinmed (Valor del campo inmediato)
+    SPACE
+    XSQUOTE(6,"Inmd: ")
+    TYPE
+    DOT
+    CR
+
+    #-- Mostrar campo de longitud
+    DUP
+    DOTHEX
+    SPACE
+    XSQUOTE(6,"NLen: ")
+    TYPE
+    DUP
+    CFETCH
+    DOT
+    CR
+
+    #-- Mostrar el campo nombre
+    DUP
+    COUNT
+    OVER   #-- addr addr+1 len addr+1
+    DOTHEX
+    SPACE
+    XSQUOTE(6,"Name: ")
+    TYPE
+    TYPE
+    CR
+
+    #-- Mostrar el campo CFA
+    NFATOCFA
+    DUP
+    DOTHEX
+    SPACE 
+    XSQUOTE(6,"CFA:   ")
+    TYPE
+    FETCH
+    DOTHEX
+    CR
+
+    EXIT

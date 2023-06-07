@@ -1010,7 +1010,6 @@ do_nfatocfa:
     LAND
     PLUS
     ALIGN
-    FETCH
     EXIT
 
 #--------------------------------------------------------
@@ -1610,6 +1609,7 @@ FIND2:
 
     #-- Obtener el CFA (Code field Address)
     NFATOCFA
+    FETCH
     SWOP
     IMMEDQ
     ZEROEQUAL
