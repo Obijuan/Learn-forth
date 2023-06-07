@@ -2,9 +2,18 @@
 #-- INTERPRETE DE FORTH. Version 171
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  ] STATE @ .HEX
+#--  LATEST @ .WINFO
 #--  
-#--  Resultado: 0xffffffff  ok
+#--  Resultado: 
+#--  Z80 CamelForth v1.01  25 Jan 1995
+#--  
+#--  0x100100c8  Link: 0x100100c1 
+#--  0x100100cc  Inmd: 0 
+#--  0x100100cd  NLen: 2 
+#--  0x100100ce  Name: .S
+#--  0x100100d0  CFA:  0x00400f90 
+#--  
+#--   ok
 #--  
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -202,14 +211,11 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- 
+    #-- LATEST @ .WINFO
 
     LATEST
     FETCH
-
     DOTWINFO
-
-    DEBUG
 
     #-- Fin ejecución directa
     XSQUOTE(4," ok\n")
