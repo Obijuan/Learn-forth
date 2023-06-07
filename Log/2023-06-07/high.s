@@ -797,6 +797,42 @@ DOTS2:
 
     EXIT
 
+#-----------------------------------------------------
+#  WORDS    --          list all words in dict.
+#   LATEST @ BEGIN
+#       DUP COUNT TYPE SPACE
+#       NFA>LFA @
+#   DUP 0= UNTIL
+#   DROP ;
+#-----------------------------------------------------
+.global do_words
+do_words:
+	DOCOLON
+
+   #-- Direccion de la ultima palabra en el diccionario
+    LATEST
+    FETCH
+
+WDS1: 
+    DUP
+    COUNT
+    TYPE
+    SPACE
+
+    #-- Obtener enlace de la siguiente palabra
+    NFATOLFA
+    FETCH
+
+    #-- Comprobar si la dirección es 0 (ultima palabra)
+    DUP
+    ZEROEQUAL
+    QBRANCH    #-- No es la ultima, imprimir la siguiente
+    ADDR(WDS1)
+
+    DROP
+
+    EXIT
+
 #------------------------------------------------------
 #-- LIMPIEZA......................
 #-----------------------------------------------------

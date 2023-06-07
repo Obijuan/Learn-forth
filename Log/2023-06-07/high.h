@@ -199,6 +199,10 @@ myStr: .byte %len,
 	jal do_create
 .end_macro
 
+.macro WORDS
+	jal do_words
+.end_macro
+
 .macro QUIT
 	jal do_quit
 .end_macro

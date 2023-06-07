@@ -1,11 +1,11 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 100
+#-- INTERPRETE DE FORTH. Version 171
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  65 EMIT CR 65 EMIT CR
+#--  ] STATE @ .HEX
 #--  
-#--  Resultado: A          A ok
-#--
+#--  Resultado: 0xffffffff  ok
+#--  
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -34,9 +34,11 @@
 #-- de alto nivel, tenemos en RA la siguiente instrucción forth
 #----------------------------------------------------------------
 
-	.include "macros.h"
+	.include "macroCPU.h"
+    .include "primitives.h"
+    .include "high.h"
 
-    .global dovar, docreate, enddict, do_uinit
+    .global do_uinit, ptib
 
 #---------------------------------
 #-- SEGMENTO DE DATOS
@@ -49,28 +51,15 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .byte '.', '.', ' ', 't'
+    .byte 3, 't', 'e', 's'
+    .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
+    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
 
-#-------------------------
-#-- Diccionario
-#-------------------------
-#-- Palabra 0
-      .word 0   #-- (link) Enlace a la siguiente palabra. Esta es la última
-      .byte 0   #-- No inmediato
-link0:          #-- Enlace a esta palabra
-      .byte 4   #-- Longitud
-      .ascii "EXIT" #-- Nombre
-exit: #-- jal exit #-- Codigo Forth
+.include "dicctionary.s"
 
-    .align 2
-
-#-- Nota: Debe valer link (enlace a la ultima palabra del diccionario)
-#-- Pero de momento ponemos su valor a 0
-lastword: .word 0   # nfa of last word in dict. 
-
-#-- Fin del diccionario
-enddict: #-- Aqui comienza el codigo del usuario
+#--- NOTA: Reservar espacio para el usuario!!!
+    .space 1024
 
 #--------------------------------
 #-- Valores iniciales para el area de usuario
@@ -85,17 +74,27 @@ enddict: #-- Aqui comienza el codigo del usuario
 #--  Se deposita en la pila la direccion de los valores iniciales
 #--  del area de usuario
 #       -- addr 
-do_uinit:
+do_uinit: #--- CODIGO!!!!
     .word 0xFFC40413  #-- addi s0,s0,-4  | PUSH_RA
     .word 0x00142023  #-- sw ra,0(s0)    |
-    .word 0x004000e7  #-- jalr ra,zero,4    (jal docreate) (4 es la dir de dovar)
 
+    #-- Saltar a la direccion del segmento de texto + 4 (offset de docreate)
+    #-- Si segmento de texto comienza en 0, poner este salto:
+    # .word 0x00000013  #-- nop
+    # .word 0x00000013  #-- nop
+    # .word 0x004000e7  #-- jalr ra,zero,4
+    #-- Si segmento de texto comienza en 0x00400000 poner este otro salto:
+    .word 0x004002b7  #-- lui t0, 0x400 | li t0, 0x00400000 (Dir seg texto)
+    .word 0x00028293  #-- addi t0,t0,0  |
+    .word 0x004280e7  #-- jalr ra,t0,4  | Saltar a 0x400004 (Dir de docreate)
+                      #-- ra contiene la direccion de los datos que vienen
+                      #-- a continuacion
 #-- Parametros: valores iniciales area de usuario
 uinit_params:
     .word 0,0,10,0  # reserved, >IN, BASE, STATE
     .word enddict   # DP
-    .word 0,0       # SOURCE init'd elsewhere
-    .word lastword  # LATEST
+    .word 5,ptib       # SOURCE init'd elsewhere
+    .word lastword   # LATEST
     .word 0         # HP init'd elsewhere
 
 
@@ -148,7 +147,6 @@ ppad:
     .space 128
 rstack:
 
-
 #---------------------------------------------------------------
 #-- CODIGO
 #---------------------------------------------------------------
@@ -196,17 +194,21 @@ start:
 
     #-- Inicializacion del sistema
     #-- (COLD)
+    #-- COLD llama a quit, pero de momento lo hacemos manualmente
     COLD
 
-	#-- Programa Forth:
+    #-- Arrancar el modo interactivo (intérprete)
+    #QUIT  #-- Nunca retorna de aquí
+
+    #-- Modo ejecución directa (No interactivo)
+    #-- Programa Forth: 
     #-- 
 
-	#-- Interprete de forth: Imprimir " ok"
+    WORDS
+
+    #-- Fin ejecución directa
     XSQUOTE(4," ok\n")
     TYPE
-	
+
 	#-- Terminar
 	BYE
-	
-
-
