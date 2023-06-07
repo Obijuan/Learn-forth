@@ -1225,6 +1225,7 @@ do_comma:
 do_create:
     DOCOLON
 
+   
     #--- Obtener la dir. de la ultima palabra
     LATEST
     FETCH
@@ -1245,15 +1246,13 @@ do_create:
     #-- Copiar el nombre del buffer de entrada
     #-- indicado por SOURCE
     BL
-    WORD
+    WORD  #--- addr  (no alineada)
 
-    #-- Leer el tamaño y sumar 1
-    CFETCH
-    ONEPLUS
-
-    #-- Reserver tamaño+1 byes (para que el contador tambien esté)
-    ALLOT
-
+    #-- Añadir los bytes del nombre y la longitud
+    CFETCH  #--- size
+    ONEPLUS #--- size'
+    ALLOT 
+    
     #-- Añadir el code field
     #-- Se mete un valor de prueba
     la t0, do_dots

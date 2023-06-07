@@ -83,14 +83,29 @@ do_storecf:
   EXIT  
 
 #----------------------------------------------------
-#  ,CF    adrs --       append a code field
+#  ,CF    cfa --       append a code field
 #   HERE !CF 4 ALLOT ;  
 #----------------------------------------------------
 .global do_commacf
 do_commacf:
   DOCOLON
 
-  #-- Almacenar CFA
+  #-- La dirección no tiene por qué estar alineada
+  #-- Vamos a cualquier desalineamiento:
+  #--   0: Está alineada
+  #--   1-3: No alineada
+  #-- En caso de desalineamiento esos bytes hay que 
+  #-- sumarlos al puntero del diccionario mediante ALLOC
+  HERE      #-- cfa addr
+  DUP       #-- cfa addr addr
+  ALIGN     #-- cfa addr a-addr
+  SWOP      #-- cfa a-addr addr
+  MINUS     #-- cfa mis  (numero de bytes de desalineacion 0-3)
+
+  #-- Meterlos en el diccionario
+  ALLOT     #-- cfa
+
+  #-- Almacenar CFA en direccion alineada
   HERE
   STORECF
 
