@@ -304,12 +304,16 @@ do_dotwinfo:
     TYPE
     DUP
     CFETCH
-    DOT
+    DOTHH
     CR
 
     #-- Mostrar el campo nombre
     DUP
     COUNT
+
+    #-- Quitar el bit mas significativo del contador
+    LIT(0x7F)
+    LAND  
     OVER   #-- addr addr+1 len addr+1
     DOTHEX
     SPACE

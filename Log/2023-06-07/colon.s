@@ -51,7 +51,7 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .byte '.', '.', ' ', ' '
+    .byte 'N', 'O', 'P', ' '
     .byte ' ', 't', 'e', 's'
     .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
@@ -214,10 +214,32 @@ start:
 # 0x00440413  addi s0,s0,4
 # 0x00008067  ret
 
+    #-- Crear una entrada nueva en el diccionario
+    CREATE
 
+    #-- Ocultar la palabra en las busquedas
+    #-- Esta a medio construir
+    HIDE
 
+    LATEST
+    FETCH
+    NFATOLFA
+    LIT(16)
+    DUMP
 
-    # NOP
+    LATEST
+    FETCH
+    DOTWINFO
+    CR
+
+    LATEST
+    FETCH
+    LIT(5)
+    DOTWCODE
+    CR
+    BYE
+
+    NOP
 
     LATEST
     FETCH

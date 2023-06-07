@@ -132,4 +132,44 @@ do_ccomma:
 
   EXIT
 
+#-------------------------------------------------
+#  !COLON   --      change code field to docolon
+#   -3 ALLOT docolon-adrs ,CF ;
+# This should be used immediately after CREATE.
+# This is made a distinct word, because on an STC
+# Forth, colon definitions have no code field.
+#-------------------------------------------------
+.global do_storcolon
+do_storcolon:
+  DOCOLON
+
+  #------- !COLON
+  #-- Almacenar la direccion HERE en HERE-4
+  #-- Ahora CPA apunta a HERE, y ahí es donde se meterá
+  #-- el codigo de la palabra que se está construyendo
+  HERE      #-- addr
+  DUP       #-- addr addr
+  LIT(-4)   #-- addr addr -4
   
+  PLUS      #-- addr addr-4
+  STORE
+
+  #-- Copiar el codigo de do-colon
+  # 0xffc40413  addi s0,s0,-4 
+  # 0x00142023  sw ra,0(s0)
+  HERE
+  POP_T0  #-- t0: Direccion destino
+  la t1,docolon  #-- t1: Dirección fuente
+
+  #-- Copiar primera instrucción
+  lw t2, 0(t1)
+  sw t2, 0(t0)
+
+  #-- Copiar la segunda instrucción
+  lw t2, 4(t1)
+  sw t2, 4(t0)
+
+  LIT(8)  #-- Generar espacio para 2 instrucciones en el diccionario
+  ALLOT
+
+  EXIT

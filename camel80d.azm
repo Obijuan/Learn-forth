@@ -16,15 +16,6 @@
 ;       addresses are byte-aligned.
 ; ===============================================
 
-;Z !COLON   --      change code field to docolon
-;   -3 ALLOT docolon-adrs ,CF ;
-; This should be used immediately after CREATE.
-; This is made a distinct word, because on an STC
-; Forth, colon definitions have no code field.
-    head STORCOLON,6,'!COLON',docolon
-        DW LIT,-3,ALLOT
-        DW LIT,docolon,COMMACF,EXIT
-
 ;Z ,EXIT    --      append hi-level EXIT action
 ;   ['] EXIT ,XT ;
 ; This is made a distinct word, because on an STC
