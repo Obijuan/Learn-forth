@@ -1,11 +1,11 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 171
+#-- INTERPRETE DE FORTH. Version 100
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  ] STATE @ .HEX
+#--  65 EMIT CR 65 EMIT CR
 #--  
-#--  Resultado: 0xffffffff  ok
-#--  
+#--  Resultado: A          A ok
+#--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -34,11 +34,9 @@
 #-- de alto nivel, tenemos en RA la siguiente instrucción forth
 #----------------------------------------------------------------
 
-	.include "macroCPU.h"
-    .include "primitives.h"
-    .include "high.h"
+	.include "macros.h"
 
-    .global do_uinit, ptib
+    .global dovar, docreate, enddict, do_uinit
 
 #---------------------------------
 #-- SEGMENTO DE DATOS
@@ -51,15 +49,28 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .byte '.', '.', ' ', 't'
-    .byte 3, 't', 'e', 's'
-    .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
-    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
+    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
-.include "dicctionary.s"
+#-------------------------
+#-- Diccionario
+#-------------------------
+#-- Palabra 0
+      .word 0   #-- (link) Enlace a la siguiente palabra. Esta es la última
+      .byte 0   #-- No inmediato
+link0:          #-- Enlace a esta palabra
+      .byte 4   #-- Longitud
+      .ascii "EXIT" #-- Nombre
+exit: #-- jal exit #-- Codigo Forth
 
-#--- NOTA: Reservar espacio para el usuario!!!
-    .space 1024
+    .align 2
+
+#-- Nota: Debe valer link (enlace a la ultima palabra del diccionario)
+#-- Pero de momento ponemos su valor a 0
+lastword: .word 0   # nfa of last word in dict. 
+
+#-- Fin del diccionario
+enddict: #-- Aqui comienza el codigo del usuario
 
 #--------------------------------
 #-- Valores iniciales para el area de usuario
@@ -74,27 +85,17 @@ ptib:  #-- Puntero
 #--  Se deposita en la pila la direccion de los valores iniciales
 #--  del area de usuario
 #       -- addr 
-do_uinit: #--- CODIGO!!!!
+do_uinit:
     .word 0xFFC40413  #-- addi s0,s0,-4  | PUSH_RA
     .word 0x00142023  #-- sw ra,0(s0)    |
+    .word 0x004000e7  #-- jalr ra,zero,4    (jal docreate) (4 es la dir de dovar)
 
-    #-- Saltar a la direccion del segmento de texto + 4 (offset de docreate)
-    #-- Si segmento de texto comienza en 0, poner este salto:
-    # .word 0x00000013  #-- nop
-    # .word 0x00000013  #-- nop
-    # .word 0x004000e7  #-- jalr ra,zero,4
-    #-- Si segmento de texto comienza en 0x00400000 poner este otro salto:
-    .word 0x004002b7  #-- lui t0, 0x400 | li t0, 0x00400000 (Dir seg texto)
-    .word 0x00028293  #-- addi t0,t0,0  |
-    .word 0x004280e7  #-- jalr ra,t0,4  | Saltar a 0x400004 (Dir de docreate)
-                      #-- ra contiene la direccion de los datos que vienen
-                      #-- a continuacion
 #-- Parametros: valores iniciales area de usuario
 uinit_params:
     .word 0,0,10,0  # reserved, >IN, BASE, STATE
     .word enddict   # DP
-    .word 5,ptib       # SOURCE init'd elsewhere
-    .word lastword   # LATEST
+    .word 0,0       # SOURCE init'd elsewhere
+    .word lastword  # LATEST
     .word 0         # HP init'd elsewhere
 
 
@@ -147,6 +148,7 @@ ppad:
     .space 128
 rstack:
 
+
 #---------------------------------------------------------------
 #-- CODIGO
 #---------------------------------------------------------------
@@ -194,270 +196,17 @@ start:
 
     #-- Inicializacion del sistema
     #-- (COLD)
-    #-- COLD llama a quit, pero de momento lo hacemos manualmente
     COLD
 
-    #-- Arrancar el modo interactivo (intérprete)
-    #QUIT  #-- Nunca retorna de aquí
-
-    #-- Modo ejecución directa (No interactivo)
-    #-- Programa Forth: 
+	#-- Programa Forth:
     #-- 
 
-    DP
-    FETCH
-    DOTHEX
-    CR
-   
-
-    #-- COLON
-    CREATE
-    HIDE
-    RIGHTBRACKET
-
-    DP
-    FETCH
-    DOTHEX
-    CR
-    BYE
-
-    #-- Cambiar el code field a campo colon
-    LATEST
-    FETCH
-
-    COUNT
-    LIT(0x7F)
-    LAND
-    PLUS
-    ALIGN
-
-    DUP
-    #-- Puntero a la siguiente direccion (donde esta el codigo)
-    DUP
-    LIT(4)
-    PLUS
-    SWOP
-    STORE
-
-    #-- Almacenar el codigo correspondiente a docolon
-    LIT(4)
-    PLUS
-    DUP
-    LIT(4)
-    PLUS
-    SWOP
-    DUP
-    DOTS
-    CR
-
-    li t0, 0xFFC40413
-    PUSH_T0
-    SWOP
-    DOTS
-    CR
-    STORE
-    DOTS
-    CR
-
-    FETCH
-    DOTHEX
-    CR
-
-    #-- Codigo a guardar
-    #0xFFC40413   #-- addi s0,s0,-4
-    #0x00142023   #-- sw x1,0(x8)
-
-    DOTS
-    CR
-
-    DUP
-    li t0, 0x00142023
-    PUSH_T0
-    SWOP
-    STORE
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instrucción de salto
-    #-- Guardar jal do_dot
-    
-    #-- De momento NO está optimizado
-    #-- Hay que generar este código máquina:
-    # 0x12345337  lui t1,0x12345 (1)
-    # 0x00fec2b7  lui t0,0xFEC (2)
-    # 0x00c2d293  srli t0,t0,12 (3)
-    # 0x00536333  or t1,t1,t0 (4)
-    # 0x00030067  jalr zero,t1,0 (5)
-
-    #-- Generamos el código máquina
-    lui t0, %hi(do_dot)
-	lui t1, 0x337
-	srli t1,t1,12
-	or t1,t0,t1      #-- Generar primera instruccion
-
-    DUP
-    POP_T0
-    sw t1,0(t0)  #-- Guardar primera instruccion
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-
-    #-- Generar la segunda instruccion
-	addi t0, zero, %lo(do_dot)
-	slli t0,t0,12
-	lui t1, 0x2b7
-	srli t1,t1,12
-	or t1,t0,t1
-
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-	
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-	#-- Generar la Tercera instruccion
-	lui t0,0x00c2d
-	addi t1,t0,0x293
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-	#-- Cuarta instruccion
-	lui t0, 0x00536
-	addi t1,t0,0x333
-
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-	LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-	
-	#-- Quinta instruccion
-	lui t0, 0x00030
-	addi t1,t0,0x067
-
-    #-- Guardar segunda instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-    
-    #-- Meter el EXIT
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instruccion: 0x00042083 lw ra,0(s0)
-	lui t0, 0x00042
-	addi t1,t0,0x083
-
-    #-- Guardar instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instruccion:  0x00440413  addi x8,x8,4
-	lui t0, 0x00044
-	addi t1,t0,0x413
-
-     #-- Guardar instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-
-    LIT(4)
-    PLUS
-    DUP
-    DOTHEX
-    CR
-
-    #-- Instruccion:  0x00008067  jalr x0,x1,0
-	lui t0, 0x00008
-	addi t1,t0,0x067
-    
-    #-- Guardar instruccion
-    DUP
-    POP_T0
-    sw t1,0(t0) 
-    DUP
-    DOTHEX
-    CR
-     
-
-    #-- Volcar la ultima palabra creada
-    LATEST
-    FETCH
-    LIT(48)
-    DUMP
-
-    #-------------------------------------
-    #-- Terminar
-    REVEAL
-    #CEXIT
-    LEFTBRACKET
-
-
-    #-- Fin ejecución directa
+	#-- Interprete de forth: Imprimir " ok"
     XSQUOTE(4," ok\n")
     TYPE
-
-    jal do_dot
-    CR
-
-    QUIT
-
+	
 	#-- Terminar
 	BYE
+	
+
+
