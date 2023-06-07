@@ -369,7 +369,7 @@ wcode1:
       
     XLOOP
     ADDR(wcode1)
-
+    DROP
     EXIT
 
 

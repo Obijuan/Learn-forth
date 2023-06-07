@@ -207,6 +207,10 @@ myStr: .byte %len,
 	jal do_colon
 .end_macro
 
+.macro CEXIT
+	jal do_cexit
+.end_macro
+
 .macro WORDS
 	jal do_words
 .end_macro

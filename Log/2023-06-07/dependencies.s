@@ -173,3 +173,40 @@ do_storcolon:
   ALLOT
 
   EXIT
+
+#-------------------------------------------------
+#  ,EXIT    --      append hi-level EXIT action
+#   ['] EXIT ,XT ;
+# This is made a distinct word, because on an STC
+# Forth, it appends a RET instruction, not an xt.
+#-------------------------------------------------
+.global do_cexit
+do_cexit:
+  DOCOLON
+
+  #-- CEXIT
+  #-- Copiar el codigo de exit
+  # 0x00042083  lw ra,0(s0)
+  # 0x00440413  addi s0,s0,4
+  # 0x00008067  ret
+  
+  HERE
+  POP_T0  #-- t0: Direccion destino
+  la t1,exit  #-- t1: Dirección fuente
+
+  #-- Copiar primera instrucción
+  lw t2, 0(t1)
+  sw t2, 0(t0)
+
+  #-- Copiar la segunda instrucción
+  lw t2, 4(t1)
+  sw t2, 4(t0)
+
+  #-- Copiar la tercera instrucción
+  lw t2, 8(t1)
+  sw t2, 8(t0)
+
+  LIT(12)  #-- Generar espacio para 3 instrucciones en el diccionario
+  ALLOT
+
+  EXIT
