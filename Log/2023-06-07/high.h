@@ -203,6 +203,10 @@ myStr: .byte %len,
 	jal do_storcolon
 .end_macro
 
+.macro COLON
+	jal do_colon
+.end_macro
+
 .macro WORDS
 	jal do_words
 .end_macro

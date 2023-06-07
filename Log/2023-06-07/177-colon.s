@@ -2,9 +2,22 @@
 #-- INTERPRETE DE FORTH. Version 174
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  ] STATE @ .HEX
+#--  : LATEST @ .WINFO CR  LATEST @ 5 .WCODE CR
 #--  
-#--  Resultado: 0xffffffff  ok
+#--  Resultado: 
+#--  Z80 CamelForth v1.01  25 Jan 1995
+#--  
+#--  0x100100e4  Link: 0x100100d9 
+#--  0x100100e8  Inmd: 0 
+#--  0x100100e9  NLen: 83
+#--  0x100100ea  Name: NOP
+#--  0x100100f0  CFA:  0x100100f4 
+#--  
+#--  0x100100f4 : 0xffc40413 
+#--  0x100100f8 : 0x00142023 
+#--  0x100100fc : 0x00000000 
+#--  0x10010100 : 0x00000000 
+#--  0x10010104 : 0x00000000
 #--  
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -209,28 +222,14 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- 
-
-
-
+    #-- : LATEST @ .WINFO CR  LATEST @ 5 .WCODE CR
 
 # #-- EXIT
 # 0x00042083  lw ra,0(s0)
 # 0x00440413  addi s0,s0,4
 # 0x00008067  ret
 
-    #-- Crear una entrada nueva en el diccionario
-    CREATE
-
-    #-- Ocultar la palabra en las busquedas
-    #-- Esta a medio construir
-    HIDE
-
-    #--- Entrar en modo compilacion
-    RIGHTBRACKET
-
-    #-- Añadir las instrucciones para ejecutar DOCOLON
-    STORCOLON
+    COLON
 
     LATEST
     FETCH

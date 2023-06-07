@@ -1329,6 +1329,29 @@ do_rightbracket:
 
     EXIT
 
+#-------------------------------------------------------------
+#  :        --      begin a colon definition
+#   CREATE HIDE ] !COLON ;
+#-------------------------------------------------------------
+.global do_colon
+do_colon:
+    DOCOLON
+
+    #-- Crear una entrada nueva en el diccionario
+    CREATE
+
+    #-- Ocultar la palabra en las busquedas
+    #-- Esta a medio construir
+    HIDE
+
+    #--- Entrar en modo compilacion
+    RIGHTBRACKET
+
+    #-- Añadir las instrucciones para ejecutar DOCOLON
+    STORCOLON
+
+    EXIT
+
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO

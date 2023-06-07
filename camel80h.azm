@@ -287,13 +287,6 @@ TICK:   call docolon
         DW LIT,1,LATEST,FETCH,ONEMINUS,CSTORE
         DW EXIT
 
-;C :        --      begin a colon definition
-;   CREATE HIDE ] !COLON ;
-    head COLON,1,:,docode
-        CALL docolon    ; code fwd ref explicitly
-        DW CREATE,HIDE,RIGHTBRACKET,STORCOLON
-        DW EXIT
-
 ;C ;
 ;   REVEAL  ,EXIT
 ;   POSTPONE [  ; IMMEDIATE
