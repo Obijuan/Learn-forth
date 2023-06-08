@@ -1,11 +1,3 @@
 CONSTANT   n --           define a Forth constant
-VARIABLE   --             define a Forth variable
 USER   n --              define user variable 'n'
-<>     x1 x2 -- flag               test not equal 
-U>     u1 u2 -- flag         test u1>u2, unsigned 
-><     x1 -- x2                        swap bytes 
-PC!    c p-addr --            output char to port
-PC@    p-addr -- c           input char from port
-KEY?   -- flag        return true if char waiting
-BDOS   DE C -- A                   call CP/M BDOS
 
