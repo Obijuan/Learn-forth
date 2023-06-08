@@ -1996,3 +1996,21 @@ do_ugreater:
     ULESS
 
     EXIT
+
+# =============== DEFINING WORDS ================================
+
+#-----------------------------------------------------
+#   VARIABLE   --      define a Forth variable
+#    CREATE 1 CELLS ALLOT ;
+#  Action of RAM variable is identical to CREATE,
+#  so we don't need a DOES> clause to change it.
+#-----------------------------------------------------
+.global do_variable
+do_variable:
+	DOCOLON
+
+	CREATE
+    STORCOLON
+    STORVAR
+
+	EXIT

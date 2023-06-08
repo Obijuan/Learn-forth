@@ -489,6 +489,10 @@
   jal do_swapbytes
 .end_macro
 
+.macro VARIABLE
+  jal do_variable
+.end_macro
+
 
 
 
