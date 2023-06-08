@@ -481,6 +481,10 @@
   jal do_sequal
 .end_macro
 
+.macro CMOVEUP
+  jal do_cmoveup
+.end_macro
+
 
 
 

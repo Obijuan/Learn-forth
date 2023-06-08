@@ -1303,6 +1303,53 @@ cmove_end:
 
 
 #-----------------------------------------------------
+#  CMOVE>  c-addr1 c-addr2 u --  move from top
+# as defined in the ANSI optional String word set
+#-----------------------------------------------------
+.global do_cmoveup
+do_cmoveup:
+
+	   #-- t2 = Numero de caracteres
+    POP_T0
+    mv t2, t0
+    #-- Decrementamos en 1 el numero de caracteres
+    addi t2,t2,-1
+
+    #-- t1 = Direccion destino
+    POP_T0
+    mv t1, t0
+
+    #-- t0 = Direccion fuente
+    POP_T0
+
+    #-- Calcular src+u, dst+u
+    add t1, t1, t2
+    add t0, t0, t2
+
+cmoveup_loop:
+    #-- Si t2==0, hemos terminado
+    beq t2,zero,cmoveup_end
+
+    #-- Copiar byte
+    lb t3, 0(t0)
+    sb t3, 0(t1)
+
+    #-- Decrementar contador de caracteres
+    addi t2,t2,-1
+
+    #-- Decrementar direcciones
+    addi t0,t0,-1
+    addi t1,t1,-1
+
+    #-- Repetir
+    j cmoveup_loop
+
+cmoveup_end:
+
+	NEXT
+
+
+#-----------------------------------------------------
 #  S=    c-addr1 c-addr2 u -- n   string compare
 #             n<0: s1<s2, n=0: s1=s2, n>0: s1>s2
 #
