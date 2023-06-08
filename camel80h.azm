@@ -452,9 +452,4 @@ LOOP2:  DW EXIT
 MOVE1:  DW RFROM,CMOVE
 MOVE2:  DW EXIT
 
-;C DEPTH    -- +n        number of items on stack
-;   SP@ S0 SWAP - 2/ ;   16-BIT VERSION!
-    head DEPTH,5,DEPTH,docolon
-        DW SPFETCH,S0,SWOP,MINUS,TWOSLASH,EXIT
-
 ; UTILITY WORDS AND STARTUP =====================

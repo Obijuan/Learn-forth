@@ -219,6 +219,10 @@ myStr: .byte %len,
 	jal do_environmentq
 .end_macro
 
+.macro DEPTH
+	jal do_depth
+.end_macro
+
 .macro WORDS
 	jal do_words
 .end_macro

@@ -1903,6 +1903,23 @@ do_abort:
 # ========== OTHER OPERATIONS ==============================
 
 #-------------------------------------------------------
+#  DEPTH    -- +n        number of items on stack
+#   SP@ S0 SWAP - 2/ ;   16-BIT VERSION!
+#--------------------------------------------------------
+.global do_depth
+do_depth:
+    DOCOLON
+
+    SPFETCH
+    S0
+    SWOP
+    MINUS
+    TWOSLASH
+    TWOSLASH
+
+    EXIT
+
+#-------------------------------------------------------
 #  ENVIRONMENT?  c-addr u -- false   system query
 #                         -- i*x true
 #   2DROP 0 ;       the minimal definition!
