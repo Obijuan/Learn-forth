@@ -247,3 +247,6 @@ myStr: .byte %len,
 	jal do_cold
 .end_macro
 
+.macro NOTEQUAL
+  jal do_notequal
+.end_macro

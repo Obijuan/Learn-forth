@@ -1970,3 +1970,18 @@ do_cold:
     #-- ABORT  (TODO)
 
     EXIT
+
+# ============= COMPARISON OPERATIONS =========================
+
+#-----------------------------------------------------
+#  <>     x1 x2 -- flag    test not eq (not ANSI)
+#-----------------------------------------------------
+.global do_notequal
+do_notequal:
+	DOCOLON
+
+	EQUAL
+    ZEROEQUAL
+
+	EXIT
+
