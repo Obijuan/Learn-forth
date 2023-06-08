@@ -56,9 +56,3 @@ dodoes: ; -- a-addr
         ld c,l
         next
 
-; COMPARISON OPERATIONS =========================
-
-;X U>    u1 u2 -- flag     u1>u2 unsgd (not ANSI)
-    head UGREATER,2,U>,docolon
-        DW SWOP,ULESS,EXIT
-

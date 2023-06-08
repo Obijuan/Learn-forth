@@ -1985,3 +1985,14 @@ do_notequal:
 
 	EXIT
 
+#-----------------------------------------------------
+#  U>    u1 u2 -- flag     u1>u2 unsgd (not ANSI)
+#-----------------------------------------------------
+.global do_ugreater
+do_ugreater:
+	DOCOLON
+
+    SWOP
+    ULESS
+
+    EXIT
