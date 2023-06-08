@@ -287,13 +287,6 @@ TICK:   call docolon
         DW LIT,1,LATEST,FETCH,ONEMINUS,CSTORE
         DW EXIT
 
-;C ;
-;   REVEAL  ,EXIT
-;   POSTPONE [  ; IMMEDIATE
-    immed SEMICOLON,1,';',docolon
-        DW REVEAL,CEXIT
-        DW LEFTBRACKET,EXIT
-
 ;C [']  --         find word & compile as literal
 ;   '  ['] LIT ,XT  , ; IMMEDIATE
 ; When encountered in a colon definition, the
