@@ -1900,8 +1900,27 @@ do_abort:
     EXIT
 
 
-# ========== UTILITY WORDS AND STARTUP =====================
+# ========== OTHER OPERATIONS ==============================
 
+#-------------------------------------------------------
+#  ENVIRONMENT?  c-addr u -- false   system query
+#                         -- i*x true
+#   2DROP 0 ;       the minimal definition!
+#--------------------------------------------------------
+.global do_environmentq
+do_environmentq:
+    DOCOLON
+
+    #-- Eliminar parametros de entrada
+    TWODROP
+
+    #-- Poner un false: No hay variables de entorno
+    #- en esta implementacion
+    LIT(0)
+
+    EXIT
+
+# ========== UTILITY WORDS AND STARTUP =====================
 
 #----------------------------------------------------
 # COLD     --      cold start Forth system

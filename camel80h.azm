@@ -457,10 +457,4 @@ MOVE2:  DW EXIT
     head DEPTH,5,DEPTH,docolon
         DW SPFETCH,S0,SWOP,MINUS,TWOSLASH,EXIT
 
-;C ENVIRONMENT?  c-addr u -- false   system query
-;                         -- i*x true
-;   2DROP 0 ;       the minimal definition!
-    head ENVIRONMENTQ,12,ENVIRONMENT?,docolon
-        DW TWODROP,LIT,0,EXIT
-
 ; UTILITY WORDS AND STARTUP =====================
