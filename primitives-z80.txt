@@ -1,54 +1,9 @@
-; Listing 2.
-; ===============================================
-;
 ; CAMEL80.AZM: Code Primitives
 ;   Source code is for the Z80MR macro assembler.
 ;   Forth words are documented as follows:
 ;x   NAME     stack -- stack    description
 ;   where x=C for ANS Forth Core words, X for ANS
 ;   Extensions, Z for internal or private words.
-;
-; Direct-Threaded Forth model for Zilog Z80
-; 16 bit cell, 8 bit char, 8 bit (byte) adrs unit
-;    Z80 BC = Forth TOS (top Param Stack item)
-;        HL =       W    working register
-;        DE =       IP   Interpreter Pointer
-;        SP =       PSP  Param Stack Pointer
-;        IX =       RSP  Return Stack Pointer
-;        IY =       UP   User area Pointer
-;    A, alternate register set = temporaries
-;
-; Revision history:
-;   19 Aug 94 v1.0
-;   25 Jan 95 v1.01  now using BDOS function 0Ah
-;       for interpreter input; TIB at 82h.
-;   02 Mar 95 v1.02  changed ALIGN to ALIGNED in
-;       S" (S"); changed ,BRANCH to ,XT in DO.
-; ===============================================
-; Macros to define Forth headers
-; HEAD  label,length,name,action
-; IMMED label,length,name,action
-;    label  = assembler name for this word
-;             (special characters not allowed)
-;    length = length of name field
-;    name   = Forth's name for this word
-;    action = code routine for this word, e.g.
-;             DOCOLON, or DOCODE for code words
-; IMMED defines a header for an IMMEDIATE word.
-;
-DOCODE  EQU 0      ; flag to indicate CODE words
-link    DEFL 0     ; link to previous Forth word
-
-head    MACRO   #label,#length,#name,#action
-        DW link
-        DB 0
-link    DEFL $
-        DB #length,'#name'
-#label:
-        IF  .NOT.(#action=DOCODE)
-        call #action
-        ENDIF
-        ENDM
 
 immed   MACRO   #label,#length,#name,#action
         DW link
@@ -60,41 +15,6 @@ link    DEFL $
         call #action
         ENDIF
         ENDM
-
-; RESET AND INTERRUPT VECTORS ===================
-; ...are not used in the CP/M implementation
-; Instead, we have the...
-
-; CP/M ENTRY POINT
-        org 100h
-reset:  ld hl,(6h)   ; BDOS address, rounded down
-        ld l,0       ;    = end of avail.mem (EM)
-        dec h        ; EM-100h
-        ld sp,hl     ;      = top of param stack
-        inc h        ; EM
-        push hl
-        pop ix       ;      = top of return stack
-        dec h        ; EM-200h
-        dec h
-        push hl
-        pop iy       ;      = bottom of user area
-        ld de,1      ; do reset if COLD returns
-        jp COLD      ; enter top-level Forth word
-
-; Memory map:
-;   0080h       Terminal Input Buffer, 128 bytes
-;   0100h       Forth kernel = start of CP/M TPA
-;     ? h       Forth dictionary (user RAM)
-;   EM-200h     User area, 128 bytes
-;   EM-180h     Parameter stack, 128B, grows down
-;   EM-100h     HOLD area, 40 bytes, grows down
-;   EM-0D8h     PAD buffer, 88 bytes
-;   EM-80h      Return stack, 128 B, grows down
-;   EM          End of RAM = start of CP/M BDOS
-; See also the definitions of U0, S0, and R0
-; in the "system variables & constants" area.
-; A task w/o terminal input requires 200h bytes.
-; Double all except TIB and PAD for 32-bit CPUs.
 
 ; DEFINING WORDS ================================
 
@@ -136,50 +56,6 @@ dodoes: ; -- a-addr
         ld c,l
         next
 
-; CP/M TERMINAL I/O =============================
-cpmbdos EQU 5h          ; CP/M BDOS entry point
-
-;Z BDOS   de c -- a   call CP/M BDOS
-    head BDOS,4,BDOS,docode
-        ex de,hl    ; save important Forth regs
-        pop de      ;  (DE,IX,IY) & pop DE value
-        push hl
-        push ix
-        push iy
-        call cpmbdos
-        ld c,a      ; result in TOS
-        ld b,0
-        pop iy      ; restore Forth regs
-        pop ix
-        pop de
-        next
-
-;X KEY?     -- f    return true if char waiting
-;   0FF 6 BDOS DUP SAVEKEY C! ;   rtns 0 or key
-; must use BDOS function 6 to work with KEY
-    head querykey,4,KEY?,docolon
-        DW LIT,0FFH,LIT,06H,BDOS
-        DW DUP,SAVEKEY,CSTORE,EXIT
-
-; STACK OPERATIONS ==============================
-
-; MEMORY AND I/O OPERATIONS =====================
-
-;Z PC!     char c-addr --    output char to port
-    head PCSTORE,3,PC!,docode
-        pop hl          ; char in L
-        out (c),l       ; to port (BC)
-        pop bc          ; pop new TOS
-        next
-
-;Z PC@     c-addr -- char   input char from port
-    head PCFETCH,3,PC@,docode
-        in c,(c)        ; read port (BC) to C
-        ld b,0
-        next
-
-; ARITHMETIC AND LOGICAL OPERATIONS =============
-
 ;Z ><      x1 -- x2         swap bytes (not ANSI)
     head swapbytes,2,><,docode
         ld a,b
@@ -196,13 +72,4 @@ cpmbdos EQU 5h          ; CP/M BDOS entry point
 ;X U>    u1 u2 -- flag     u1>u2 unsgd (not ANSI)
     head UGREATER,2,U>,docolon
         DW SWOP,ULESS,EXIT
-
-; LOOP AND BRANCH OPERATIONS ====================
-
-; MULTIPLY AND DIVIDE ===========================
-
-; BLOCK AND STRING OPERATIONS ===================
-
-*INCLUDE camel80d.azm   ; CPU Dependencies
-*INCLUDE camel80h.azm   ; High Level words
 
