@@ -2,14 +2,30 @@
 #-- INTERPRETE DE FORTH. Version 185
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--   7 7 <> .HEX CR  7 5 <> .HEX CR
+#--   LATEST @ .WINFO  LATEST @ 6 .WCODE QUIT
 #--  
 #--  Resultado: 3  ok
 #--  Z80 CamelForth v1.01  25 Jan 1995
-#--  0x00000000 
-#--  0xffffffff 
-#--   ok
 #--  
+#--  0x100100f4  Link: 0x100100e9 
+#--  0x100100f8  Inmd: 0 
+#--  0x100100f9  NLen: 01
+#--  0x100100fa  Name: A
+#--  0x100100fc  CFA:  0x10010100 
+#--  0x10010100 : 0xffc40413 
+#--  0x10010104 : 0x00142023 
+#--  0x10010108 : 0x004002b7 
+#--  0x1001010c : 0x00428293 
+#--  0x10010110 : 0x000280e7 
+#--  0x10010114 : 0x00000000 
+#--   ok
+#--  A
+#--   ok 
+#--  .S
+#--   268501268 ok 
+#--  BYE
+#--  
+#-- NOTA: 268501268 = 0x10010114
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -222,7 +238,7 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- 
+    #-- LATEST @ .WINFO  LATEST @ 6 .WCODE QUIT
   
     LATEST
     FETCH
