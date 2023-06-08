@@ -239,3 +239,38 @@ do_storvar:
   ALLOT
 
   EXIT
+
+#-------------------------------------------------
+#  !CON  x --      Añadir campo para constantes
+#-------------------------------------------------
+.global do_storcon
+do_storcon:
+  DOCOLON
+
+  HERE
+  POP_T0  #-- t0: Direccion destino
+  la t1,docon_code  #-- t1: Dirección fuente
+
+  #-- Copiar primera instrucción
+  lw t2, 8(t1)
+  sw t2, 0(t0)
+
+  #-- Copiar la segunda instrucción
+  lw t2, 0xC(t1)
+  sw t2, 4(t0)
+
+  #-- Copiar la tercera instrucción
+  lw t2, 0x10(t1)
+  sw t2, 8(t0)
+
+  LIT(12)  #-- Generar espacio para 3 instrucciones en el diccionario
+  ALLOT
+
+  #-- Almacenar la constante
+  HERE
+  STORE
+
+  LIT(4)
+  ALLOT
+
+  EXIT

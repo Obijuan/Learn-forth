@@ -207,6 +207,11 @@ myStr: .byte %len,
 	jal do_storvar
 .end_macro
 
+.macro STORCON
+	jal do_storcon
+.end_macro
+
+
 
 .macro COLON
 	jal do_colon
