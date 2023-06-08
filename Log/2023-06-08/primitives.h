@@ -485,6 +485,9 @@
   jal do_cmoveup
 .end_macro
 
+.macro SWAPBYTES
+  jal do_swapbytes
+.end_macro
 
 
 

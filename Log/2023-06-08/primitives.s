@@ -1530,3 +1530,28 @@ do_mplus:
 
 	NEXT
 
+# ============= COMPARISON OPERATIONS =========================
+
+#-----------------------------------------------------
+#  ><      x1 -- x2         swap bytes (not ANSI)
+#-----------------------------------------------------
+.global do_swapbytes
+do_swapbytes:
+
+    POP_T0
+
+    #-- Meter en t1 el byte alto
+    li t1, 0xFF00
+    and t1,t1,t0
+    srli t1,t1,8
+
+    #-- En t0 tenemos el byte bajo
+    andi t0,t0,0xFF
+    slli t0,t0,8
+
+    #-- Meter en t0 el valor final
+    or t0,t1,t0
+
+    PUSH_T0
+
+	NEXT

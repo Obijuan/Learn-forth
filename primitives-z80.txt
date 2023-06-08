@@ -56,13 +56,6 @@ dodoes: ; -- a-addr
         ld c,l
         next
 
-;Z ><      x1 -- x2         swap bytes (not ANSI)
-    head swapbytes,2,><,docode
-        ld a,b
-        ld b,c
-        ld c,a
-        next
-
 ; COMPARISON OPERATIONS =========================
 
 ;X <>     x1 x2 -- flag    test not eq (not ANSI)
