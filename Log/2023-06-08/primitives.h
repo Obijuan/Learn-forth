@@ -493,6 +493,10 @@
   jal do_variable
 .end_macro
 
+.macro CONSTANT
+  jal do_constant
+.end_macro
+
 
 
 

@@ -2014,3 +2014,17 @@ do_variable:
     STORVAR
 
 	EXIT
+
+#-----------------------------------------------------
+#  CONSTANT   n --      define a Forth constant
+#   CREATE , DOES> (machine code fragment)
+#-----------------------------------------------------
+.global do_constant
+do_constant:
+	DOCOLON
+
+	CREATE
+    STORCOLON
+    STORCON
+
+	EXIT

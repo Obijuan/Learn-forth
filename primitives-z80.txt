@@ -18,11 +18,6 @@ link    DEFL $
 
 ; DEFINING WORDS ================================
 
-;C CONSTANT   n --      define a Forth constant
-;   CREATE , DOES> (machine code fragment)
-    head CONSTANT,8,CONSTANT,docolon
-        DW CREATE,COMMA,XDOES
-
 ;Z USER     n --        define user variable 'n'
 ;   CREATE , DOES> (machine code fragment)
     head USER,4,USER,docolon
