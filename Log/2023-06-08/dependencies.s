@@ -210,3 +210,32 @@ do_cexit:
   ALLOT
 
   EXIT
+
+
+#-------------------------------------------------
+#  !VAR   --      Añadir campo para variables
+#-------------------------------------------------
+.global do_storvar
+do_storvar:
+  DOCOLON
+
+  HERE
+  POP_T0  #-- t0: Direccion destino
+  la t1,dovar_code  #-- t1: Dirección fuente
+
+  #-- Copiar primera instrucción
+  lw t2, 8(t1)
+  sw t2, 0(t0)
+
+  #-- Copiar la segunda instrucción
+  lw t2, 0xC(t1)
+  sw t2, 4(t0)
+
+  #-- Copiar la tercera instrucción
+  lw t2, 0x10(t1)
+  sw t2, 8(t0)
+
+  LIT(12)  #-- Generar espacio para 3 instrucciones en el diccionario
+  ALLOT
+
+  EXIT
