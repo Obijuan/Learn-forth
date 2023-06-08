@@ -68,13 +68,49 @@ link5:
     .align 2
     .word link5
     .byte 0
-lastword:
 link6:
     .byte 3
     .ascii "NOP"
     .word do_null
 
 
+#-- Palabra 7
+    .align 2
+    .word link6
+    .byte 0
+link7:
+    .byte 5
+    .ascii "WORDS"
+    .word do_words
+
+
+#-- Palabra 8: VARIABLE
+    .align 2
+    .word link7
+    .byte 0
+lastword:
+link8:
+    .byte 1
+    .ascii "A"
+    .word do_a
+do_a:  
+     .word 0xffc40413  #-- addi s0,s0, -4
+     .word 0x00142023  #-- sw ra, 0(s0)
+     .word 0x004002b7  #-- li t0, 0x00400004
+     .word 0x00428293
+     .word 0x000280e7  #-- jalr ra,t0,0
+     .word 0           #-- PARAMETRO: La variable
+
+
+
+#-------------------------------------------
+#-- Codigo a ejecutar para leer la variable
+#-- almacenada en el campo de parametros
+#-- 0xffc40413  #-- addi s0,s0, -4
+#-- 0x00142023  #-- sw ra, 0(s0)
+#-- 0x004002b7  #-- li t0, 0x00400004
+#-- 0x00428293  
+#-- 0x000280e7  #-- jalr ra,t0,0
 
 
 

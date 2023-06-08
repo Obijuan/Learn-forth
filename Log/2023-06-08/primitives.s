@@ -1212,6 +1212,9 @@ do_execute:
 	POP_T0
 
 	#-- Ejecutar la palabra
+	#-- En ra está la dirección del campo de parametros
+	#-- Solo lo usan las variables y constantes para recuperar
+	#-- el valor
 	jalr  zero, t0, 0
 
 
