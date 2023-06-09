@@ -1,34 +1,43 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 198
+#-- INTERPRETE DE FORTH. Version 199
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  LATEST @ .WINFO  
-#--  LIT(0xCACA) CONSTANT 
-#--  LATEST @ .WINFO  LATEST @ 6 .WCODE 
-#--  QUIT
+#--  LATEST @ DUP .WINFO 7 .WCODE
+#--  : TEST6 -- ;
+#--  LATEST @ DUP .WINFO 7 .WCODE
 #--  
 #--  Resultado: 
 #--  Z80 CamelForth v1.01  25 Jan 1995
 #--  
-#--  0x10010118  Link: 0x100100f9 
-#--  0x1001011c  Inmd: 0 
-#--  0x1001011d  NLen: 03
-#--  0x1001011e  Name: ESC
-#--  0x10010124  CFA:  0x10010128 
+#--  0x10010158  Link: 0x10010151 
+#--  0x1001015c  Inmd: 0 
+#--  0x1001015d  NLen: 05
+#--  0x1001015e  Name: TEST5
+#--  0x10010164  CFA:  0x00402198 
+#--  0x00402198 : 0xffc40413 
+#--  0x0040219c : 0x00142023 
+#--  0x004021a0 : 0x00402337 
+#--  0x004021a4 : 0x0001c2b7 
+#--  0x004021a8 : 0x00c2d293 
+#--  0x004021ac : 0x005362b3 
+#--  0x004021b0 : 0x000280e7 
 #--  
-#--  0x10010140  Link: 0x1001011d 
-#--  0x10010144  Inmd: 0 
-#--  0x10010145  NLen: 02
-#--  0x10010146  Name: NL
-#--  0x10010148  CFA:  0x1001014c 
-#--  0x1001014c : 0xffc40413 
-#--  0x10010150 : 0x00142023 
-#--  0x10010154 : 0x004002b7 
-#--  0x10010158 : 0x01c28293 
-#--  0x1001015c : 0x000280e7 
-#--  0x10010160 : 0x0000caca 
+#--  0x10010168  Link: 0x1001015d 
+#--  0x1001016c  Inmd: 0 
+#--  0x1001016d  NLen: 05
+#--  0x1001016e  Name: TEST6
+#--  0x10010174  CFA:  0x10010178 
+#--  0x10010178 : 0xffc40413 
+#--  0x1001017c : 0x00142023 
+#--  0x10010180 : 0x00402337 
+#--  0x10010184 : 0x000c82b7 
+#--  0x10010188 : 0x00c2d293 
+#--  0x1001018c : 0x005362b3 
+#--  0x10010190 : 0x000280e7 
 #--   ok
-#--   ok
+#--  TEST6
+#--   -----
+#--  ok 
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -292,10 +301,9 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    la t0,do_line
-    PUSH_T0
-    DOTHEX 
-    CR
+    #-- LATEST @ DUP .WINFO 7 .WCODE
+    #-- : TEST6 -- ;
+    #-- LATEST @ DUP .WINFO 7 .WCODE
 
     #-- Mostrar la ultima palabra del diccionario (TEST5)
     LATEST
