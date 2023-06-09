@@ -522,12 +522,6 @@ do_test5:
     #-- Saltar a esa rutina
     jalr ra,t0,0
 
-    # 0x12345337  lui t1,0x12345 (1)
-    # 0x00fec2b7  lui t0,0xFEC (2)
-    # 0x00c2d293  srli t0,t0,12 (3)
-    # 0x00536333  or t1,t1,t0 (4)
-    # 0x00030067  jalr zero,t1,0 (5)
-
 
     EXIT
 .global end_do_test5
