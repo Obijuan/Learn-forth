@@ -1774,15 +1774,13 @@ INTER1:
 
     #-- Modo interprete
     EXECUTE
+
     BRANCH
     ADDR(INTER3)
 
 INTER2:  
     #-- Modo de compilacion
-    LIT(65)
-    EMIT
-    DOTS
-    COMMA
+    CJAL
 
 INTER3:
     BRANCH

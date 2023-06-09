@@ -147,7 +147,7 @@ link10:
 #-- Palabra 11
     .align 2
     .word link10
-    .byte 0
+    .byte 1
 link11:
     .byte 1
     .ascii ";"
