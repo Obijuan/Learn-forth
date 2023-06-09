@@ -1,35 +1,11 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 192
+#-- INTERPRETE DE FORTH. Version 174
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  LATEST @ .WINFO  
-#--  LIT(0xCACA) CONSTANT 
-#--  LATEST @ .WINFO  LATEST @ 6 .WCODE 
-#--  QUIT
+#--  ] STATE @ .HEX
 #--  
-#--  Resultado: 
-#--  Z80 CamelForth v1.01  25 Jan 1995
+#--  Resultado: 0xffffffff  ok
 #--  
-#--  0x10010118  Link: 0x100100f9 
-#--  0x1001011c  Inmd: 0 
-#--  0x1001011d  NLen: 03
-#--  0x1001011e  Name: ESC
-#--  0x10010124  CFA:  0x10010128 
-#--  
-#--  0x10010140  Link: 0x1001011d 
-#--  0x10010144  Inmd: 0 
-#--  0x10010145  NLen: 02
-#--  0x10010146  Name: NL
-#--  0x10010148  CFA:  0x1001014c 
-#--  0x1001014c : 0xffc40413 
-#--  0x10010150 : 0x00142023 
-#--  0x10010154 : 0x004002b7 
-#--  0x10010158 : 0x01c28293 
-#--  0x1001015c : 0x000280e7 
-#--  0x10010160 : 0x0000caca 
-#--   ok
-#--   ok
-#--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -62,7 +38,7 @@
     .include "primitives.h"
     .include "high.h"
 
-    .global do_uinit, ptib, docolon, dovar_code, docon_code, exit
+    .global do_uinit, ptib
 
 #---------------------------------
 #-- SEGMENTO DE DATOS
@@ -75,7 +51,7 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .byte '.', '.', ' ', ' '
+    .byte 'N', 'O', 'P', ' '
     .byte ' ', 't', 'e', 's'
     .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
@@ -117,7 +93,7 @@ do_uinit: #--- CODIGO!!!!
 uinit_params:
     .word 0,0,10,0  # reserved, >IN, BASE, STATE
     .word enddict   # DP
-    .word 0,0       # SOURCE init'd elsewhere
+    .word 5,ptib       # SOURCE init'd elsewhere
     .word lastword   # LATEST
     .word 0         # HP init'd elsewhere
 
@@ -189,7 +165,7 @@ rstack:
 #-- Meter la direccion de la variable en la pila
 #---------------------------------------------------
 #-- Dirección 0x0004
-dovar2:
+dovar:
 docreate:
 
     #-- La direccion de la variable esta en ra
@@ -200,62 +176,6 @@ docreate:
 	#--- NEXT
 	POP_RA
 	NEXT
-
-#---------------------------------------------------
-#-- DOCON, code action of CONSTANT
-#---------------------------------------------------
-#-- Direccion 0x001C
-docon2:
-	#-- Leer la constante en t0
-	lw t0, 0(ra)
-
-	#-- Meterla en la pila
-	addi sp,sp,-4
-	sw t0, 0(sp)
-
-	#---- NEXT
-	lw ra,0(s0)
-	addi s0,s0,4
-	ret
-
-#-------------------------------------------------
-#-- Codigo a copiar en el diccionario al crear
-#-- una palabra nueva
-#-------------------------------------------------
-docolon:
-    addi s0,s0,-4 # 0xffc40413  
-    sw ra,0(s0)   # 0x00142023
-
-#-------------------------------------------------
-#-- Codigo a copiar en el diccionar al terminar
-#-- una palabra nueva
-#-------------------------------------------------
-exit:
-    lw ra,0(s0)   # 0x00042083  
-    addi s0,s0,4  # 0x00440413  
-    ret           # 0x00008067  
-
-#-------------------------------------------------
-#-- Codigo a copiar en el diccionar al crear
-#-- una variable
-#-------------------------------------------------
-dovar_code:
-    addi s0,s0, -4    # 0xffc40413   0
-    sw ra, 0(s0)      # 0x00142023   4
-    li t0, 0x00400004 # 0x004002b7   8
-                      # 0x00428293   C
-    jalr ra,t0,0      # 0x000280e7   10 
-
-#-------------------------------------------------
-#-- Codigo a copiar en el diccionar al crear
-#-- una constante
-#-------------------------------------------------
-docon_code:
-    addi s0,s0, -4    # 0xffc40413   0
-    sw ra, 0(s0)      # 0x00142023   4
-    li t0, 0x0040001C # 0x004002b7   8
-                      # 0x01C28293   C
-    jalr ra,t0,0      # 0x000280e7   10 
 
 
 #-----------------------------------------------------------------------------
@@ -282,12 +202,312 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    QUIT 
+    #-- 
+
+# #-- Do COLON
+# 0xffc40413  addi s0,s0,-4 
+# 0x00142023  sw ra,0(s0)
+
+
+# #-- EXIT
+# 0x00042083  lw ra,0(s0)
+# 0x00440413  addi s0,s0,4
+# 0x00008067  ret
+
+    #-- Crear una entrada nueva en el diccionario
+    CREATE
+
+    #-- Ocultar la palabra en las busquedas
+    #-- Esta a medio construir
+    HIDE
+
+    LATEST
+    FETCH
+    NFATOLFA
+    LIT(16)
+    DUMP
+
+    LATEST
+    FETCH
+    DOTWINFO
+    CR
+
+    LATEST
+    FETCH
+    LIT(5)
+    DOTWCODE
+    CR
+    BYE
+
+    NOP
+
+    LATEST
+    FETCH
+    DOTWINFO
+    CR
+
+    CREATE
+
+    LATEST
+    FETCH
+    DOTWINFO
+    CR
+
+    QUIT
+    BYE
+
+    DP
+    FETCH
+    DOTHEX
+    CR
    
 
-    #-- Fin ejecución direct
+    #-- COLON
+    CREATE
+    HIDE
+    RIGHTBRACKET
+
+    DP
+    FETCH
+    DOTHEX
+    CR
+    BYE
+
+    #-- Cambiar el code field a campo colon
+    LATEST
+    FETCH
+
+    COUNT
+    LIT(0x7F)
+    LAND
+    PLUS
+    ALIGN
+
+    DUP
+    #-- Puntero a la siguiente direccion (donde esta el codigo)
+    DUP
+    LIT(4)
+    PLUS
+    SWOP
+    STORE
+
+    #-- Almacenar el codigo correspondiente a docolon
+    LIT(4)
+    PLUS
+    DUP
+    LIT(4)
+    PLUS
+    SWOP
+    DUP
+    DOTS
+    CR
+
+    li t0, 0xFFC40413
+    PUSH_T0
+    SWOP
+    DOTS
+    CR
+    STORE
+    DOTS
+    CR
+
+    FETCH
+    DOTHEX
+    CR
+
+    #-- Codigo a guardar
+    #0xFFC40413   #-- addi s0,s0,-4
+    #0x00142023   #-- sw x1,0(x8)
+
+    DOTS
+    CR
+
+    DUP
+    li t0, 0x00142023
+    PUSH_T0
+    SWOP
+    STORE
+
+    LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+
+    #-- Instrucción de salto
+    #-- Guardar jal do_dot
+    
+    #-- De momento NO está optimizado
+    #-- Hay que generar este código máquina:
+    # 0x12345337  lui t1,0x12345 (1)
+    # 0x00fec2b7  lui t0,0xFEC (2)
+    # 0x00c2d293  srli t0,t0,12 (3)
+    # 0x00536333  or t1,t1,t0 (4)
+    # 0x00030067  jalr zero,t1,0 (5)
+
+    #-- Generamos el código máquina
+    lui t0, %hi(do_dot)
+	lui t1, 0x337
+	srli t1,t1,12
+	or t1,t0,t1      #-- Generar primera instruccion
+
+    DUP
+    POP_T0
+    sw t1,0(t0)  #-- Guardar primera instruccion
+    DUP
+    DOTHEX
+    CR
+
+    LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+	
+
+    #-- Generar la segunda instruccion
+	addi t0, zero, %lo(do_dot)
+	slli t0,t0,12
+	lui t1, 0x2b7
+	srli t1,t1,12
+	or t1,t0,t1
+
+    #-- Guardar segunda instruccion
+    DUP
+    POP_T0
+    sw t1,0(t0) 
+    DUP
+    DOTHEX
+    CR
+	
+    LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+	
+	#-- Generar la Tercera instruccion
+	lui t0,0x00c2d
+	addi t1,t0,0x293
+    #-- Guardar segunda instruccion
+    DUP
+    POP_T0
+    sw t1,0(t0) 
+    DUP
+    DOTHEX
+    CR
+
+    LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+	
+	#-- Cuarta instruccion
+	lui t0, 0x00536
+	addi t1,t0,0x333
+
+    #-- Guardar segunda instruccion
+    DUP
+    POP_T0
+    sw t1,0(t0) 
+    DUP
+    DOTHEX
+    CR
+
+	LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+	
+	#-- Quinta instruccion
+	lui t0, 0x00030
+	addi t1,t0,0x067
+
+    #-- Guardar segunda instruccion
+    DUP
+    POP_T0
+    sw t1,0(t0) 
+    DUP
+    DOTHEX
+    CR
+    
+    #-- Meter el EXIT
+    LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+
+    #-- Instruccion: 0x00042083 lw ra,0(s0)
+	lui t0, 0x00042
+	addi t1,t0,0x083
+
+    #-- Guardar instruccion
+    DUP
+    POP_T0
+    sw t1,0(t0) 
+    DUP
+    DOTHEX
+    CR
+
+    LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+
+    #-- Instruccion:  0x00440413  addi x8,x8,4
+	lui t0, 0x00044
+	addi t1,t0,0x413
+
+     #-- Guardar instruccion
+    DUP
+    POP_T0
+    sw t1,0(t0) 
+    DUP
+    DOTHEX
+    CR
+
+    LIT(4)
+    PLUS
+    DUP
+    DOTHEX
+    CR
+
+    #-- Instruccion:  0x00008067  jalr x0,x1,0
+	lui t0, 0x00008
+	addi t1,t0,0x067
+    
+    #-- Guardar instruccion
+    DUP
+    POP_T0
+    sw t1,0(t0) 
+    DUP
+    DOTHEX
+    CR
+     
+
+    #-- Volcar la ultima palabra creada
+    LATEST
+    FETCH
+    LIT(48)
+    DUMP
+
+    #-------------------------------------
+    #-- Terminar
+    REVEAL
+    #CEXIT
+    LEFTBRACKET
+
+
+    #-- Fin ejecución directa
     XSQUOTE(4," ok\n")
     TYPE
+
+    jal do_dot
+    CR
 
     QUIT
 

@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 192
+#-- INTERPRETE DE FORTH. Version 190
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  LATEST @ .WINFO  
