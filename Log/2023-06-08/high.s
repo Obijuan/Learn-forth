@@ -1759,13 +1759,13 @@ INTER1:
     ADDR(INTER4)
 
     #-- Palabra en el diccionario: Pila: addr
-    ONEPLUS   #-- addr u
+    ONEPLUS   #-- addr
 
     #-- Leer estado de compilacion
     STATE
-    FETCH #-- addr u flag
+    FETCH #-- addr flag
 
-    ZEROEQUAL #-- addr u flag  (-1 --> modo interprete)
+    ZEROEQUAL #-- addr flag  (-1 --> modo interprete)
     LOR
 
     #-- Saltar al modo de compilacion
@@ -1777,8 +1777,12 @@ INTER1:
     BRANCH
     ADDR(INTER3)
 
-INTER2:   
+INTER2:  
     #-- Modo de compilacion
+    LIT(65)
+    EMIT
+    DOTS
+    COMMA
 
 INTER3:
     BRANCH

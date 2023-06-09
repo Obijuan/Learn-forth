@@ -1,3 +1,2 @@
-CONSTANT   n --           define a Forth constant
 USER   n --              define user variable 'n'
 

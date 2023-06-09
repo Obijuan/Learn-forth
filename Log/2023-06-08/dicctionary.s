@@ -113,7 +113,6 @@ do_a:
     .align 2
     .word link8
     .byte 0
-lastword:
 link9:
     .byte 3
     .ascii "ESC"
@@ -135,7 +134,25 @@ do_esc:
 #--  0x01c28293
 #--  0x000280e7  #--jalr ra,t0,0
 
+#-- Palabra 10
+    .align 2
+    .word link9
+    .byte 0
+link10:
+    .byte 1
+    .ascii ":"
+    .word do_colon
 
+
+#-- Palabra 11
+    .align 2
+    .word link10
+    .byte 0
+lastword:
+link11:
+    .byte 1
+    .ascii ";"
+    .word do_semi
 
 
 #-- Fin del diccionario
