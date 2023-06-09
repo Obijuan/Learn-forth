@@ -306,75 +306,16 @@ start:
     LIT(7)
     DOTWCODE
 
-    #-- Crear instrucción TEST6
+    #-- : TEST6    Crear instrucción TEST6
     COLON
 
-    #--- Añadir las instrucciones de salto
-
-    #-- (1) 0x00402337 lui t1, 0x00402
-    #-- (2) 0x0001c2b7 lui t0, 0x01C
-    #-- (3) 0x00c2d293 srli t0,t0, 12
-    #-- (4) 0x005362b3 or t0,t1,t0
-    #-- (5) 0x000280e7 jalr ra,0(s0)
-
+    #-- Añadir Llamada a LINE
     la t0,do_line
     PUSH_T0
+    CJAL 
 
-   
-
-    #-- t4: Direccion destino
-    HERE
-    POP_T0
-    mv t4, t0
-
-    #-- t0: Direccion a la que hay que saltar
-    POP_T0
-
-    #-- Meter en t1 la parte alta de la direccion
-    li t1, -1      #-- 0xFFFFF_FFF
-    slli t1,t1,12  #-- 0xFFFFF_000
-    and t1, t1, t0 #-- t1 = %hi(do_line)
-
-    #-- Dejar en t0 la parte baja
-    slli t0,t0,20 #-- Dejar lo 12 bits de la direccion en la parte alta
-    srli t0,t0,20 #-- Llevarlas a la baja (y los altos quedan a cero)
-                  #-- t0 = %lo(do_line)
-
-    #--- Generar las instrucciones 1 y 2
-    #--- Partimos de tener en t1 y t0 las direcciones
-    #--- alta (20-bits) y baja (12-bits) de la subrutina a llamar
-
-    #-- t2 --> Primera instruccion
-    ori t2, t1, 0x337  #-- Poner opcode de lui t1 en los 12-bits bajos
-
-    #-- Copiarla a destino
-    sw t2, 0(t4)
-
-    #-- t2: Segunda instruccion
-    slli t2,t0,12
-    ori t2, t2, 0x2B7  #-- 2B7 opcode de lui t0
-    
-    #-- Copiarla a destino
-    sw t2, 4(t4)
-
-    #-- Copiar resto de instrucciones (Son fijas)
-    #-- Direccion origen: t3
-    la t3, cjal_code
-
-    lw t2, 0(t3)  #-- Copiar tercera instruccion
-    sw t2, 8(t4)
-
-    lw t2, 4(t3)  #-- Copiar cuarta instrucción
-    sw t2, 0xC(t4)
-
-    lw t2, 8(t3)  #-- Copiar quinta instruccion
-    sw t2, 0x10(t4)
-
-    LIT(20) #-- 5 Instrucciones  (5 * 4 bytes)
-    ALLOT
-
+    #-- ;  Terminar
     SEMI
-    
     
     #-- Mostrar la info de TEST6
     LATEST
@@ -384,18 +325,6 @@ start:
 
     LIT(7)
     DOTWCODE
-
-    #--- Escribir marca para comprobar volcados de memoria
-    #li t1,0xCAFEBACA
-    #la t0,end_do_test5
-    #sw t1,0(t0)
-
-    #-- Meter en la pila la dirección de do_dot
-    #la t0, do_dot
-    #PUSH_T0
-
-    #-- CJAL (,JAL)
-    #-- Escribir jal ra,t0,0
 
     #-- Fi#n ejecución direct
     XSQUOTE(4," ok\n")

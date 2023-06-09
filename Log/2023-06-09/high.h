@@ -289,3 +289,6 @@ myStr: .byte %len,
   jal do_test5
 .end_macro
 
+.macro CJAL
+  jal do_cjal
+.end_macro
