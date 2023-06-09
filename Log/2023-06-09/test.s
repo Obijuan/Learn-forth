@@ -383,3 +383,52 @@ do_null:
     DOCOLON
     EXIT
 
+
+
+#---------------------------------------------------------
+#-- --    --   Dibujar una linea
+#-- : --  ;
+#---------------------------------------------------------
+.global do_line
+do_line:
+    DOCOLON
+
+    LIT(0x2D)
+    EMIT
+    LIT(0x2D)
+    EMIT
+    LIT(0x2D)
+    EMIT
+    LIT(0x2D)
+    EMIT
+    LIT(0x2D)
+    EMIT
+    CR
+
+    EXIT
+
+#---------------------------------------------------------
+#-- TEST    --   Palabra para pruebas
+#-- : TEST -- ;
+#---------------------------------------------------------
+.global do_test
+do_test:
+    DOCOLON
+    LINE
+    EXIT
+.global end_do_test
+#--- Almacenar un valor testigo aqui, para comprobar los volcados
+end_do_test:  
+
+#---------------------------------------------------------
+#-- TEST2    --   Palabra para pruebas
+#-- : TEST2 -- ;
+#---------------------------------------------------------
+.global do_test2
+do_test2:
+    DOCOLON
+    jal do_test2
+    EXIT
+.global end_do_test2
+#--- Almacenar un valor testigo aqui, para comprobar los volcados
+end_do_test2:  

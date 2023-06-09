@@ -148,11 +148,20 @@ link10:
     .align 2
     .word link10
     .byte 0
-lastword:
 link11:
     .byte 1
     .ascii ";"
     .word do_semi
+
+#-- Palabra 12
+    .align 2
+    .word link11
+    .byte 0
+lastword:
+link12:
+    .byte 4
+    .ascii "TEST"
+    .word do_test
 
 
 #-- Fin del diccionario

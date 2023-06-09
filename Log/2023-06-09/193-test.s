@@ -117,7 +117,7 @@ do_uinit: #--- CODIGO!!!!
 uinit_params:
     .word 0,0,10,0  # reserved, >IN, BASE, STATE
     .word enddict   # DP
-    .word 0,0       # SOURCE init'd elsewhere
+    .word 5,ptib       # SOURCE init'd elsewhere
     .word lastword   # LATEST
     .word 0         # HP init'd elsewhere
 
@@ -282,10 +282,39 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
+
+    #-- Crear instrucción DOTDOT
+    # COLON
+    # DOT
+    # SEMI
+
+    #--- Escribir marca para comprobar volcados de memoria
+    li t1,0xCAFEBACA
+    la t0,end_do_test
+    sw t1,0(t0)
+
+    LATEST
+    FETCH
+    DUP
+    DOTWINFO
+
+    LIT(7)
+    DOTWCODE
+    
+    
+    #COLON
+
+    #-- Meter en la pila la dirección de do_dot
+    #la t0, do_dot
+    #PUSH_T0
+
+    #-- CJAL (,JAL)
+    #-- Escribir jal ra,t0,0
+
     QUIT 
    
 
-    #-- Fin ejecución direct
+    #-- Fi#n ejecución direct
     XSQUOTE(4," ok\n")
     TYPE
 

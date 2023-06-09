@@ -264,3 +264,11 @@ myStr: .byte %len,
 .macro UGREATER
   jal do_ugreater
 .end_macro
+
+.macro LINE
+  jal do_line
+.end_macro
+
+.macro TEST
+  jal do_test
+.end_macro
