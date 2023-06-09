@@ -427,7 +427,21 @@ end_do_test:
 .global do_test2
 do_test2:
     DOCOLON
-    jal do_test2
+
+
+    #-- Leer la direccion de la rutina line
+    la t0, do_line
+
+    #-- Saltar a esa rutina
+    jalr ra,t0,0
+
+    # 0x12345337  lui t1,0x12345 (1)
+    # 0x00fec2b7  lui t0,0xFEC (2)
+    # 0x00c2d293  srli t0,t0,12 (3)
+    # 0x00536333  or t1,t1,t0 (4)
+    # 0x00030067  jalr zero,t1,0 (5)
+
+
     EXIT
 .global end_do_test2
 #--- Almacenar un valor testigo aqui, para comprobar los volcados

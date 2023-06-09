@@ -272,3 +272,7 @@ myStr: .byte %len,
 .macro TEST
   jal do_test
 .end_macro
+
+.macro TEST2
+  jal do_test2
+.end_macro

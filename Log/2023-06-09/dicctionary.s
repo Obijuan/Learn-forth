@@ -159,9 +159,9 @@ link11:
     .byte 0
 lastword:
 link12:
-    .byte 4
-    .ascii "TEST"
-    .word do_test
+    .byte 5
+    .ascii "TEST2"
+    .word do_test2
 
 
 #-- Fin del diccionario
