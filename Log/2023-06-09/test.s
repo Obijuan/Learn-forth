@@ -502,3 +502,34 @@ do_test4:
 .global end_do_test4
 #--- Almacenar un valor testigo aqui, para comprobar los volcados
 end_do_test4:  
+
+
+#---------------------------------------------------------
+#-- TEST5    --   Palabra para pruebas
+#-- : TEST5 -- ;
+#---------------------------------------------------------
+.global do_test5
+do_test5:
+    DOCOLON
+
+    lui t1, 0x00402    #-- t1= parte alta: 0x00402000
+    lui t0, 0x01C      #-- t0= parte baja: 0x0000001C
+    srli t0, t0, 12    #---    Desplazar 12 bits a la derecha
+
+    #-- Creamos la direccion comple uniendo ambas con or
+    or t0, t1, t0
+
+    #-- Saltar a esa rutina
+    jalr ra,t0,0
+
+    # 0x12345337  lui t1,0x12345 (1)
+    # 0x00fec2b7  lui t0,0xFEC (2)
+    # 0x00c2d293  srli t0,t0,12 (3)
+    # 0x00536333  or t1,t1,t0 (4)
+    # 0x00030067  jalr zero,t1,0 (5)
+
+
+    EXIT
+.global end_do_test5
+#--- Almacenar un valor testigo aqui, para comprobar los volcados
+end_do_test5:  

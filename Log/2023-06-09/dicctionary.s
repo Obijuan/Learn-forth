@@ -160,8 +160,8 @@ link11:
 lastword:
 link12:
     .byte 5
-    .ascii "TEST4"
-    .word do_test4
+    .ascii "TEST5"
+    .word do_test5
 
 
 #-- Fin del diccionario
