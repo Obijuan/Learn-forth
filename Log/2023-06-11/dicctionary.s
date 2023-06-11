@@ -166,7 +166,6 @@ link12:
     .align 2
     .word link12
     .byte 0
-lastword:
 link13:
     .byte 1
     .ascii "1"
@@ -178,6 +177,16 @@ do_l1:
     .word 0x01c28293
     .word 0x000280e7  #--jalr ra,t0,0
     .word 1  #-- CONSTANTE
+
+#-- Palabra 14
+    .align 2
+    .word link13
+    .byte 0
+lastword:
+link14:
+    .byte 7
+    .ascii ".WLINFO"
+    .word do_dotlwinfo
 
 
 #-- Fin del diccionario
