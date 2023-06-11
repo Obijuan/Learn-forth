@@ -1683,14 +1683,15 @@ do_literal:
     ADDR(LITER1)
 
     #-- Modo de compilacion
-    #-- TODO
-    #LIT
-    #LIT
-    #COMAXT
-    #COMMA
-    LIT(68)
-    EMIT
-    BYE
+    #-- Pila:  n --
+
+    #-- Añadir Llamada a docon
+    la t0,docon2
+    PUSH_T0
+    CJAL
+
+    #-- Meter el literal
+    COMMA
 
 LITER1:
     #-- Modo interpretando
