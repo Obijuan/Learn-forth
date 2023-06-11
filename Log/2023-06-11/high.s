@@ -1685,8 +1685,8 @@ do_literal:
     #-- Modo de compilacion
     #-- Pila:  n --
 
-    #-- Añadir Llamada a docon
-    la t0,docon2
+    #-- Añadir Llamada a dolit
+    la t0,dolit
     PUSH_T0
     CJAL
 
