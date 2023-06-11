@@ -1667,7 +1667,6 @@ FIND3:
 #  This tests STATE so that it can also be used
 #  interpretively.  (ANSI doesn't require this.)
 #--------------------------------------------------------
-#-- TODO!!! INCOMPLETO!!
 .global do_literal
 do_literal:
     DOCOLON

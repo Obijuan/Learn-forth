@@ -167,8 +167,8 @@ link12:
     .word link12
     .byte 0
 link13:
-    .byte 1
-    .ascii "1"
+    .byte 3
+    .ascii "ONE"
     .word do_l1
 do_l1:
     .word 0xffc40413  #--addi s0, s0, -4
