@@ -387,7 +387,7 @@ do_dotlwinfo:
 
     LATEST
     FETCH
-    LIT(8)
+    LIT(16)
     DOTWCODE
 
 
@@ -547,3 +547,21 @@ do_test5:
 .global end_do_test5
 #--- Almacenar un valor testigo aqui, para comprobar los volcados
 end_do_test5:  
+
+
+#---------------------------------------------------------
+#-- "HI    --   Imprimir la palabra HI en la consola
+#---------------------------------------------------------
+.global do_quotehi
+do_quotehi:
+    DOCOLON
+
+    LIT('H')
+    EMIT
+    LIT('I')
+    EMIT
+    LIT('!')
+    EMIT
+    CR
+
+    EXIT

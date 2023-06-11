@@ -182,11 +182,21 @@ do_l1:
     .align 2
     .word link13
     .byte 0
-lastword:
 link14:
     .byte 7
     .ascii ".WLINFO"
     .word do_dotlwinfo
+
+#-- Palabra 15
+    .align 2
+    .word link14
+    .byte 0
+lastword:
+link15:
+    .byte 3
+    .byte 0x22  #-- Caracter "
+    .ascii "HI"
+    .word do_quotehi
 
 
 #-- Fin del diccionario
