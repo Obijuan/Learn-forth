@@ -374,6 +374,38 @@ wcode1:
 
 
 #---------------------------------------------------------
+#-- DCODE   addr u --   Mostrar codigo maquina situado
+#--  a partir de la direcion addr (u instrucciones)
+#---------------------------------------------------------
+.global do_dcode
+do_dcode:
+    DOCOLON
+
+    LIT(0)
+    XDO
+dcode_loop:
+
+    DUP     #-- addr addr
+    DUP     #-- addr addr addr
+    DOTHEX  #-- addr addr
+
+    DUP      #-- addr addr addr
+    FETCH    #-- addr addr addr x
+    LIT(':') #-- addr addr :
+    EMIT     #-- addr addr
+    SPACE
+    DOTHEX  #-- addr
+    CR
+
+    LIT(4)  #-- addr 4
+    PLUS    #-- addr+4
+      
+    XLOOP
+    ADDR(dcode_loop)
+
+    EXIT
+
+#---------------------------------------------------------
 #-- .LWINFO    --   Mostrar informacion y codigo de la
 #--    ultima palabra del diccionario
 #---------------------------------------------------------

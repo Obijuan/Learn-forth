@@ -162,49 +162,6 @@ UMAX1:  DW DROP,EXIT
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;C LITERAL  x --        append numeric literal
-;   STATE @ IF ['] LIT ,XT , THEN ; IMMEDIATE
-; This tests STATE so that it can also be used
-; interpretively.  (ANSI doesn't require this.)
-    immed LITERAL,7,LITERAL,docolon
-        DW STATE,FETCH,qbranch,LITER1
-        DW LIT,LIT,COMMAXT,COMMA
-LITER1: DW EXIT
-
-;Z INTERPRET    i*x c-addr u -- j*x
-;Z                      interpret given buffer
-; This is a common factor of EVALUATE and QUIT.
-; ref. dpANS-6, 3.4 The Forth Text Interpreter
-;   'SOURCE 2!  0 >IN !
-;   BEGIN
-;   BL WORD DUP C@ WHILE        -- textadr
-;       FIND                    -- a 0/1/-1
-;       ?DUP IF                 -- xt 1/-1
-;           1+ STATE @ 0= OR    immed or interp?
-;           IF EXECUTE ELSE ,XT THEN
-;       ELSE                    -- textadr
-;           ?NUMBER
-;           IF POSTPONE LITERAL     converted ok
-;           ELSE COUNT TYPE 3F EMIT CR ABORT  err
-;           THEN
-;       THEN
-;   REPEAT DROP ;
-    head INTERPRET,9,INTERPRET,docolon
-        DW TICKSOURCE,TWOSTORE,LIT,0,TOIN,STORE
-INTER1: DW BL,WORD,DUP,CFETCH,qbranch,INTER9
-        DW FIND,QDUP,qbranch,INTER4
-        DW ONEPLUS,STATE,FETCH,ZEROEQUAL,OR
-        DW qbranch,INTER2
-        DW EXECUTE,branch,INTER3
-INTER2: DW COMMAXT
-INTER3: DW branch,INTER8
-INTER4: DW QNUMBER,qbranch,INTER5
-        DW LITERAL,branch,INTER6
-INTER5: DW COUNT,TYPE,LIT,3FH,EMIT,CR,ABORT
-INTER6:
-INTER8: DW branch,INTER1
-INTER9: DW DROP,EXIT
-
 ;C EVALUATE  i*x c-addr u -- j*x  interprt string
 ;   'SOURCE 2@ >R >R  >IN @ >R
 ;   INTERPRET

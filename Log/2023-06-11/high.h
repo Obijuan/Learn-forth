@@ -249,6 +249,10 @@ myStr: .byte %len,
 	jal do_dotlwinfo
 .end_macro
 
+.macro DCODE
+	jal do_dcode
+.end_macro
+
 .macro NULL
 	jal do_null
 .end_macro
@@ -295,4 +299,8 @@ myStr: .byte %len,
 
 .macro CJAL
   jal do_cjal
+.end_macro
+
+.macro QUOTEHI
+  jal do_quotehi
 .end_macro

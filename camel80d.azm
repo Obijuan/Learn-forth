@@ -16,12 +16,6 @@
 ;       addresses are byte-aligned.
 ; ===============================================
 
-;Z ,EXIT    --      append hi-level EXIT action
-;   ['] EXIT ,XT ;
-; This is made a distinct word, because on an STC
-; Forth, it appends a RET instruction, not an xt.
-    head CEXIT,5,',EXIT',docolon
-        DW LIT,EXIT,COMMAXT,EXIT
 
 ; CONTROL STRUCTURES ============================
 ; These words allow Forth control structure words
