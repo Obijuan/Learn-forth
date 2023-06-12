@@ -1391,6 +1391,25 @@ do_tol:
 
     EXIT
 
+#-------------------------------------------------------------
+#  L>   -- x   L: x --      move from leave stack
+#   LP @ @  CELL NEGATE LP +! ;
+#-------------------------------------------------------------
+.global do_lfrom
+do_lfrom:
+    DOCOLON
+
+    CELL
+    LP
+    PLUSSTORE  #-- Añadir una celda de espacio en la pila L
+    
+    LP
+    FETCH
+    STORE
+
+    EXIT
+
+
 
 
 #-------------------------------------------------------------

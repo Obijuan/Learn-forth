@@ -322,12 +322,6 @@ POST2:  DW EXIT
     immed REPEAT,6,REPEAT,docolon
         DW SWOP,AGAIN,THEN,EXIT
 
-;Z L>   -- x   L: x --      move from leave stack
-;   LP @ @  CELL NEGATE LP +! ;
-    head LFROM,2,L>,docolon
-        DW LP,FETCH,FETCH
-        DW CELL,NEGATE,LP,PLUSSTORE,EXIT
-
 ;C DO       -- adrs   L: -- 0
 ;   ['] xdo ,XT   HERE     target for bwd branch
 ;   0 >L ; IMMEDIATE           marker for LEAVEs

@@ -336,3 +336,8 @@ myStr: .byte %len,
 .macro TOL
   jal do_tol
 .end_macro
+
+.macro LFROM
+  jal do_lfrom
+.end_macro
+
