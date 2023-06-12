@@ -210,11 +210,38 @@ link16:
     .align 2
     .word link16
     .byte 1  #-- IMMED
-lastword:
 link17:
     .byte 4
     .ascii "THEN"
     .word do_then
+
+#-- Palabra 18
+    .align 2
+    .word link17
+    .byte 1  #-- IMMED
+link18:
+    .byte 4
+    .ascii "ELSE"
+    .word do_else
+
+#-- Palabra 19
+    .align 2
+    .word link18
+    .byte 0
+link19:
+    .byte 4
+    .ascii "EMIT"
+    .word do_emit
+
+#-- Palabra 20
+    .align 2
+    .word link19
+    .byte 0
+lastword:
+link20:
+    .byte 5
+    .ascii "SPACE"
+    .word do_space
 
 
 #-- Fin del diccionario
