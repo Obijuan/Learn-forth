@@ -321,3 +321,11 @@ myStr: .byte %len,
   jal do_then
 .end_macro
 
+.macro QUOTETRUE
+  jal do_quotetrue
+.end_macro
+
+.macro QUOTEFALSE
+  jal do_quotefalse
+.end_macro
+

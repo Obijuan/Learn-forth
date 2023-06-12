@@ -597,3 +597,29 @@ do_quotehi:
     CR
 
     EXIT
+
+#---------------------------------------------------------
+#-- "TRUE    --   Imprimir T
+#---------------------------------------------------------
+.global do_quotetrue
+do_quotetrue:
+    DOCOLON
+
+    LIT(84)
+    EMIT
+    SPACE
+
+    EXIT
+
+#---------------------------------------------------------
+#-- "FALSE    --   Imprimir F
+#---------------------------------------------------------
+.global do_quotefalse
+do_quotefalse:
+    DOCOLON
+
+    LIT(70)
+    EMIT
+    SPACE
+
+    EXIT
