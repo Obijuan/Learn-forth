@@ -294,7 +294,7 @@ do_xloop2:
 
 	#-- Incrementar ra para saltar la literal
 	addi ra,ra,4
-	j end_xloop
+    ret
 
 	#-- No hemos terminado: Saltar a DO
 xloop_repeat:
