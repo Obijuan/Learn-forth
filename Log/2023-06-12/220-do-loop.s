@@ -1,32 +1,17 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 218
+#-- INTERPRETE DE FORTH. Version 219
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  QUIT
+#--  LP @ .HEX CR   0xBA >L  LP @ .HEX CR  L>  LP @ DOTHEX CR
 #--  
 #--  
 #--  Resultado: Sesion interactiva 
 #--  Z80 CamelForth v1.01  25 Jan 1995
+#--  Z80 CamelForth v1.01  25 Jan 1995
+#--  0x10010660 
+#--  0x10010664 
+#--  0x10010668 
 #--   ok
-#--  WORDS
-#--   SPACE EMIT ELSE THEN IF "HI .WLINFO ONE TEST5 ; : ESC A WORDS NOP .S . + BYE lit EXIT ok 
-#--  SPACE
-#--    ok 
-#--  : T 84 EMIT SPACE ;
-#--   ok 
-#--  T
-#--   T ok 
-#--  : F 70 EMIT SPACE ;
-#--   ok 
-#--  F
-#--   F ok 
-#--  : ?BOOL IF T ELSE F THEN ;
-#--   ok 
-#--  0 ?BOOL
-#--   F ok 
-#--  1 ?BOOL
-#--   T ok 
-#--  BYE
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -73,7 +58,7 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .byte 'D', 'O', ' ', 'O'
+    .byte '-', '-', ' ', 'O'
     .byte 'L', ' ', 'e', 's'
     .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
@@ -136,7 +121,8 @@ user_area: #-- Botom of user area
     .word 0  #--
     .word 0  #-- LATEST: Last word in dict. Offset: 0x1C
     .word 0  #-- HP: HOLD Pointer. Offset: 0x20
-    .word 0  #-- LP: Leave-stack pointer. Offset: 0x24
+    .word leave_stack  #-- LP: Leave-stack pointer. Offset: 0x24
+leave_stack:
     .space 88
 
    #-----------------------
@@ -282,6 +268,48 @@ do_branch2:
     ret
 
 #-------------------------------------------------
+#-- (loop)   R: sys1 sys2 --  | sys1 sys2
+#-- sys1: limite
+#-- sys2: indice
+#-------------------------------------------------
+do_xloop2:
+	#-- Leer el indice. t2 = indice
+	#-- sin sacarlo de la pila R
+	lw t2, 0(s0)
+
+	#-- Leer el limite. t1 = limite
+	#-- sin sacarlo de la pila R
+	lw t1, 4(s0)
+
+	#-- Incrementar el indice en 1 unidad
+	#-- (+LOOP incrementa en n unidades, tomadas de la pila)
+	addi t2,t2,1
+
+	#-- si index < limit --> saltar a DO
+	blt t2, t1, xloop_repeat
+
+	#-- Hemos terminado. Vaciar la pila R
+	POPR_T0
+	POPR_T0
+
+	#-- Incrementar ra para saltar la literal
+	addi ra,ra,4
+	j end_xloop
+
+	#-- No hemos terminado: Saltar a DO
+xloop_repeat:
+	#-- Actualizar el indide en la pila R
+	sw t2, 0(s0)
+
+end_xloop:
+    #-- La dirección está en ra
+    lw ra,0(ra)
+	ret
+
+
+
+
+#-------------------------------------------------
 #-- Codigo a copiar en el diccionario al crear
 #-- una palabra nueva
 #-------------------------------------------------
@@ -356,6 +384,7 @@ start:
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
     #-- : -- CR 10 0 DO 45 EMIT LOOP ;
+    
     COLON
 
     #--- Añadir Llamada a CR
@@ -364,7 +393,7 @@ start:
     CJAL
 
     #-- Meter literal en la pila para insertarlo en el codigo compilado
-    li t0, 10
+    li t0, 5  # 10
     PUSH_T0
     LITERAL
 
@@ -372,6 +401,7 @@ start:
     PUSH_T0
     LITERAL
 
+    #-- DO
     #-- Añadir llamada a XDO
     la t0,do_xdo
     PUSH_T0
@@ -379,12 +409,46 @@ start:
 
     #-- Direccion a donde saltar para repetir el bucle
     #-- La dejamos en la pila
-    HERE
+    HERE 
+    DUP
+    DOTHEX
+    CR
+
+    li t0, 0
+    PUSH_T0
+    LITERAL
+
+    #-- Añadir llamada a TOL
+    la t0,do_emit
+    PUSH_T0
+    CJAL
+
+    DOTS 
+    CR
+
+    li t0, 45
+    PUSH_T0
+    LITERAL
+
+    #-- Añadir llamada a EMIT
+    la t0,do_emit
+    PUSH_T0
+    CJAL
+
+    #-- LOOP
+    #-- Añadir Llamada a xloop
+    la t0,do_xloop2
+    PUSH_T0
+    CJAL
+
+    #-- Añadir campo para direccion destino
+    COMMA
 
     
 
 
     SEMI
+    
 
     LATEST
     FETCH
@@ -392,8 +456,9 @@ start:
 
     LATEST
     FETCH
-    LIT(24)
+    LIT(58)
     DOTWCODE
+
 
     #-- Fin ejecución direct
     XSQUOTE(4," ok\n")
@@ -403,3 +468,4 @@ start:
 
 	#-- Terminar
 	BYE
+
