@@ -1014,8 +1014,9 @@ do_qbranch:
 	#-- si NO es 0, se continua
 	bne t0,zero,skip
 
-	#-- Hay que hacer el salto
-	#-- Directamente se termina para que
+	#-- Hay que hacer el salto a ra
+
+	#-- Se termina para que
 	#-- se ejecute el salto que sigue a qbranch
 	j end_qbranch
 

@@ -99,6 +99,10 @@ myStr: .byte %len,
 	jal do_comma
 .end_macro
 
+.macro COMMABRANCH
+	jal do_comma
+.end_macro
+
 .macro COMPILE
 	jal do_comma
 .end_macro
