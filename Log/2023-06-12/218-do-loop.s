@@ -2,19 +2,31 @@
 #-- INTERPRETE DE FORTH. Version 218
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  LP 4 + DUP .HEX 16 DUMP CR  0xBA >L 0xCA >L 
-#--  LP 4 + DUP .HEX 16 DUMP CR 
+#--  QUIT
 #--  
 #--  
 #--  Resultado: Sesion interactiva 
 #--  Z80 CamelForth v1.01  25 Jan 1995
-#--  0x10010660 
-#--  0660 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
-#--  
-#--  0x10010660 
-#--  0660 00 00 00 00 BA 00 00 00 CA 00 00 00 00 00 00 00 
-#--  
 #--   ok
+#--  WORDS
+#--   SPACE EMIT ELSE THEN IF "HI .WLINFO ONE TEST5 ; : ESC A WORDS NOP .S . + BYE lit EXIT ok 
+#--  SPACE
+#--    ok 
+#--  : T 84 EMIT SPACE ;
+#--   ok 
+#--  T
+#--   T ok 
+#--  : F 70 EMIT SPACE ;
+#--   ok 
+#--  F
+#--   F ok 
+#--  : ?BOOL IF T ELSE F THEN ;
+#--   ok 
+#--  0 ?BOOL
+#--   F ok 
+#--  1 ?BOOL
+#--   T ok 
+#--  BYE
 #--
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -124,8 +136,7 @@ user_area: #-- Botom of user area
     .word 0  #--
     .word 0  #-- LATEST: Last word in dict. Offset: 0x1C
     .word 0  #-- HP: HOLD Pointer. Offset: 0x20
-    .word leave_stack  #-- LP: Leave-stack pointer. Offset: 0x24
-leave_stack:
+    .word 0  #-- LP: Leave-stack pointer. Offset: 0x24
     .space 88
 
    #-----------------------
@@ -344,38 +355,51 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- LP 4 + DUP .HEX 16 DUMP CR  0xBA >L 0xCA >L 
-    #-- LP 4 + DUP .HEX 16 DUMP CR 
+    #-- : -- CR 10 0 DO 45 EMIT LOOP ;
+    COLON
+
+    #--- Añadir Llamada a CR
+    la t0,do_cr
+    PUSH_T0
+    CJAL
+
+    #-- Meter literal en la pila para insertarlo en el codigo compilado
+    li t0, 10
+    PUSH_T0
+    LITERAL
+
+    li t0, 0
+    PUSH_T0
+    LITERAL
+
+    #-- Añadir llamada a XDO
+    la t0,do_xdo
+    PUSH_T0
+    CJAL
+
+    #-- Direccion a donde saltar para repetir el bucle
+    #-- La dejamos en la pila
+    HERE
+
     
-    #-- Volcar la pila L
-    LP      #-- addr-lp
-    LIT(4)
-    PLUS
-    DUP     #-- addr-lp  addr-lp
-    DOTHEX  #-- lp
-    LIT(16)
-    DUMP
-    CR
 
-    LIT(0xBA)
-    TOL
-    LIT(0XCA)
-    TOL
 
-    #-- Volcar la pila L
-    LP      #-- addr-lp
-    LIT(4)
-    PLUS
-    DUP     #-- addr-lp  addr-lp
-    DOTHEX  #-- lp
-    LIT(16)
-    DUMP
-    CR
+    SEMI
 
+    LATEST
+    FETCH
+    DOTWINFO
+
+    LATEST
+    FETCH
+    LIT(24)
+    DOTWCODE
 
     #-- Fin ejecución direct
     XSQUOTE(4," ok\n")
     TYPE
+
+    QUIT
 
 	#-- Terminar
 	BYE
