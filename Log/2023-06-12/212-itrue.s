@@ -2,20 +2,42 @@
 #-- INTERPRETE DE FORTH. Version 212
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  QUIT
+#--  : ITRUE IF "HI THEN ;
 #--  
 #--  
 #--  Resultado: Sesion interactiva 
 #--  Z80 CamelForth v1.01  25 Jan 1995
+#--  
+#--  0x100101b4  Link: 0x100101a9 
+#--  0x100101b8  Inmd: 0 
+#--  0x100101b9  NLen: 05
+#--  0x100101ba  Name: ITRUE
+#--  0x100101c0  CFA:  0x100101c4 
+#--  0x100101c4 : 0xffc40413 
+#--  0x100101c8 : 0x00142023 
+#--  0x100101cc : 0x00400337 
+#--  0x100101d0 : 0x000482b7 
+#--  0x100101d4 : 0x00c2d293 
+#--  0x100101d8 : 0x005362b3 
+#--  0x100101dc : 0x000280e7 
+#--  0x100101e0 : 0x100101f8 
+#--  0x100101e4 : 0x00402337 
+#--  0x100101e8 : 0x002902b7 
+#--  0x100101ec : 0x00c2d293 
+#--  0x100101f0 : 0x005362b3 
+#--  0x100101f4 : 0x000280e7 
+#--  0x100101f8 : 0x00042083 
+#--  0x100101fc : 0x00440413 
+#--  0x10010200 : 0x00008067 
+#--  0x10010204 : 0x00000000 
 #--   ok
 #--  WORDS
-#--   TEST5 ; : ESC A WORDS NOP .S . + BYE lit EXIT ok 
-#--  : T ;
+#--   ITRUE "HI .WLINFO ONE TEST5 ; : ESC A WORDS NOP .S . + BYE lit EXIT ok 
+#--  0 ITRUE
 #--   ok 
-#--  WORDS
-#--   T TEST5 ; : ESC A WORDS NOP .S . + BYE lit EXIT ok 
-#--  T
-#--   ok 
+#--  -1 ITRUE
+#--   HI!
+#--  ok 
 #--  BYE
 #--
 #--------------------------------------------------------------------
@@ -332,8 +354,7 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-
-    #-- : ITRUE -1 IF "HI THEN ;
+    #-- : ITRUE IF "HI THEN ;
     COLON
 
     #-- IF
@@ -342,18 +363,10 @@ start:
     PUSH_T0
     CJAL
 
-    HERE
-    DOTHEX
-    CR
-
     #-- Añadir campo para direccion destino
     HERE
     DUP
     COMMA
-
-    HERE
-    DOTHEX
-    CR
 
     #--- Añadir Llamada a HI
     la t0,do_quotehi
@@ -361,10 +374,7 @@ start:
     CJAL
 
     #-- THEN
-    HERE
-    DOTHEX
-    CR
-      #-- Pila: addrIF --   (addrIF es la dir de salto del IF (qbranch))
+    #-- Pila: addrIF --   (addrIF es la dir de salto del IF (qbranch))
     HERE  #-- addrIF addRThen
     SWOP  #-- addrThen AddrIF
     STOREDEST  #-- Almacenar direccion
@@ -378,7 +388,7 @@ start:
 
     LATEST
     FETCH
-    LIT(24)
+    LIT(17)
     DOTWCODE
 
     #-- Fin ejecución direct
