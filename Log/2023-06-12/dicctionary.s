@@ -191,12 +191,30 @@ link14:
     .align 2
     .word link14
     .byte 0
-lastword:
 link15:
     .byte 3
     .byte 0x22  #-- Caracter "
     .ascii "HI"
     .word do_quotehi
+
+#-- Palabra 16
+    .align 2
+    .word link15
+    .byte 1  #-- IMMED
+link16:
+    .byte 2
+    .ascii "IF"
+    .word do_if
+
+#-- Palabra 17
+    .align 2
+    .word link16
+    .byte 1  #-- IMMED
+lastword:
+link17:
+    .byte 4
+    .ascii "THEN"
+    .word do_then
 
 
 #-- Fin del diccionario
