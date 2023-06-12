@@ -58,7 +58,7 @@
 #-- Direccion: 0x2000
 #--------------------------------
 ptib:  #-- Puntero
-    .byte '-', '-', ' ', 'O'
+    .byte 'D', 'O', ' ', 'O'
     .byte 'L', ' ', 'e', 's'
     .word 0x0,0x0,0x0,0,0,0,0,0,0,0,0,0,0,0 #-- 14 palabras
     .word 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 #-- 16 palabras
@@ -268,48 +268,6 @@ do_branch2:
     ret
 
 #-------------------------------------------------
-#-- (loop)   R: sys1 sys2 --  | sys1 sys2
-#-- sys1: limite
-#-- sys2: indice
-#-------------------------------------------------
-do_xloop2:
-	#-- Leer el indice. t2 = indice
-	#-- sin sacarlo de la pila R
-	lw t2, 0(s0)
-
-	#-- Leer el limite. t1 = limite
-	#-- sin sacarlo de la pila R
-	lw t1, 4(s0)
-
-	#-- Incrementar el indice en 1 unidad
-	#-- (+LOOP incrementa en n unidades, tomadas de la pila)
-	addi t2,t2,1
-
-	#-- si index < limit --> saltar a DO
-	blt t2, t1, xloop_repeat
-
-	#-- Hemos terminado. Vaciar la pila R
-	POPR_T0
-	POPR_T0
-
-	#-- Incrementar ra para saltar la literal
-	addi ra,ra,4
-    ret
-
-	#-- No hemos terminado: Saltar a DO
-xloop_repeat:
-	#-- Actualizar el indide en la pila R
-	sw t2, 0(s0)
-
-end_xloop:
-    #-- La dirección está en ra
-    lw ra,0(ra)
-	ret
-
-
-
-
-#-------------------------------------------------
 #-- Codigo a copiar en el diccionario al crear
 #-- una palabra nueva
 #-------------------------------------------------
@@ -383,99 +341,25 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- : -- CR 10 0 DO 45 EMIT LOOP ;
+    #-- LP @ .HEX CR   0xBA >L  LP @ .HEX CR  L>  LP @ DOTHEX CR
     
-    
-
-    COLON
-
-    #--- Añadir Llamada a CR
-    la t0,do_cr
-    PUSH_T0
-    CJAL
-
-    #-- Meter literal en la pila para insertarlo en el codigo compilado
-    li t0, 5  # 10
-    PUSH_T0
-    LITERAL
-
-    li t0, 0
-    PUSH_T0
-    LITERAL
-
-    #-- DO
-    #-- Añadir llamada a XDO
-    la t0,do_xdo
-    PUSH_T0
-    CJAL
-
-    #-- Direccion a donde saltar para repetir el bucle
-    #-- La dejamos en la pila
-    HERE 
-    DUP
-    DOTHEX
+    LIT(1)
+    LIT(133)
+    DOTS
     CR
-
-    LIT(0)
     TOL
-   
+    DOTS
+    CR
 
-    li t0, 45
-    PUSH_T0
-    LITERAL
-
-    #-- Añadir llamada a EMIT
-    la t0,do_emit
-    PUSH_T0
-    CJAL
-
-    #-- LOOP
-    #-- Añadir Llamada a xloop
-    la t0,do_xloop2
-    PUSH_T0
-    CJAL
-
-    #-- Añadir campo para direccion destino
-    COMMA
-
-LOOP1:
     LFROM
+
     DOTS
     CR
-
-    QDUP #-- Duplicate if non zero
-    DOTS
-    CR
-
-    QBRANCH
-    ADDR(LOOP2)
-
-    THEN
-    BRANCH
-    ADDR(LOOP1)
-
-LOOP2:
-
-
-    SEMI
-    
-
-    LATEST
-    FETCH
-    DOTWINFO
-
-    LATEST
-    FETCH
-    LIT(58)
-    DOTWCODE
 
 
     #-- Fin ejecución direct
     XSQUOTE(4," ok\n")
     TYPE
 
-    QUIT
-
 	#-- Terminar
 	BYE
-

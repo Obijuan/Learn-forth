@@ -1399,13 +1399,14 @@ do_tol:
 do_lfrom:
     DOCOLON
 
-    CELL
-    LP
-    PLUSSTORE  #-- Añadir una celda de espacio en la pila L
-    
     LP
     FETCH
-    STORE
+    FETCH
+
+    CELL
+    NEGATE
+    LP
+    PLUSSTORE
 
     EXIT
 
