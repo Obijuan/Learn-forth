@@ -403,21 +403,7 @@ start:
     PUSH_T0
     LITERAL
 
-    #-- DO
-    #-- Añadir llamada a XDO
-    la t0,do_xdo
-    PUSH_T0
-    CJAL
-
-    #-- Direccion a donde saltar para repetir el bucle
-    #-- La dejamos en la pila
-    HERE 
-    DUP
-    DOTHEX
-    CR
-
-    LIT(0)
-    TOL
+    DO
    
 
     li t0, 45

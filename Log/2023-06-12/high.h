@@ -341,3 +341,7 @@ myStr: .byte %len,
   jal do_lfrom
 .end_macro
 
+.macro DO
+  jal do_do
+.end_macro
+

@@ -1411,6 +1411,30 @@ do_lfrom:
     EXIT
 
 
+#-------------------------------------------------------------
+# DO       -- adrs   L: -- 0
+#  ['] xdo ,XT   HERE     target for bwd branch
+#  0 >L ; IMMEDIATE           marker for LEAVEs
+#-------------------------------------------------------------
+.global do_do
+do_do:
+    DOCOLON
+
+    #-- Añadir llamada a XDO
+    la t0,do_xdo
+    PUSH_T0
+    CJAL
+
+    #-- Direccion a donde saltar para repetir el bucle
+    #-- La dejamos en la pila
+    HERE 
+
+    #-- No tengo claro porque mete 0 ahí...
+    LIT(0)
+    TOL
+
+    EXIT
+
 
 
 #-------------------------------------------------------------
