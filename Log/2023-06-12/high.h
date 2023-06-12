@@ -99,6 +99,10 @@ myStr: .byte %len,
 	jal do_comma
 .end_macro
 
+.macro COMMADEST
+	jal do_comma
+.end_macro
+
 .macro COMMABRANCH
 	jal do_comma
 .end_macro
@@ -311,5 +315,9 @@ myStr: .byte %len,
 
 .macro IF
   jal do_if
+.end_macro
+
+.macro THEN
+  jal do_then
 .end_macro
 

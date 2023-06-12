@@ -1395,6 +1395,20 @@ do_if:
 
     EXIT
 
+#-------------------------------------------------------------
+#  THEN     adrs --        resolve forward branch
+#   HERE SWAP !DEST ; IMMEDIATE
+#-------------------------------------------------------------
+.global do_then
+do_then:
+    DOCOLON
+
+    #-- Pila: addrIF --   (addrIF es la dir de salto del IF (qbranch))
+    HERE  #-- addrIF addRThen
+    SWOP  #-- addrThen AddrIF
+    STOREDEST  #-- Almacenar direccion
+
+    EXIT
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO

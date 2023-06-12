@@ -293,11 +293,6 @@ POST2:  DW EXIT
 
 ; CONTROL STRUCTURES ============================
 
-;C THEN     adrs --        resolve forward branch
-;   HERE SWAP !DEST ; IMMEDIATE
-    immed THEN,4,THEN,docolon
-        DW HERE,SWOP,STOREDEST,EXIT
-
 ;C ELSE     adrs1 -- adrs2    branch for IF..ELSE
 ;   ['] branch ,BRANCH  HERE DUP ,DEST
 ;   SWAP  POSTPONE THEN ; IMMEDIATE

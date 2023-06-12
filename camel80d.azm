@@ -17,31 +17,6 @@
 ; ===============================================
 
 
-; CONTROL STRUCTURES ============================
-; These words allow Forth control structure words
-; to be defined portably.
-
-;Z ,BRANCH   xt --    append a branch instruction
-; xt is the branch operator to use, e.g. qbranch
-; or (loop).  It does NOT append the destination
-; address.  On the Z80 this is equivalent to ,XT.
-    head COMMABRANCH,7,',BRANCH',docode
-        jp COMMA
-
-;Z ,DEST   dest --        append a branch address
-; This appends the given destination address to
-; the branch instruction.  On the Z80 this is ','
-; ...other CPUs may use relative addressing.
-    head COMMADEST,5,',DEST',docode
-        jp COMMA
-
-;Z !DEST   dest adrs --    change a branch dest'n
-; Changes the destination address found at 'adrs'
-; to the given 'dest'.  On the Z80 this is '!'
-; ...other CPUs may need relative addressing.
-    head STOREDEST,5,'!DEST',docode
-        jp STORE
-
 ; HEADER STRUCTURE ==============================
 ; The structure of the Forth dictionary headers
 ; (name, link, immediate flag, and "smudge" bit)
