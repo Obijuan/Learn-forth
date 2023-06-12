@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 210
+#-- INTERPRETE DE FORTH. Version 212
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  QUIT
