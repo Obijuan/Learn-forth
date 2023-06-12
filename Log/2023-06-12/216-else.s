@@ -264,6 +264,7 @@ end_qbranch2:
 #-------------------------------------------------
 #-- branch2   --                  branch always
 #-------------------------------------------------
+.global do_branch2
 do_branch2:
 
     #-- En ra está la dirección hacia donde saltar
@@ -358,18 +359,7 @@ start:
 
     #--ELSE
 
-    #-- Añadir Llamada a branch
-    la t0,do_branch2
-    PUSH_T0
-    CJAL
-
-    #-- Añadir campo para direccion destino
-    HERE
-    DUP
-    COMMADEST
-
-    SWOP
-    THEN
+    ELSE
 
     #-- Añadir llamada a "FALSE
     la t0,do_quotefalse

@@ -293,14 +293,6 @@ POST2:  DW EXIT
 
 ; CONTROL STRUCTURES ============================
 
-;C ELSE     adrs1 -- adrs2    branch for IF..ELSE
-;   ['] branch ,BRANCH  HERE DUP ,DEST
-;   SWAP  POSTPONE THEN ; IMMEDIATE
-    immed ELSE,4,ELSE,docolon
-        DW LIT,branch,COMMABRANCH
-        DW HERE,DUP,COMMADEST
-        DW SWOP,THEN,EXIT
-
 ;C BEGIN    -- adrs        target for bwd. branch
 ;   HERE ; IMMEDIATE
     immed BEGIN,5,BEGIN,docode

@@ -1396,6 +1396,30 @@ do_if:
     EXIT
 
 #-------------------------------------------------------------
+#  ELSE     adrs1 -- adrs2    branch for IF..ELSE
+#   ['] branch ,BRANCH  HERE DUP ,DEST
+#   SWAP  POSTPONE THEN ; IMMEDIATE
+#-------------------------------------------------------------
+.global do_else
+do_else:
+    DOCOLON
+
+    #-- Añadir Llamada a branch
+    la t0,do_branch2
+    PUSH_T0
+    CJAL
+
+    #-- Añadir campo para direccion destino
+    HERE
+    DUP
+    COMMADEST
+
+    SWOP
+    THEN
+
+    EXIT
+
+#-------------------------------------------------------------
 #  THEN     adrs --        resolve forward branch
 #   HERE SWAP !DEST ; IMMEDIATE
 #-------------------------------------------------------------
