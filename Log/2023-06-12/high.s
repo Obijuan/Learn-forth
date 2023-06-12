@@ -1373,6 +1373,27 @@ do_semi:
 
 # =========== CONTROL STRUCTURES ===================================
 #-------------------------------------------------------------
+#  >L   x --   L: -- x        move to leave stack
+#   CELL LP +!  LP @ ! ;      (L stack grows up)
+#   head TOL,2,>L,docolon
+#-------------------------------------------------------------
+.global do_tol
+do_tol:
+    DOCOLON
+
+    CELL
+    LP
+    PLUSSTORE  #-- Añadir una celda de espacio en la pila L
+    
+    LP
+    FETCH
+    STORE
+
+    EXIT
+
+
+
+#-------------------------------------------------------------
 #  IF       -- adrs    conditional forward branch
 #   ['] qbranch ,BRANCH  HERE DUP ,DEST ;
 #   IMMEDIATE

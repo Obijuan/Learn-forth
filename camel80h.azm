@@ -322,11 +322,6 @@ POST2:  DW EXIT
     immed REPEAT,6,REPEAT,docolon
         DW SWOP,AGAIN,THEN,EXIT
 
-;Z >L   x --   L: -- x        move to leave stack
-;   CELL LP +!  LP @ ! ;      (L stack grows up)
-    head TOL,2,>L,docolon
-        DW CELL,LP,PLUSSTORE,LP,FETCH,STORE,EXIT
-
 ;Z L>   -- x   L: x --      move from leave stack
 ;   LP @ @  CELL NEGATE LP +! ;
     head LFROM,2,L>,docolon

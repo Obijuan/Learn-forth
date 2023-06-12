@@ -333,3 +333,6 @@ myStr: .byte %len,
   jal do_quotefalse
 .end_macro
 
+.macro TOL
+  jal do_tol
+.end_macro
