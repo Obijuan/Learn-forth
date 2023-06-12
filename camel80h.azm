@@ -293,13 +293,6 @@ POST2:  DW EXIT
 
 ; CONTROL STRUCTURES ============================
 
-;C IF       -- adrs    conditional forward branch
-;   ['] qbranch ,BRANCH  HERE DUP ,DEST ;
-;   IMMEDIATE
-    immed IF,2,IF,docolon
-        DW LIT,qbranch,COMMABRANCH
-        DW HERE,DUP,COMMADEST,EXIT
-
 ;C THEN     adrs --        resolve forward branch
 ;   HERE SWAP !DEST ; IMMEDIATE
     immed THEN,4,THEN,docolon

@@ -308,3 +308,8 @@ myStr: .byte %len,
 .macro QUOTEHI
   jal do_quotehi
 .end_macro
+
+.macro IF
+  jal do_if
+.end_macro
+

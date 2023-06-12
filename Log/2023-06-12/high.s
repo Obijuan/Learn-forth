@@ -1371,6 +1371,31 @@ do_semi:
 
     EXIT
 
+# =========== CONTROL STRUCTURES ===================================
+#-------------------------------------------------------------
+#  IF       -- adrs    conditional forward branch
+#   ['] qbranch ,BRANCH  HERE DUP ,DEST ;
+#   IMMEDIATE
+#-------------------------------------------------------------
+.global do_if
+do_if:
+    DOCOLON
+
+    #-- Añadir Llamada a qbranch
+    la t0,do_qbranch2
+    PUSH_T0
+    CJAL
+
+    #-- Añadir campo para direccion destino
+    HERE
+    DUP
+    COMMA
+
+    #-- Deja la dirección del if en la pila
+
+    EXIT
+
+
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
 #===================================================================
