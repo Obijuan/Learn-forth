@@ -264,11 +264,20 @@ link22:
     .align 2
     .word link22
     .byte 0
-lastword:
 link23:
     .byte 2
     .ascii "CR"
     .word do_cr
+
+#-- Palabra 24
+    .align 2
+    .word link23
+    .byte 0
+lastword:
+link24:
+    .byte 4
+    .ascii "TYPE"
+    .word do_type
 
 
 #-- Fin del diccionario
