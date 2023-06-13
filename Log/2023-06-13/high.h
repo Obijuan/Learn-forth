@@ -425,3 +425,6 @@ myStr: .byte %len,
   jal do_ssmod
 .end_macro
 
+.macro STARSLASH
+  jal do_starslash
+.end_macro

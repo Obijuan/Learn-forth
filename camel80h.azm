@@ -12,11 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C */     n1 n2 n3 -- n4        n1*n2/n3
-;   */MOD nip ;
-    head STARSLASH,2,*/,docolon
-        dw SSMOD,NIP,EXIT
-
 ;C MAX    n1 n2 -- n3       signed maximum
 ;   2DUP < IF SWAP THEN DROP ;
     head MAX,3,MAX,docolon

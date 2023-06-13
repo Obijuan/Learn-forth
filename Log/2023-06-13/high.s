@@ -394,8 +394,20 @@ do_ssmod:
 
 
 #----------------------------------------------------
-#  MOD    n1 n2 -- n3       signed remainder
-#   /MOD DROP ;
+#  */MOD  n1 n2 n3 -- n4 n5    n1*n2/n3, rem&quot
+#   >R M* R> FM/MOD ;
+#----------------------------------------------------
+.global do_starslash
+do_starslash: 
+    DOCOLON
+    SSMOD
+    NIP
+    EXIT
+
+
+#----------------------------------------------------
+#  */     n1 n2 n3 -- n4        n1*n2/n3
+#   */MOD nip ;
 #----------------------------------------------------
 .global do_mod
 do_mod: 
