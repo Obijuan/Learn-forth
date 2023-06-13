@@ -11,14 +11,7 @@
 ; ===============================================
 
 ; ARITHMETIC OPERATORS ==========================
-; INPUT/OUTPUT ==================================
-
-;Z umax    u1 u2 -- u       unsigned maximum
-;   2DUP U< IF SWAP THEN DROP ;
-    head UMAX,4,UMAX,docolon
-        DW TWODUP,ULESS,QBRANCH,UMAX1,SWOP
-UMAX1:  DW DROP,EXIT
-                        
+; INPUT/OUTPUT ==================================                        
 ; NUMERIC OUTPUT ================================
 ; Numeric conversion is done l.s.digit first, so
 ; the output buffer is built backwards in memory.

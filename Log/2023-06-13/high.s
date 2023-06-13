@@ -530,6 +530,22 @@ UMIN1:
     DROP
     EXIT
 
+#----------------------------------------------------
+#   umax    u1 u2 -- u       unsigned maximum
+#    2DUP U< IF SWAP THEN DROP ;
+#----------------------------------------------------
+.global do_umax
+do_umax: 
+    DOCOLON
+    TWODUP
+    ULESS
+    QBRANCH
+    ADDR(UMAX1)
+    SWOP
+UMAX1:
+    DROP
+    EXIT
+
 
 #----------------------------------------------------
 #-- BL      -- char            an ASCII space
