@@ -376,3 +376,7 @@ myStr: .byte %len,
 .macro PAREN
   jal do_paren
 .end_macro
+
+.macro STOD
+  jal do_stod
+.end_macro

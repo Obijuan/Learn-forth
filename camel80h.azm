@@ -12,11 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C S>D    n -- d          single -> double prec.
-;   DUP 0< ;
-    head STOD,3,S>D,docolon
-        dw DUP,ZEROLESS,EXIT
-
 ;X DNEGATE   d1 -- d2     negate double precision
 ;   SWAP INVERT SWAP INVERT 1 M+ ;
     head DNEGATE,7,DNEGATE,docolon

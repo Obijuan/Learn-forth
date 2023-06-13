@@ -214,7 +214,18 @@ do_twoswap:
 
 #=========== ARITHMETIC OPERATORS ==========================
 
+#----------------------------------------------------
+#  S>D    n -- d          single -> double prec.
+#   DUP 0< ;
+#----------------------------------------------------
+.global do_stod
+do_stod: 
+    DOCOLON
 
+    DUP
+    ZEROLESS
+
+    EXIT
 
 
 
