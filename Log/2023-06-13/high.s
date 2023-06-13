@@ -514,6 +514,22 @@ MIN1:
     EXIT
 
 
+#----------------------------------------------------
+#  umin     u1 u2 -- u      unsigned minimum
+#   2DUP U> IF SWAP THEN DROP ;
+#----------------------------------------------------
+.global do_umin
+do_umin: 
+    DOCOLON
+    TWODUP
+    UGREATER
+    QBRANCH
+    ADDR(UMIN1)
+    SWOP
+UMIN1: 
+    DROP
+    EXIT
+
 
 #----------------------------------------------------
 #-- BL      -- char            an ASCII space

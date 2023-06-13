@@ -436,3 +436,7 @@ myStr: .byte %len,
 .macro MIN
   jal do_min
 .end_macro
+
+.macro UMIN
+  jal do_umin
+.end_macro

@@ -13,12 +13,6 @@
 ; ARITHMETIC OPERATORS ==========================
 ; INPUT/OUTPUT ==================================
 
-;Z umin     u1 u2 -- u      unsigned minimum
-;   2DUP U> IF SWAP THEN DROP ;
-    head UMIN,4,UMIN,docolon
-        DW TWODUP,UGREATER,QBRANCH,UMIN1,SWOP
-UMIN1:  DW DROP,EXIT
-
 ;Z umax    u1 u2 -- u       unsigned maximum
 ;   2DUP U< IF SWAP THEN DROP ;
     head UMAX,4,UMAX,docolon
