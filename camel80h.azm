@@ -196,11 +196,6 @@ TICK:   call docolon
         DW LIT,LIT,COMMAXT
         DW COMMA,EXIT
 
-;C (    --                     skip input until )
-;   [ HEX ] 29 WORD DROP ; IMMEDIATE
-    immed PAREN,1,(,docolon
-        DW LIT,29H,WORD,DROP,EXIT
-
 ; COMPILER ======================================
         
 ;Z (DOES>)  --      run-time action of DOES>
