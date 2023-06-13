@@ -392,3 +392,7 @@ myStr: .byte %len,
 .macro DABS
   jal do_dabs
 .end_macro
+
+.macro MSTAR
+  jal do_mstar
+.end_macro

@@ -261,6 +261,31 @@ do_dabs:
     EXIT 
 
 #----------------------------------------------------
+# M*     n1 n2 -- d    signed 16*16->32 multiply
+#  2DUP XOR >R        carries sign of the result
+#  SWAP ABS SWAP ABS UM*
+#  R> ?DNEGATE ;
+#----------------------------------------------------
+.global do_mstar
+do_mstar: 
+    DOCOLON
+
+    TWODUP
+    LXOR
+    TOR
+
+    SWOP
+    ABS
+    SWOP
+    ABS
+    UMSTAR
+
+    RFROM
+    QDNEGATE
+
+    EXIT
+
+#----------------------------------------------------
 #  S>D    n -- d          single -> double prec.
 #   DUP 0< ;
 #----------------------------------------------------

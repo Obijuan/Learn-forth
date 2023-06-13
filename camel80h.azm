@@ -12,15 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C M*     n1 n2 -- d    signed 16*16->32 multiply
-;   2DUP XOR >R        carries sign of the result
-;   SWAP ABS SWAP ABS UM*
-;   R> ?DNEGATE ;
-    head MSTAR,2,M*,docolon
-        DW TWODUP,XOR,TOR
-        DW SWOP,ABS,SWOP,ABS,UMSTAR
-        DW RFROM,QDNEGATE,EXIT
-
 ;C SM/REM   d1 n1 -- n2 n3   symmetric signed div
 ;   2DUP XOR >R              sign of quotient
 ;   OVER >R                  sign of remainder
