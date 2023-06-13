@@ -216,11 +216,6 @@
 	#-- PARA LOS PROGRAMAS EN FORTH
 	#----------------------------------------------------
 
-	#--------- Alto nivel
-	.macro HOME
-	  jal do_home
-	.end_macro
-
 	.macro TEST_RFETCH
 	  jal do_test_rfetch
 	.end_macro

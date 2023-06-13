@@ -311,11 +311,20 @@ link27:
  .align 2
     .word link27
     .byte 0
-lastword:
 link28:
     .byte 3
     .ascii "CLS"
     .word do_cls
+
+#-- Palabra 29
+ .align 2
+    .word link28
+    .byte 0
+lastword:
+link29:
+    .byte 4
+    .ascii "HOME"
+    .word do_home
     
 
 

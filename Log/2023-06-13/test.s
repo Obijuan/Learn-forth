@@ -650,3 +650,19 @@ do_cls:
     TYPE
 
     EXIT
+
+#----------------------------------------------------
+#-- HOME  -- Llevar el cursor a HOME
+#-- : HOME EESC ." [H" ;
+#----------------------------------------------------
+.global do_home
+do_home:
+    DOCOLON
+
+    EESC
+    XSQUOTE(2,"[H")
+    TYPE
+
+    EXIT
+
+    

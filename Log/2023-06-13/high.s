@@ -500,22 +500,6 @@ do_add3:
 
 	#-- Devolver control
 	ret	
-	
-#--- HOME: Llevar el cursor a HOme
-do_home:
-        #-- Guardar direccion de retorno
-	PUSH_RA
-	
-	LIT(27)
-	EMIT
-	LIT(91)
-	EMIT
-	LIT(72)
-	EMIT
-	
-	#-- Recuperar direccion de retorno
-	POP_RA
-	ret
 
 #--- Prueba para R@
 #--- Al entrar aquí se guarda la direccion de retorno en la pila R

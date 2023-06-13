@@ -368,3 +368,7 @@ myStr: .byte %len,
 .macro CLS
   jal do_cls
 .end_macro
+
+.macro HOME
+  jal do_home
+.end_macro
