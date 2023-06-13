@@ -12,11 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C */MOD  n1 n2 n3 -- n4 n5    n1*n2/n3, rem&quot
-;   >R M* R> FM/MOD ;
-    head SSMOD,5,*/MOD,docolon
-        dw TOR,MSTAR,RFROM,FMSLASHMOD,EXIT
-
 ;C */     n1 n2 n3 -- n4        n1*n2/n3
 ;   */MOD nip ;
     head STARSLASH,2,*/,docolon

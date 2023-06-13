@@ -379,6 +379,19 @@ do_slash:
     NIP
     EXIT
 
+#----------------------------------------------------
+#  */MOD  n1 n2 n3 -- n4 n5    n1*n2/n3, rem&quot
+#   >R M* R> FM/MOD ;
+#----------------------------------------------------
+.global do_ssmod
+do_ssmod: 
+    DOCOLON
+    TOR
+    MSTAR
+    RFROM
+    FMSLASHMOD
+    EXIT
+
 
 #----------------------------------------------------
 #  MOD    n1 n2 -- n3       signed remainder

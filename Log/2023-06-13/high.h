@@ -420,3 +420,8 @@ myStr: .byte %len,
 .macro MOD
   jal do_mod
 .end_macro
+
+.macro SSMOD
+  jal do_ssmod
+.end_macro
+
