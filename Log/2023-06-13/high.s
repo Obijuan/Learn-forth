@@ -233,6 +233,22 @@ do_dnegate:
 
 
 #----------------------------------------------------
+#  ?DNEGATE  d1 n -- d2   negate d1 if n negative
+#   0< IF DNEGATE THEN ;       ...a common factor
+#----------------------------------------------------
+.global do_qdnegate
+do_qdnegate: 
+    DOCOLON
+
+    ZEROLESS
+    QBRANCH
+    ADDR(DNEG1)
+    DNEGATE
+DNEG1:
+
+    EXIT
+
+#----------------------------------------------------
 #  S>D    n -- d          single -> double prec.
 #   DUP 0< ;
 #----------------------------------------------------

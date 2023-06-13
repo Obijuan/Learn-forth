@@ -384,3 +384,7 @@ myStr: .byte %len,
 .macro DNEGATE
   jal do_dnegate
 .end_macro
+
+.macro QDNEGATE
+  jal do_qdnegate
+.end_macro

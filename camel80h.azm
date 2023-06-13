@@ -12,12 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;Z ?DNEGATE  d1 n -- d2   negate d1 if n negative
-;   0< IF DNEGATE THEN ;       ...a common factor
-    head QDNEGATE,8,?DNEGATE,docolon
-        DW ZEROLESS,qbranch,DNEG1,DNEGATE
-DNEG1:  DW EXIT
-
 ;X DABS     d1 -- +d2    absolute value dbl.prec.
 ;   DUP ?DNEGATE ;
     head DABS,4,DABS,docolon
