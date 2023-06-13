@@ -248,6 +248,18 @@ DNEG1:
 
     EXIT
 
+
+#----------------------------------------------------
+#  DABS     d1 -- +d2    absolute value dbl.prec.
+#   DUP ?DNEGATE ;
+#----------------------------------------------------
+.global do_dabs
+do_dabs: 
+    DOCOLON
+    DUP
+    QDNEGATE
+    EXIT 
+
 #----------------------------------------------------
 #  S>D    n -- d          single -> double prec.
 #   DUP 0< ;

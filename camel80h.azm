@@ -12,11 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;X DABS     d1 -- +d2    absolute value dbl.prec.
-;   DUP ?DNEGATE ;
-    head DABS,4,DABS,docolon
-        DW DUP,QDNEGATE,EXIT
-
 ;C M*     n1 n2 -- d    signed 16*16->32 multiply
 ;   2DUP XOR >R        carries sign of the result
 ;   SWAP ABS SWAP ABS UM*
