@@ -131,7 +131,7 @@ UMAX1:  DW DROP,EXIT
 ;C S"       --         compile in-line string
 ;   COMPILE (S")  [ HEX ]
 ;   22 WORD C@ 1+ ALIGNED ALLOT ; IMMEDIATE
-    immed SQUOTE,2,S",docolon
+    immed SQUOTE,2,S",docolon "
         DW LIT,XSQUOTE,COMMAXT
         DW LIT,22H,WORD,CFETCH,ONEPLUS
         DW ALIGNED,ALLOT,EXIT
@@ -321,23 +321,6 @@ POST2:  DW EXIT
 ;   SWAP POSTPONE AGAIN POSTPONE THEN ; IMMEDIATE
     immed REPEAT,6,REPEAT,docolon
         DW SWOP,AGAIN,THEN,EXIT
-
-
-;Z ENDLOOP   adrs xt --   L: 0 a1 a2 .. aN --
-;   ,BRANCH  ,DEST                backward loop
-;   BEGIN L> ?DUP WHILE POSTPONE THEN REPEAT ;
-;                                 resolve LEAVEs
-; This is a common factor of LOOP and +LOOP.
-    head ENDLOOP,7,ENDLOOP,docolon
-        DW COMMABRANCH,COMMADEST
-LOOP1:  DW LFROM,QDUP,qbranch,LOOP2
-        DW THEN,branch,LOOP1
-LOOP2:  DW EXIT
-
-;C LOOP    adrs --   L: 0 a1 a2 .. aN --
-;   ['] xloop ENDLOOP ;  IMMEDIATE
-    immed LOOP,4,LOOP,docolon
-        DW LIT,xloop,ENDLOOP,EXIT
 
 ;C +LOOP   adrs --   L: 0 a1 a2 .. aN --
 ;   ['] xplusloop ENDLOOP ;  IMMEDIATE

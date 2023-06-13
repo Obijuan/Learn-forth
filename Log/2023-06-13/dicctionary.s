@@ -237,11 +237,38 @@ link19:
     .align 2
     .word link19
     .byte 0
-lastword:
 link20:
     .byte 5
     .ascii "SPACE"
     .word do_space
+
+#-- Palabra 21
+    .align 2
+    .word link20
+    .byte 1   #-- IMMED
+link21:
+    .byte 2
+    .ascii "DO"
+    .word do_do
+
+#-- Palabra 22
+    .align 2
+    .word link21
+    .byte 1   #-- IMMED
+link22:
+    .byte 4
+    .ascii "LOOP"
+    .word do_loop
+
+#-- Palabra 23
+    .align 2
+    .word link22
+    .byte 0
+lastword:
+link23:
+    .byte 2
+    .ascii "CR"
+    .word do_cr
 
 
 #-- Fin del diccionario

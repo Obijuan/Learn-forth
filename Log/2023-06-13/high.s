@@ -1449,12 +1449,7 @@ do_endloop:
 
 LOOP1:
     LFROM
-    DOTS
-    CR
-
     QDUP #-- Duplicate if non zero
-    DOTS
-    CR
 
     QBRANCH
     ADDR(LOOP2)
