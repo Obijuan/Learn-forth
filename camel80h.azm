@@ -12,22 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C FM/MOD   d1 n1 -- n2 n3   floored signed div'n
-;   DUP >R              save divisor
-;   SM/REM
-;   DUP 0< IF           if quotient negative,
-;       SWAP R> +         add divisor to rem'dr
-;       SWAP 1-           decrement quotient
-;   ELSE R> DROP THEN ;
-; Ref. dpANS-6 section 3.2.2.1.
-    head FMSLASHMOD,6,FM/MOD,docolon
-        DW DUP,TOR,SMSLASHREM
-        DW DUP,ZEROLESS,qbranch,FMMOD1
-        DW SWOP,RFROM,PLUS,SWOP,ONEMINUS
-        DW branch,FMMOD2
-FMMOD1: DW RFROM,DROP
-FMMOD2: DW EXIT
-
 ;C *      n1 n2 -- n3       signed multiply
 ;   M* DROP ;
     head STAR,1,*,docolon

@@ -331,6 +331,45 @@ do_smslashrem:
 
     EXIT
 
+
+#----------------------------------------------------
+#  FM/MOD   d1 n1 -- n2 n3   floored signed div'n
+#   DUP >R              save divisor
+#   SM/REM
+#   DUP 0< IF           if quotient negative,
+#       SWAP R> +         add divisor to rem'dr
+#       SWAP 1-           decrement quotient
+#   ELSE R> DROP THEN ;
+# Ref. dpANS-6 section 3.2.2.1.
+#----------------------------------------------------
+.global do_fmslashmod
+do_fmslashmod: 
+    DOCOLON
+
+    DUP
+    TOR
+    SMSLASHREM
+
+    DUP
+    ZEROLESS
+    QBRANCH
+    ADDR(FMMOD1)
+    SWOP
+    RFROM
+    PLUS
+    SWOP
+    ONEMINUS
+    BRANCH
+    ADDR(FMMOD2)
+FMMOD1: 
+    RFROM
+    DROP
+FMMOD2:
+
+
+    EXIT
+
+
 #----------------------------------------------------
 # ?NEGATE  n1 n2 -- n3  negate n1 if n2 negative
 #   0< IF NEGATE THEN ;        ...a common factor

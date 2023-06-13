@@ -400,3 +400,7 @@ myStr: .byte %len,
 .macro SMSLASHREM
   jal do_smslashrem
 .end_macro
+
+.macro FMSLASHMOD
+  jal do_fmslashmod
+.end_macro
