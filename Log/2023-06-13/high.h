@@ -412,3 +412,7 @@ myStr: .byte %len,
 .macro SLASHMOD
   jal do_slashmod
 .end_macro
+
+.macro SLASH
+  jal do_slash
+.end_macro

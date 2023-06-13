@@ -366,8 +366,19 @@ FMMOD1:
     DROP
 FMMOD2:
 
-
     EXIT
+
+#----------------------------------------------------
+#  /      n1 n2 -- n3       signed divide
+#   /MOD nip ;
+#----------------------------------------------------
+.global do_slash
+do_slash: 
+    DOCOLON
+    SLASHMOD
+    NIP
+    EXIT
+
 
 #----------------------------------------------------
 #--  /MOD   n1 n2 -- n3 n4    signed divide/rem'dr
