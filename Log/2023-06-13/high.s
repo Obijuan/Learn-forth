@@ -2111,7 +2111,7 @@ QUIT1:
     ADDR(QUIT2)
 
     #-- Estamos enmodo intérprete
-    XSQUOTE(3,"ok ")
+    XSQUOTE(3," ok ")
     TYPE
     CR
 
