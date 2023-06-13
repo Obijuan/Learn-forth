@@ -744,9 +744,6 @@ do_squote:
     #-- Añadir los bytes necesarios para que la nueva dir de HERE
     #-- este alineada 
     HERE   #-- addr(no-align)
-    DUP
-    DOTHEX
-    CR
 
     DUP     #-- addr(no-align) addr(no-align)
     ALIGN   #-- addr(no-align) a-addr

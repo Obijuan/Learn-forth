@@ -273,12 +273,21 @@ link23:
     .align 2
     .word link23
     .byte 0
-lastword:
 link24:
     .byte 4
     .ascii "TYPE"
     .word do_type
 
+#-- Palabra 25
+    .align 2
+    .word link24
+    .byte 1
+lastword:
+link25:
+    .byte 2
+    .ascii "S"
+    .byte 0x22  #-- "
+    .word do_squote
     
 
 
