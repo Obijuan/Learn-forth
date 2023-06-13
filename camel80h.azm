@@ -127,21 +127,6 @@ UMIN1:  DW DROP,EXIT
     head UMAX,4,UMAX,docolon
         DW TWODUP,ULESS,QBRANCH,UMAX1,SWOP
 UMAX1:  DW DROP,EXIT
-
-;C S"       --         compile in-line string
-;   COMPILE (S")  [ HEX ]
-;   22 WORD C@ 1+ ALIGNED ALLOT ; IMMEDIATE
-    immed SQUOTE,2,S",docolon "
-        DW LIT,XSQUOTE,COMMAXT
-        DW LIT,22H,WORD,CFETCH,ONEPLUS
-        DW ALIGNED,ALLOT,EXIT
-
-;C ."       --         compile string to print"
-;   POSTPONE S"  POSTPONE TYPE ; IMMEDIATE"
-    immed DOTQUOTE,2,.",docolon"
-        DW SQUOTE
-        DW LIT,TYPE,COMMAXT
-        DW EXIT
                         
 ; NUMERIC OUTPUT ================================
 ; Numeric conversion is done l.s.digit first, so

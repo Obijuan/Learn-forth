@@ -282,12 +282,22 @@ link24:
     .align 2
     .word link24
     .byte 1
-lastword:
 link25:
     .byte 2
     .ascii "S"
     .byte 0x22  #-- "
     .word do_squote
+
+#-- Palabra 26
+    .align 2
+    .word link25
+    .byte 1
+lastword:
+link26:
+    .byte 2
+    .ascii "."  #-- ."
+    .byte 0x22 
+    .word do_dotquote
     
 
 

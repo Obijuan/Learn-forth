@@ -757,6 +757,23 @@ do_squote:
     EXIT
 
 #----------------------------------------------------
+#  ."       --         compile string to print"
+#   POSTPONE S"  POSTPONE TYPE ; IMMEDIATE"
+#----------------------------------------------------
+.global do_dotquote
+do_dotquote:
+    DOCOLON
+
+    SQUOTE
+
+    #--- Añadir Llamada a TYPE
+    la t0,do_type
+    PUSH_T0
+    CJAL
+
+    EXIT
+
+#----------------------------------------------------
 #  TYPE    c-addr +n --     type line to term'l
 #   ?DUP IF
 #     OVER + SWAP DO I C@ EMIT LOOP

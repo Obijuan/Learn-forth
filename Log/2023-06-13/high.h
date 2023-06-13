@@ -356,3 +356,7 @@ myStr: .byte %len,
 .macro SQUOTE
   jal do_squote
 .end_macro
+
+.macro DOTQUOTE
+  jal do_dotquote
+.end_macro
