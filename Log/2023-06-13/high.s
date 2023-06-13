@@ -215,18 +215,30 @@ do_twoswap:
 #=========== ARITHMETIC OPERATORS ==========================
 
 #----------------------------------------------------
+#  DNEGATE   d1 -- d2     negate double precision
+#   SWAP INVERT SWAP INVERT 1 M+ ;
+#----------------------------------------------------
+.global do_dnegate
+do_dnegate: 
+    DOCOLON
+
+    SWOP
+    INVERT
+    SWOP
+    INVERT
+    LIT(1)
+    MPLUS
+
+    EXIT
+
+
+#----------------------------------------------------
 #  S>D    n -- d          single -> double prec.
 #   DUP 0< ;
 #----------------------------------------------------
 .global do_stod
 do_stod: 
     DOCOLON
-
-    DUP
-    ZEROLESS
-
-    EXIT
-
 
 
 #----------------------------------------------------

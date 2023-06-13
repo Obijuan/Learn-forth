@@ -380,3 +380,7 @@ myStr: .byte %len,
 .macro STOD
   jal do_stod
 .end_macro
+
+.macro DNEGATE
+  jal do_dnegate
+.end_macro

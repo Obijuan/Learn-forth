@@ -12,12 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;X DNEGATE   d1 -- d2     negate double precision
-;   SWAP INVERT SWAP INVERT 1 M+ ;
-    head DNEGATE,7,DNEGATE,docolon
-        DW SWOP,INVERT,SWOP,INVERT,LIT,1,MPLUS
-        DW EXIT
-
 ;Z ?DNEGATE  d1 n -- d2   negate d1 if n negative
 ;   0< IF DNEGATE THEN ;       ...a common factor
     head QDNEGATE,8,?DNEGATE,docolon
