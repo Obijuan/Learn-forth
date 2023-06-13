@@ -1253,6 +1253,8 @@ do_charplus:
 # or it may be different.
 
 
+
+
 #--------------------------------------------------------
 #  ?SIGN   adr n -- adr' n' f  get optional sign
 #   advance adr/n if sign; return NZ if negative
@@ -1533,6 +1535,37 @@ do_paren:
     DROP
 
     EXIT
+
+
+#--------------------------------------------------------
+#  EVALUATE  i*x c-addr u -- j*x  interprt string
+#   'SOURCE 2@ >R >R  >IN @ >R
+#   INTERPRET
+#   R> >IN !  R> R> 'SOURCE 2! ;
+#---------------------------------------------------------
+.global do_evaluate
+do_evaluate:
+    DOCOLON
+    TICKSOURCE
+    TWOFETCH
+    TOR
+    TOR
+
+    TOIN
+    FETCH
+    TOR
+    INTERPRET
+
+    RFROM
+    TOIN
+    STORE
+    RFROM
+    RFROM
+    
+    TICKSOURCE
+    TWOSTORE
+    EXIT
+
 
 # ================ DICTIONARY MANAGEMENT =========================
 

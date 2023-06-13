@@ -1,45 +1,8 @@
-; LISTING 2.
-;
-; ===============================================
-; CAMEL80H.AZM: High Level Words
-;   Source code is for the Z80MR macro assembler.
-;   Forth words are documented as follows:
-;*   NAME     stack -- stack    description
-;   Word names in upper case are from the ANS
-;   Forth Core word set.  Names in lower case are
-;   "internal" implementation words & extensions.
-; ===============================================
-
-; ARITHMETIC OPERATORS ==========================
-; INPUT/OUTPUT ==================================                        
-; NUMERIC OUTPUT ================================
-; Numeric conversion is done l.s.digit first, so
-; the output buffer is built backwards in memory.
-
-; Some double-precision arithmetic operators are
-; needed to implement ANSI numeric conversion.
-
-; DICTIONARY MANAGEMENT =========================
-
-; Note: , and C, are only valid for combined
-; Code and Data spaces.
-
-
 ; INTERPRETER ===================================
 ; Note that NFA>LFA, NFA>CFA, IMMED?, and FIND
 ; are dependent on the structure of the Forth
 ; header.  This may be common across many CPUs,
 ; or it may be different.
-
-;C EVALUATE  i*x c-addr u -- j*x  interprt string
-;   'SOURCE 2@ >R >R  >IN @ >R
-;   INTERPRET
-;   R> >IN !  R> R> 'SOURCE 2! ;
-    head EVALUATE,8,EVALUATE,docolon
-        DW TICKSOURCE,TWOFETCH,TOR,TOR
-        DW TOIN,FETCH,TOR,INTERPRET
-        DW RFROM,TOIN,STORE,RFROM,RFROM
-        DW TICKSOURCE,TWOSTORE,EXIT
 
 ;Z ?ABORT   f c-addr u --      abort & print msg
 ;   ROT IF TYPE ABORT THEN 2DROP ;

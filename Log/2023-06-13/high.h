@@ -452,3 +452,7 @@ myStr: .byte %len,
 .macro MOVE
   jal do_move
 .end_macro
+
+.macro EVALUATE
+  jal do_evaluate
+.end_macro
