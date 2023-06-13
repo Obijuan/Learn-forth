@@ -320,11 +320,20 @@ link28:
  .align 2
     .word link28
     .byte 0
-lastword:
 link29:
     .byte 4
     .ascii "HOME"
     .word do_home
+
+#-- Palabra 30
+ .align 2
+    .word link29
+    .byte 1 #-- IMMED
+lastword:
+link30:
+    .byte 1
+    .ascii "("
+    .word do_paren
     
 
 
