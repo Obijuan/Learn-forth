@@ -292,12 +292,30 @@ link25:
     .align 2
     .word link25
     .byte 1
-lastword:
 link26:
     .byte 2
     .ascii "."  #-- ."
     .byte 0x22 
     .word do_dotquote
+
+#-- Palabra 27
+ .align 2
+    .word link26
+    .byte 0
+link27:
+    .byte 4
+    .ascii "EESC"
+    .word do_eesc
+
+#-- Palabra 28
+ .align 2
+    .word link27
+    .byte 0
+lastword:
+link28:
+    .byte 3
+    .ascii "CLS"
+    .word do_cls
     
 
 

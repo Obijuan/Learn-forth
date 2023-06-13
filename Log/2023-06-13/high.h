@@ -360,3 +360,11 @@ myStr: .byte %len,
 .macro DOTQUOTE
   jal do_dotquote
 .end_macro
+
+.macro EESC
+  jal do_eesc
+.end_macro
+
+.macro CLS
+  jal do_cls
+.end_macro

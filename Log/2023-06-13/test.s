@@ -623,3 +623,30 @@ do_quotefalse:
     SPACE
 
     EXIT
+
+#----------------------------------------------------
+#-- EESC  -- Imprimir caracter de escape (27)
+#-- : EESC 27 EMIT ;
+#----------------------------------------------------
+.global do_eesc
+do_eesc:
+    DOCOLON
+
+    LIT(27)
+    EMIT
+
+    EXIT 
+
+#----------------------------------------------------
+#-- CLS  -- Borrar la pantalla
+#-- : CLS EESC ." c" ;
+#----------------------------------------------------
+.global do_cls
+do_cls:
+    DOCOLON
+
+    EESC
+    XSQUOTE(1,"c")
+    TYPE
+
+    EXIT
