@@ -279,6 +279,8 @@ link24:
     .ascii "TYPE"
     .word do_type
 
+    
+
 
 #-- Fin del diccionario
 .align 2

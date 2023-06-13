@@ -716,6 +716,50 @@ do_xsquote:
 	EXIT
 
 #----------------------------------------------------
+#  S"       --         compile in-line string
+#   COMPILE (S")  [ HEX ]
+#   22 WORD C@ 1+ ALIGNED ALLOT ; IMMEDIATE
+#----------------------------------------------------
+.global do_squote
+do_squote:
+    DOCOLON
+
+    #--- Añadir Llamada a xsquote2
+    la t0,do_xsquote2
+    PUSH_T0
+    CJAL
+
+    LIT(0x22)    #-- "
+    WORD         #--   c-addr (no alineada)
+
+    #-- Obtener caracteres de la cadena
+    CFETCH     #--  u
+
+    #-- Sumar 1 (para dejar espacio para el contador)
+    ONEPLUS    #-- u+1
+
+    #-- Reservar espacio para la cadena
+    ALLOT    #--
+    
+    #-- Añadir los bytes necesarios para que la nueva dir de HERE
+    #-- este alineada 
+    HERE   #-- addr(no-align)
+    DUP
+    DOTHEX
+    CR
+
+    DUP     #-- addr(no-align) addr(no-align)
+    ALIGN   #-- addr(no-align) a-addr
+    SWOP    #-- a-addr addr
+    MINUS   #-- u  (bytes de desalineamiento)
+
+    #-- Reservar los bytes de desalineamiento
+    #-- Ahora HERE debe apuntar a una direccion ALINEADA
+    ALLOT
+
+    EXIT
+
+#----------------------------------------------------
 #  TYPE    c-addr +n --     type line to term'l
 #   ?DUP IF
 #     OVER + SWAP DO I C@ EMIT LOOP

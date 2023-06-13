@@ -352,3 +352,7 @@ myStr: .byte %len,
 .macro LOOP
   jal do_loop
 .end_macro
+
+.macro SQUOTE
+  jal do_squote
+.end_macro
