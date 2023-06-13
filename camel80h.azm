@@ -11,13 +11,6 @@
 ; ===============================================
 
 ; ARITHMETIC OPERATORS ==========================
-
-;C MIN    n1 n2 -- n3       signed minimum
-;   2DUP > IF SWAP THEN DROP ;
-    head MIN,3,MIN,docolon
-        dw TWODUP,GREATER,qbranch,MIN1,SWOP
-MIN1:   dw DROP,EXIT
-
 ; INPUT/OUTPUT ==================================
 
 ;Z umin     u1 u2 -- u      unsigned minimum

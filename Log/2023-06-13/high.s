@@ -497,6 +497,22 @@ MAX1:
     DROP
     EXIT
 
+#----------------------------------------------------
+#  MIN    n1 n2 -- n3       signed minimum
+#   2DUP > IF SWAP THEN DROP ;
+#----------------------------------------------------
+.global do_min
+do_min: 
+    DOCOLON
+    TWODUP
+    GREATER
+    QBRANCH
+    ADDR(MIN1)
+    SWOP
+MIN1:
+    DROP
+    EXIT
+
 
 
 #----------------------------------------------------
