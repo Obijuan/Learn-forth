@@ -12,11 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C /MOD   n1 n2 -- n3 n4    signed divide/rem'dr
-;   >R S>D R> FM/MOD ;
-    head SLASHMOD,4,/MOD,docolon
-        dw TOR,STOD,RFROM,FMSLASHMOD,EXIT
-
 ;C /      n1 n2 -- n3       signed divide
 ;   /MOD nip ;
     head SLASH,1,/,docolon

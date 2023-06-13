@@ -369,6 +369,24 @@ FMMOD2:
 
     EXIT
 
+#----------------------------------------------------
+#--  /MOD   n1 n2 -- n3 n4    signed divide/rem'dr
+#--   >R S>D R> FM/MOD ;
+#----------------------------------------------------
+.global do_slashmod
+do_slashmod: 
+    DOCOLON
+
+    TOR
+    STOD
+    RFROM
+    FMSLASHMOD
+
+    EXIT
+
+
+
+
 
 #----------------------------------------------------
 #  *      n1 n2 -- n3       signed multiply

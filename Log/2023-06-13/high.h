@@ -408,3 +408,7 @@ myStr: .byte %len,
 .macro STAR
   jal do_star
 .end_macro
+
+.macro SLASHMOD
+  jal do_slashmod
+.end_macro
