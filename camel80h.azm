@@ -201,17 +201,4 @@ POST2:  DW EXIT
         DW HERE,DUP,COMMADEST,TOL,EXIT
 
 ; OTHER OPERATIONS ==============================
-
-;C MOVE    addr1 addr2 u --     smart move
-;             VERSION FOR 1 ADDRESS UNIT = 1 CHAR
-;  >R 2DUP SWAP DUP R@ +     -- ... dst src src+n
-;  WITHIN IF  R> CMOVE>        src <= dst < src+n
-;       ELSE  R> CMOVE  THEN ;          otherwise
-    head MOVE,4,MOVE,docolon
-        DW TOR,TWODUP,SWOP,DUP,RFETCH,PLUS
-        DW WITHIN,qbranch,MOVE1
-        DW RFROM,CMOVEUP,branch,MOVE2
-MOVE1:  DW RFROM,CMOVE
-MOVE2:  DW EXIT
-
 ; UTILITY WORDS AND STARTUP =====================

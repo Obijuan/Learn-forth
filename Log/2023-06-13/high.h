@@ -448,3 +448,7 @@ myStr: .byte %len,
 .macro WITHIN
   jal do_within
 .end_macro
+
+.macro MOVE
+  jal do_move
+.end_macro

@@ -2449,6 +2449,35 @@ do_within:
     EXIT
 
 #-------------------------------------------------------
+#  MOVE    addr1 addr2 u --     smart move
+#             VERSION FOR 1 ADDRESS UNIT = 1 CHAR
+#  >R 2DUP SWAP DUP R@ +     -- ... dst src src+n
+#  WITHIN IF  R> CMOVE>        src <= dst < src+n
+#       ELSE  R> CMOVE  THEN ;          otherwise
+#--------------------------------------------------------
+.global do_move
+do_move:
+    DOCOLON
+    TOR
+    TWODUP
+    SWOP
+    DUP
+    RFETCH
+    PLUS
+    WITHIN
+    QBRANCH
+    ADDR(MOVE1)
+    RFROM,
+    CMOVEUP
+    BRANCH
+    ADDR(MOVE2)
+MOVE1: 
+    RFROM
+    CMOVE
+MOVE2:
+    EXIT
+
+#-------------------------------------------------------
 #  DEPTH    -- +n        number of items on stack
 #   SP@ S0 SWAP - 2/ ;   16-BIT VERSION!
 #--------------------------------------------------------
