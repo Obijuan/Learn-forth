@@ -202,11 +202,6 @@ POST2:  DW EXIT
 
 ; OTHER OPERATIONS ==============================
 
-;X WITHIN   n1|u1 n2|u2 n3|u3 -- f   n2<=n1<n3?
-;  OVER - >R - R> U< ;          per ANS document
-    head WITHIN,6,WITHIN,docolon
-        DW OVER,MINUS,TOR,MINUS,RFROM,ULESS,EXIT
-
 ;C MOVE    addr1 addr2 u --     smart move
 ;             VERSION FOR 1 ADDRESS UNIT = 1 CHAR
 ;  >R 2DUP SWAP DUP R@ +     -- ... dst src src+n

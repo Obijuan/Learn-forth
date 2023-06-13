@@ -2434,6 +2434,21 @@ do_abort:
 # ========== OTHER OPERATIONS ==============================
 
 #-------------------------------------------------------
+#--  WITHIN   n1|u1 n2|u2 n3|u3 -- f   n2<=n1<n3?
+#--  OVER - >R - R> U< ;          per ANS document
+#--------------------------------------------------------
+.global do_within
+do_within:
+    DOCOLON
+    OVER
+    MINUS
+    TOR
+    MINUS
+    RFROM
+    ULESS
+    EXIT
+
+#-------------------------------------------------------
 #  DEPTH    -- +n        number of items on stack
 #   SP@ S0 SWAP - 2/ ;   16-BIT VERSION!
 #--------------------------------------------------------

@@ -444,3 +444,7 @@ myStr: .byte %len,
 .macro UMAX
   jal do_umax
 .end_macro
+
+.macro WITHIN
+  jal do_within
+.end_macro
