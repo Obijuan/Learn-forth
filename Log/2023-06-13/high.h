@@ -404,3 +404,7 @@ myStr: .byte %len,
 .macro FMSLASHMOD
   jal do_fmslashmod
 .end_macro
+
+.macro STAR
+  jal do_star
+.end_macro
