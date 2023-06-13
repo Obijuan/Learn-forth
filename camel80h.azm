@@ -12,19 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C SM/REM   d1 n1 -- n2 n3   symmetric signed div
-;   2DUP XOR >R              sign of quotient
-;   OVER >R                  sign of remainder
-;   ABS >R DABS R> UM/MOD
-;   SWAP R> ?NEGATE
-;   SWAP R> ?NEGATE ;
-; Ref. dpANS-6 section 3.2.2.1.
-    head SMSLASHREM,6,SM/REM,docolon
-        DW TWODUP,XOR,TOR,OVER,TOR
-        DW ABS,TOR,DABS,RFROM,UMSLASHMOD
-        DW SWOP,RFROM,QNEGATE,SWOP,RFROM,QNEGATE
-        DW EXIT
-
 ;C FM/MOD   d1 n1 -- n2 n3   floored signed div'n
 ;   DUP >R              save divisor
 ;   SM/REM

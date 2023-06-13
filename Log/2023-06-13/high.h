@@ -396,3 +396,7 @@ myStr: .byte %len,
 .macro MSTAR
   jal do_mstar
 .end_macro
+
+.macro SMSLASHREM
+  jal do_smslashrem
+.end_macro

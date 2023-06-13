@@ -292,12 +292,50 @@ do_mstar:
 .global do_stod
 do_stod: 
     DOCOLON
+    DUP
+    ZEROLESS
+    EXIT
 
+
+#----------------------------------------------------
+#  SM/REM   d1 n1 -- n2 n3   symmetric signed div
+#   2DUP XOR >R              sign of quotient
+#   OVER >R                  sign of remainder
+#   ABS >R DABS R> UM/MOD
+#   SWAP R> ?NEGATE
+#   SWAP R> ?NEGATE ;
+# Ref. dpANS-6 section 3.2.2.1.
+#----------------------------------------------------
+.global do_smslashrem
+do_smslashrem: 
+    DOCOLON
+
+    TWODUP
+    LXOR
+    TOR
+    OVER
+    TOR
+
+    ABS
+    TOR
+    DABS
+    RFROM
+    UMSLASHMOD
+
+    SWOP
+    RFROM
+    QNEGATE
+    SWOP
+    RFROM
+    QNEGATE
+
+    EXIT
 
 #----------------------------------------------------
 # ?NEGATE  n1 n2 -- n3  negate n1 if n2 negative
 #   0< IF NEGATE THEN ;        ...a common factor
 #----------------------------------------------------
+.global do_qnegate
 do_qnegate: 
     DOCOLON
 
