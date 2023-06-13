@@ -12,12 +12,6 @@
 
 ; ARITHMETIC OPERATORS ==========================
 
-;C MAX    n1 n2 -- n3       signed maximum
-;   2DUP < IF SWAP THEN DROP ;
-    head MAX,3,MAX,docolon
-        dw TWODUP,LESS,qbranch,MAX1,SWOP
-MAX1:   dw DROP,EXIT
-
 ;C MIN    n1 n2 -- n3       signed minimum
 ;   2DUP > IF SWAP THEN DROP ;
     head MIN,3,MIN,docolon

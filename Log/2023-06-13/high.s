@@ -481,8 +481,21 @@ do_abs:
     EXIT
 
 
-
-
+#----------------------------------------------------
+#  MAX    n1 n2 -- n3       signed maximum
+#   2DUP < IF SWAP THEN DROP ;
+#----------------------------------------------------
+.global do_max
+do_max: 
+    DOCOLON
+    TWODUP   #-- n1 n2 n1 n2
+    LESS     #-- n1 n2 flag
+    QBRANCH
+    ADDR(MAX1)
+    SWOP
+MAX1:
+    DROP
+    EXIT
 
 
 

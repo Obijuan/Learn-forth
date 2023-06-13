@@ -428,3 +428,7 @@ myStr: .byte %len,
 .macro STARSLASH
   jal do_starslash
 .end_macro
+
+.macro MAX
+  jal do_max
+.end_macro
