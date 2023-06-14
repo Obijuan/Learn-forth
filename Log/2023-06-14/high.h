@@ -464,3 +464,7 @@ myStr: .byte %len,
 .macro ABORTQUOTE
   jal do_abortquote
 .end_macro
+
+.macro TICK
+  jal do_tick
+.end_macro

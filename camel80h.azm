@@ -4,19 +4,6 @@
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;C '    -- xt           find word in dictionary
-;   BL WORD FIND
-;   0= ABORT" ?" ;
-;    head TICK,1,',docolon
-        DW link                 ; must expand
-        DB 0                    ; manually
-link    DEFL $                  ; because of
-        DB 1,27h                ; tick character
-TICK:   call docolon
-        DW BL,WORD,FIND,ZEROEQUAL,XSQUOTE
-        DB 1,'?'
-        DW QABORT,EXIT
-
 ;C CHAR   -- char           parse ASCII character
 ;   BL WORD 1+ C@ ;
     head CHAR,4,CHAR,docolon

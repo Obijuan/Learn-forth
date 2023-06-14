@@ -1086,6 +1086,23 @@ TYP4:
 TYP5:
 	EXIT
 
+#----------------------------------------------------
+#--  '    -- xt           find word in dictionary
+#--   BL WORD FIND
+#--   0= ABORT" ?" ;
+#--    head TICK,1,',docolon
+#----------------------------------------------------
+.global do_tick
+do_tick:
+    DOCOLON
+    BL
+    WORD
+    FIND
+    ZEROEQUAL
+    XSQUOTE(1,"?")
+    QABORT
+    EXIT
+
 # ================ DICTIONARY MANAGEMENT =========================
 
 #-----------------------------------------------------
