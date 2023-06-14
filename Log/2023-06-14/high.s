@@ -1582,6 +1582,21 @@ QABO1:
     TWODROP
     EXIT
 
+#--------------------------------------------------------
+#  ABORT"  i*x 0  -- i*x   R: j*x -- j*x  x1=0
+#          i*x x1 --       R: j*x --      x1<>0
+#   POSTPONE S" POSTPONE ?ABORT ; IMMEDIATE "
+#---------------------------------------------------------
+.global do_abortquote
+do_abortquote:
+    DOCOLON
+    SQUOTE
+    #--- Añadir Llamada a QABORT
+    la t0,do_qabort
+    PUSH_T0
+    CJAL
+    EXIT
+
 
 # ================ DICTIONARY MANAGEMENT =========================
 

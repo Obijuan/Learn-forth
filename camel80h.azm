@@ -4,14 +4,6 @@
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;C ABORT"  i*x 0  -- i*x   R: j*x -- j*x  x1=0
-;C         i*x x1 --       R: j*x --      x1<>0
-;   POSTPONE S" POSTPONE ?ABORT ; IMMEDIATE "
-    immed ABORTQUOTE,6,ABORT",docolon "
-        DW SQUOTE
-        DW LIT,QABORT,COMMAXT
-        DW EXIT
-
 ;C '    -- xt           find word in dictionary
 ;   BL WORD FIND
 ;   0= ABORT" ?" ;

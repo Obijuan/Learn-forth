@@ -460,3 +460,7 @@ myStr: .byte %len,
 .macro QABORT
   jal do_qabort
 .end_macro
+
+.macro ABORTQUOTE
+  jal do_abortquote
+.end_macro
