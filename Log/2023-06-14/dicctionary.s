@@ -365,11 +365,20 @@ link33:
  .align 2
     .word link33
     .byte 1
-lastword:
 link34:
     .byte 7
     .ascii "RECURSE"
     .word do_recurse
+
+#-- Palabra 35
+ .align 2
+    .word link34
+    .byte 0
+lastword:
+link35:
+    .byte 4
+    .ascii "QUIT"
+    .word do_quit
     
 
 
