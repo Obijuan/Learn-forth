@@ -512,3 +512,11 @@ myStr: .byte %len,
 .macro AGAIN
   jal do_again
 .end_macro
+
+.macro WHILE
+  jal do_while
+.end_macro
+
+.macro REPEAT
+  jal do_repeat
+.end_macro

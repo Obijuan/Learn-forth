@@ -2091,6 +2091,30 @@ do_again:
     COMMADEST
     EXIT
 
+
+#-------------------------------------------------------------
+#  WHILE    -- adrs         branch for WHILE loop
+#   POSTPONE IF ; IMMEDIATE
+#-------------------------------------------------------------
+.global do_while
+do_while:
+    DOCOLON
+    IF
+    EXIT
+
+#-------------------------------------------------------------
+#--  REPEAT   adrs1 adrs2 --     resolve WHILE loop
+#--   SWAP POSTPONE AGAIN POSTPONE THEN ; IMMEDIATE
+#-------------------------------------------------------------
+.global do_repeat
+do_repeat:
+    DOCOLON
+    SWOP
+    AGAIN
+    THEN
+    EXIT
+
+
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
 #===================================================================
