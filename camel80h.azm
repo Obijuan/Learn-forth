@@ -1,11 +1,6 @@
 
 ; COMPILER ======================================
 
-;C RECURSE  --      recurse current definition
-;   LATEST @ NFA>CFA ,XT ; IMMEDIATE
-    immed RECURSE,7,RECURSE,docolon
-        DW LATEST,FETCH,NFATOCFA,COMMAXT,EXIT
-
 ;C POSTPONE  --   postpone compile action of word
 ;   BL WORD FIND
 ;   DUP 0= ABORT" ?"
@@ -25,18 +20,6 @@ POST1:  DW COMMAXT
 POST2:  DW EXIT
 
 ; CONTROL STRUCTURES ============================
-
-;C BEGIN    -- adrs        target for bwd. branch
-;   HERE ; IMMEDIATE
-    immed BEGIN,5,BEGIN,docode
-        jp HERE
-
-;C UNTIL    adrs --   conditional backward branch
-;   ['] qbranch ,BRANCH  ,DEST ; IMMEDIATE
-;   conditional backward branch
-    immed UNTIL,5,UNTIL,docolon
-        DW LIT,qbranch,COMMABRANCH
-        DW COMMADEST,EXIT
 
 ;X AGAIN    adrs --      uncond'l backward branch
 ;   ['] branch ,BRANCH  ,DEST ; IMMEDIATE

@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 256
+#-- INTERPRETE DE FORTH. Version 258
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  Programa Forth: 
@@ -423,52 +423,45 @@ start:
     #-- COLD llama a quit, pero de momento lo hacemos manualmente
     COLD
 
+    COLON
+    BL 
+    WORD
+    FIND
+    DUP
+    ZEROEQUAL
+    XSQUOTE(1,'?')
+
+    QABORT
+    ZEROLESS
+    QBRANCH(POST1)
+
+    #-- No inmediato: añadir el codigo a la definicion
+    #-- actual para compilar xt más tarde
+    #-- TODO: no lo entiendo bien...
+    #-- Lo dejo para más adelante...
+    LITERAL
+    CJAL
+
+
+POST1:
+    #-- Inmmed: Compilar en la def. actual
+    CJAL
+POST2:
+    EXIT
+
+    SEMI
+
     #-- Arrancar el modo interactivo (intérprete)
     #QUIT  #-- Nunca retorna de aquí
 
     #-- Modo ejecución directa (No interactivo)
-    #-- Programa Forth:
-    #-- : T DUP 0 > IF DUP 1- RECURSE THEN ;
-    #-- 0 >IN !  ( Inicializar buffer )
-    #-- 5 ' EXECUTE ( Ejecutar comando T )
-    #-- DOTS
-    #-- CR
-
-    #-- Crear palabra T
-    COLON
-
-    #-- Añadir llamada a DUP
-    COMMAXT(do_dup)
-
-    #-- Llamada para meter literal 0
-    li t0, 0
-    PUSH_T0
-    LITERAL
-
-    #-- Llamada a greather
-    COMMAXT(do_greater)
-
-    IF
-    COMMAXT(do_dup)
-    COMMAXT(do_oneminus)
-    RECURSE
-    THEN
-
-    SEMI
-
-    LIT(0)
-    TOIN
-    STORE
-
-    LIT(5)
-    TICK
-    EXECUTE
-    DOTS
-    CR
+    #-- Programa Forth: QUIT
 
     #-- Fin ejecución direct
     XSQUOTE(4," ok\n")
     TYPE
+
+    #QUIT
 
 	#-- Terminar
 	BYE

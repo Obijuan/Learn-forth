@@ -495,4 +495,16 @@ myStr: .byte %len,
   CJAL
 .end_macro
 
+.macro CLITERAL(%value)
+  li t0, %value
+  PUSH_T0
+  LITERAL
+.end_macro
 
+.macro BEGIN
+  jal do_begin
+.end_macro
+
+.macro UNTIL
+  jal do_until
+.end_macro

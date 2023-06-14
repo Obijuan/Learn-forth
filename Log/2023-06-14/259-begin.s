@@ -1,32 +1,67 @@
 #--------------------------------------------------------------------
-#-- INTERPRETE DE FORTH. Version 256
+#-- INTERPRETE DE FORTH. Version 258
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  Programa Forth: 
-#--  : T RECURSE ;
+#--  : T BEGIN DUP . 1- DUP 0 = UNTIL ; 
 #--  LATEST @ .WINFO
-#--  LATEST @ 11 .WCODE
+#--  LATEST @ 43 .WCODE
 #--  
 #--  Resultado: 
 #--  Z80 CamelForth v1.01  25 Jan 1995
-#--  
-#--  0x1001028c  Link: 0x10010285 
-#--  0x10010290  Inmd: 0 
-#--  0x10010291  NLen: 01
-#--  0x10010292  Name: T
-#--  0x10010294  CFA:  0x10010298 
-#--  0x10010298 : 0xffc40413 
-#--  0x1001029c : 0x00142023 
-#--  0x100102a0 : 0x10010337 
-#--  0x100102a4 : 0x002982b7 
-#--  0x100102a8 : 0x00c2d293 
-#--  0x100102ac : 0x005362b3 
-#--  0x100102b0 : 0x000280e7 
-#--  0x100102b4 : 0x00042083 
-#--  0x100102b8 : 0x00440413 
-#--  0x100102bc : 0x00008067 
-#--  0x100102c0 : 0x00000000 
+#--  0x100102dc 
+#--  0x100102c8  Link: 0x100102b9 
+#--  0x100102cc  Inmd: 0 
+#--  0x100102cd  NLen: 01
+#--  0x100102ce  Name: T
+#--  0x100102d0  CFA:  0x100102d4 
+#--  0x100102d4 : 0xffc40413 
+#--  0x100102d8 : 0x00142023 
+#--  0x100102dc : 0x00400337 
+#--  0x100102e0 : 0x004b02b7 
+#--  0x100102e4 : 0x00c2d293 
+#--  0x100102e8 : 0x005362b3 
+#--  0x100102ec : 0x000280e7 
+#--  0x100102f0 : 0x00401337 
+#--  0x100102f4 : 0x005b02b7 
+#--  0x100102f8 : 0x00c2d293 
+#--  0x100102fc : 0x005362b3 
+#--  0x10010300 : 0x000280e7 
+#--  0x10010304 : 0x00400337 
+#--  0x10010308 : 0x003542b7 
+#--  0x1001030c : 0x00c2d293 
+#--  0x10010310 : 0x005362b3 
+#--  0x10010314 : 0x000280e7 
+#--  0x10010318 : 0x00400337 
+#--  0x1001031c : 0x004b02b7 
+#--  0x10010320 : 0x00c2d293 
+#--  0x10010324 : 0x005362b3 
+#--  0x10010328 : 0x000280e7 
+#--  0x1001032c : 0x00400337 
+#--  0x10010330 : 0x000342b7 
+#--  0x10010334 : 0x00c2d293 
+#--  0x10010338 : 0x005362b3 
+#--  0x1001033c : 0x000280e7 
+#--  0x10010340 : 0x00000000 
+#--  0x10010344 : 0x00400337 
+#--  0x10010348 : 0x004342b7 
+#--  0x1001034c : 0x00c2d293 
+#--  0x10010350 : 0x005362b3 
+#--  0x10010354 : 0x000280e7 
+#--  0x10010358 : 0x00400337 
+#--  0x1001035c : 0x000482b7 
+#--  0x10010360 : 0x00c2d293 
+#--  0x10010364 : 0x005362b3 
+#--  0x10010368 : 0x000280e7 
+#--  0x1001036c : 0x100102dc 
+#--  0x10010370 : 0x00042083 
+#--  0x10010374 : 0x00440413 
+#--  0x10010378 : 0x00008067 
+#--  0x1001037c : 0x00000000 
 #--   ok
+#--  5 T
+#--   5 4 3 2 1  ok
+#--  BYE
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -427,48 +462,47 @@ start:
     #QUIT  #-- Nunca retorna de aquí
 
     #-- Modo ejecución directa (No interactivo)
-    #-- Programa Forth:
-    #-- : T DUP 0 > IF DUP 1- RECURSE THEN ;
-    #-- 0 >IN !  ( Inicializar buffer )
-    #-- 5 ' EXECUTE ( Ejecutar comando T )
-    #-- DOTS
-    #-- CR
+    #-- Programa Forth: 
+    #-- : T BEGIN DUP . 1- DUP 0 = UNTIL ; 
+    #-- LATEST @ .WINFO
+    #-- LATEST @ 43 .WCODE
 
-    #-- Crear palabra T
+    #-- Compilar instruccion T
     COLON
 
-    #-- Añadir llamada a DUP
+    BEGIN
+   
+    #-- Debug: Mostrar direccion para comprobar que
+    #-- se mete en el codigo maquina
+    DUP
+    DOTHEX
+
     COMMAXT(do_dup)
-
-    #-- Llamada para meter literal 0
-    li t0, 0
-    PUSH_T0
-    LITERAL
-
-    #-- Llamada a greather
-    COMMAXT(do_greater)
-
-    IF
-    COMMAXT(do_dup)
+    COMMAXT(do_dot)
     COMMAXT(do_oneminus)
-    RECURSE
-    THEN
+    COMMAXT(do_dup)
+    CLITERAL(0)
+    COMMAXT(do_equal)
+
+    UNTIL
 
     SEMI
 
-    LIT(0)
-    TOIN
-    STORE
+    #-- Mostrar informacion de T
+    LATEST
+    FETCH
+    DOTWINFO
 
-    LIT(5)
-    TICK
-    EXECUTE
-    DOTS
-    CR
+    LATEST
+    FETCH
+    LIT(43)
+    DOTWCODE
 
     #-- Fin ejecución direct
     XSQUOTE(4," ok\n")
     TYPE
+
+    QUIT
 
 	#-- Terminar
 	BYE

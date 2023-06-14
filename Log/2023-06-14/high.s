@@ -2057,6 +2057,31 @@ do_then:
 
     EXIT
 
+#-------------------------------------------------------------
+#  BEGIN    -- adrs        target for bwd. branch
+#   HERE ; IMMEDIATE
+#-------------------------------------------------------------
+.global do_begin
+do_begin:
+    DOCOLON
+    HERE
+    EXIT
+
+#-------------------------------------------------------------
+#  UNTIL    adrs --   conditional backward branch
+#   ['] qbranch ,BRANCH  ,DEST ; IMMEDIATE
+#   conditional backward branch
+#-------------------------------------------------------------
+.global do_until
+do_until:
+    DOCOLON
+    COMMAXT(do_qbranch2)
+    COMMABRANCH
+    EXIT
+
+
+
+
 #===================================================================
 #=              INCOMPLETOS.... TO-DO
 #===================================================================
