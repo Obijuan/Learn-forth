@@ -329,11 +329,47 @@ link29:
  .align 2
     .word link29
     .byte 1 #-- IMMED
-lastword:
 link30:
     .byte 1
     .ascii "("
     .word do_paren
+
+#-- Palabra 31
+ .align 2
+    .word link30
+    .byte 0
+link31:
+    .byte 3
+    .ascii "DUP"
+    .word do_dup
+
+#-- Palabra 32
+ .align 2
+    .word link31
+    .byte 0
+link32:
+    .byte 1
+    .ascii ">"
+    .word do_greater
+
+#-- Palabra 33
+ .align 2
+    .word link32
+    .byte 0
+link33:
+    .byte 2
+    .ascii "1-"
+    .word do_oneminus
+
+#-- Palabra 34
+ .align 2
+    .word link33
+    .byte 1
+lastword:
+link34:
+    .byte 7
+    .ascii "RECURSE"
+    .word do_recurse
     
 
 
