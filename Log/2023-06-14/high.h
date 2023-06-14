@@ -468,3 +468,7 @@ myStr: .byte %len,
 .macro TICK
   jal do_tick
 .end_macro
+
+.macro CHAR
+  jal do_char
+.end_macro

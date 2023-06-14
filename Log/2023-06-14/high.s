@@ -1103,6 +1103,19 @@ do_tick:
     QABORT
     EXIT
 
+#----------------------------------------------------
+#  CHAR   -- char           parse ASCII character
+#   BL WORD 1+ C@ ;
+#----------------------------------------------------
+.global do_char
+do_char:
+    DOCOLON
+    BL
+    WORD
+    ONEPLUS
+    CFETCH
+    EXIT
+
 # ================ DICTIONARY MANAGEMENT =========================
 
 #-----------------------------------------------------

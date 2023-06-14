@@ -4,11 +4,6 @@
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;C CHAR   -- char           parse ASCII character
-;   BL WORD 1+ C@ ;
-    head CHAR,4,CHAR,docolon
-        DW BL,WORD,ONEPLUS,CFETCH,EXIT
-
 ;C [CHAR]   --          compile character literal
 ;   CHAR  ['] LIT ,XT  , ; IMMEDIATE
     immed BRACCHAR,6,[CHAR],docolon
