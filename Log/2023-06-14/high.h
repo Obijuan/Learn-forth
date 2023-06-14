@@ -477,3 +477,7 @@ myStr: .byte %len,
   jal do_bracchar
 .end_macro
 
+.macro BRACTICK
+  jal do_bractick
+.end_macro
+

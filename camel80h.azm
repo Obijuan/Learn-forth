@@ -1,8 +1,3 @@
-; INTERPRETER ===================================
-; Note that NFA>LFA, NFA>CFA, IMMED?, and FIND
-; are dependent on the structure of the Forth
-; header.  This may be common across many CPUs,
-; or it may be different.
 
 ; COMPILER ======================================
 
@@ -16,24 +11,6 @@
     head IMMEDIATE,9,IMMEDIATE,docolon
         DW LIT,1,LATEST,FETCH,ONEMINUS,CSTORE
         DW EXIT
-
-;C [']  --         find word & compile as literal
-;   '  ['] LIT ,XT  , ; IMMEDIATE
-; When encountered in a colon definition, the
-; phrase  ['] xxx  will cause   LIT,xxt  to be
-; compiled into the colon definition (where
-; (where xxt is the execution token of word xxx).
-; When the colon definition executes, xxt will
-; be put on the stack.  (All xt's are one cell.)
-;    immed BRACTICK,3,['],docolon
-        DW link                 ; must expand
-        DB 1                    ; manually
-link    DEFL $                  ; because of
-        DB 3,5Bh,27h,5Dh        ; tick character
-BRACTICK: call docolon
-        DW TICK               ; get xt of 'xxx'
-        DW LIT,LIT,COMMAXT    ; append LIT action
-        DW COMMA,EXIT         ; append xt literal
 
 ;C POSTPONE  --   postpone compile action of word
 ;   BL WORD FIND
@@ -52,17 +29,6 @@ BRACTICK: call docolon
         DW LIT,COMMAXT,COMMAXT,branch,POST2
 POST1:  DW COMMAXT
 POST2:  DW EXIT
-               
-;Z COMPILE   --   append inline execution token
-;   R> DUP CELL+ >R @ ,XT ;
-; The phrase ['] xxx ,XT appears so often that
-; this word was created to combine the actions
-; of LIT and ,XT.  It takes an inline literal
-; execution token and appends it to the dict.
-;    head COMPILE,7,COMPILE,docolon
-;        DW RFROM,DUP,CELLPLUS,TOR
-;        DW FETCH,COMMAXT,EXIT
-; N.B.: not used in the current implementation
 
 ; CONTROL STRUCTURES ============================
 
@@ -109,5 +75,3 @@ POST2:  DW EXIT
         DW LIT,branch,COMMABRANCH
         DW HERE,DUP,COMMADEST,TOL,EXIT
 
-; OTHER OPERATIONS ==============================
-; UTILITY WORDS AND STARTUP =====================

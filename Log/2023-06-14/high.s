@@ -1679,6 +1679,27 @@ do_comma:
 # ===========  COMPILER ======================================
 
 #-------------------------------------------------------------
+#   [']  --         find word & compile as literal
+#    '  ['] LIT ,XT  , ; IMMEDIATE
+#  When encountered in a colon definition, the
+#  phrase  ['] xxx  will cause   LIT,xxt  to be
+#  compiled into the colon definition (where
+#  (where xxt is the execution token of word xxx).
+#  When the colon definition executes, xxt will
+#  be put on the stack.  (All xt's are one cell.)
+#     immed BRACTICK,3,['],docolon
+#-------------------------------------------------------------
+.global do_bractick
+do_bractick:
+    DOCOLON
+
+    TICK    #-- Devuelve xt
+    LITERAL #-- Compilar xt
+
+    EXIT
+
+
+#-------------------------------------------------------------
 #  CREATE   --      create an empty definition
 #   LATEST @ , 0 C,         link & immed field
 #   HERE LATEST !           new "latest" link
