@@ -4,29 +4,7 @@
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;C [CHAR]   --          compile character literal
-;   CHAR  ['] LIT ,XT  , ; IMMEDIATE
-    immed BRACCHAR,6,[CHAR],docolon
-        DW CHAR
-        DW LIT,LIT,COMMAXT
-        DW COMMA,EXIT
-
 ; COMPILER ======================================
-        
-;Z (DOES>)  --      run-time action of DOES>
-;   R>              adrs of headless DOES> def'n
-;   LATEST @ NFA>CFA    code field to fix up
-;   !CF ;
-    head XDOES,7,(DOES>),docolon
-        DW RFROM,LATEST,FETCH,NFATOCFA,STORECF
-        DW EXIT
-
-;C DOES>    --      change action of latest def'n
-;   COMPILE (DOES>)
-;   dodoes ,CF ; IMMEDIATE
-    immed DOES,5,DOES>,docolon
-        DW LIT,XDOES,COMMAXT
-        DW LIT,dodoes,COMMACF,EXIT
 
 ;C RECURSE  --      recurse current definition
 ;   LATEST @ NFA>CFA ,XT ; IMMEDIATE

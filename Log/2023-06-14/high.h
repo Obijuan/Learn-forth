@@ -472,3 +472,8 @@ myStr: .byte %len,
 .macro CHAR
   jal do_char
 .end_macro
+
+.macro BRACCHAR
+  jal do_bracchar
+.end_macro
+

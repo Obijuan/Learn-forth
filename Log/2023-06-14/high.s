@@ -1116,6 +1116,20 @@ do_char:
     CFETCH
     EXIT
 
+#----------------------------------------------------
+#  [CHAR]   --          compile character literal
+#   CHAR  ['] LIT ,XT  , ; IMMEDIATE
+#----------------------------------------------------
+.global do_bracchar
+do_bracchar:
+    DOCOLON
+    
+    CHAR
+    PUSH_T0
+    LITERAL
+
+    EXIT
+
 # ================ DICTIONARY MANAGEMENT =========================
 
 #-----------------------------------------------------
