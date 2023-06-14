@@ -2114,6 +2114,23 @@ do_repeat:
     THEN
     EXIT
 
+#-------------------------------------------------------------
+#  LEAVE    --    L: -- adrs
+#   ['] UNLOOP ,XT
+#   ['] branch ,BRANCH   HERE DUP ,DEST  >L
+#   ; IMMEDIATE      unconditional forward branch
+#-------------------------------------------------------------
+.global do_leave
+do_leave:
+    DOCOLON
+    COMMAXT(do_unloop)
+    COMMAXT(do_branch2)
+    HERE
+    DUP
+    COMMADEST
+    TOL
+    EXIT
+
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO

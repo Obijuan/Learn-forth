@@ -21,27 +21,8 @@ POST2:  DW EXIT
 
 ; CONTROL STRUCTURES ============================
 
-;C WHILE    -- adrs         branch for WHILE loop
-;   POSTPONE IF ; IMMEDIATE
-    immed WHILE,5,WHILE,docode
-        jp IF
-
-;C REPEAT   adrs1 adrs2 --     resolve WHILE loop
-;   SWAP POSTPONE AGAIN POSTPONE THEN ; IMMEDIATE
-    immed REPEAT,6,REPEAT,docolon
-        DW SWOP,AGAIN,THEN,EXIT
-
 ;C +LOOP   adrs --   L: 0 a1 a2 .. aN --
 ;   ['] xplusloop ENDLOOP ;  IMMEDIATE
     immed PLUSLOOP,5,+LOOP,docolon
         DW LIT,xplusloop,ENDLOOP,EXIT
-
-;C LEAVE    --    L: -- adrs
-;   ['] UNLOOP ,XT
-;   ['] branch ,BRANCH   HERE DUP ,DEST  >L
-;   ; IMMEDIATE      unconditional forward branch
-    immed LEAVE,5,LEAVE,docolon
-        DW LIT,unloop,COMMAXT
-        DW LIT,branch,COMMABRANCH
-        DW HERE,DUP,COMMADEST,TOL,EXIT
 

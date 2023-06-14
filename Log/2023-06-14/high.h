@@ -520,3 +520,7 @@ myStr: .byte %len,
 .macro REPEAT
   jal do_repeat
 .end_macro
+
+.macro LEAVE
+  jal do_leave
+.end_macro
