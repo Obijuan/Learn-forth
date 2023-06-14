@@ -1995,6 +1995,22 @@ do_loop:
 
     EXIT
 
+
+#-------------------------------------------------------------
+#  +LOOP   adrs --   L: 0 a1 a2 .. aN --
+#   ['] xplusloop ENDLOOP ;  IMMEDIATE
+#-------------------------------------------------------------
+.global do_plusloop
+do_plusloop:
+    DOCOLON
+
+    COMMAXT(do_xplusloop2)
+    COMMA
+    ENDLOOP
+
+    EXIT
+
+
 #-------------------------------------------------------------
 #  IF       -- adrs    conditional forward branch
 #   ['] qbranch ,BRANCH  HERE DUP ,DEST ;

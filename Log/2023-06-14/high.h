@@ -524,3 +524,7 @@ myStr: .byte %len,
 .macro LEAVE
   jal do_leave
 .end_macro
+
+.macro PLUSLOOP
+  jal do_plusloop
+.end_macro
