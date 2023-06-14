@@ -2,11 +2,44 @@
 #-- INTERPRETE DE FORTH. Version 249
 #-- 
 #--  Implementación en ensamblador del programa Forth:
-#--  Programa Forth: 1 TIB 3 ?ABORT
+#--  Programa Forth: 
+#-- : T ABORT" HI!" ;
+#-- LATEST @ .WINFO
+#-- LATEST @ 16 .WCODE
+#-- QUIT 
 #--  
 #--  Resultado: 
 #--  Z80 CamelForth v1.01  25 Jan 1995
-#--  HI! ok
+#--  
+#--  0x1001028c  Link: 0x10010285 
+#--  0x10010290  Inmd: 0 
+#--  0x10010291  NLen: 01
+#--  0x10010292  Name: T
+#--  0x10010294  CFA:  0x10010298 
+#--  0x10010298 : 0xffc40413 
+#--  0x1001029c : 0x00142023 
+#--  0x100102a0 : 0x00400337 
+#--  0x100102a4 : 0x000a02b7 
+#--  0x100102a8 : 0x00c2d293 
+#--  0x100102ac : 0x005362b3 
+#--  0x100102b0 : 0x000280e7 
+#--  0x100102b4 : 0x21494808 
+#--  0x100102b8 : 0x31203120 
+#--  0x100102bc : 0x00002000 
+#--  0x100102c0 : 0x00401337 
+#--  0x100102c4 : 0x00ad82b7 
+#--  0x100102c8 : 0x00c2d293 
+#--  0x100102cc : 0x005362b3 
+#--  0x100102d0 : 0x000280e7 
+#--  0x100102d4 : 0x00042083 
+#--   ok
+#--  0 T
+#--    ok
+#--  1 T
+#--   HI! 1 1 ok
+#--  
+#--    ok
+#--  BYE
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
 #--
@@ -408,7 +441,10 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth: 
-    #-- 
+    #-- : T ABORT" HI!" ;
+    #-- LATEST @ .WINFO
+    #-- LATEST @ 16 .WCODE
+    #-- QUIT 
 
     COLON
     ABORTQUOTE
