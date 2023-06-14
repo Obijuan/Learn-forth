@@ -3,10 +3,9 @@
 #-- 
 #--  Implementación en ensamblador del programa Forth:
 #--  Programa Forth: 
-#--  : T ( Palabra vacia ) ;
+#--  : T RECURSE ;
 #--  LATEST @ .WINFO
-#--  IMMEDIATE
-#--  LATEST @ .WINFO
+#--  LATEST @ 11 .WCODE
 #--  
 #--  Resultado: 
 #--  Z80 CamelForth v1.01  25 Jan 1995
@@ -16,12 +15,17 @@
 #--  0x10010291  NLen: 01
 #--  0x10010292  Name: T
 #--  0x10010294  CFA:  0x10010298 
-#--  
-#--  0x1001028c  Link: 0x10010285 
-#--  0x10010290  Inmd: 1 
-#--  0x10010291  NLen: 01
-#--  0x10010292  Name: T
-#--  0x10010294  CFA:  0x10010298 
+#--  0x10010298 : 0xffc40413 
+#--  0x1001029c : 0x00142023 
+#--  0x100102a0 : 0x10010337 
+#--  0x100102a4 : 0x002982b7 
+#--  0x100102a8 : 0x00c2d293 
+#--  0x100102ac : 0x005362b3 
+#--  0x100102b0 : 0x000280e7 
+#--  0x100102b4 : 0x00042083 
+#--  0x100102b8 : 0x00440413 
+#--  0x100102bc : 0x00008067 
+#--  0x100102c0 : 0x00000000 
 #--   ok
 #--------------------------------------------------------------------
 #-- HACK PARA LITERALES!
@@ -424,10 +428,9 @@ start:
 
     #-- Modo ejecución directa (No interactivo)
     #-- Programa Forth:
-    #-- : T DUP 0 > IF DUP 1- RECURSE THEN ;
+    #-- : T RECURSE ;
     #-- LATEST @ .WINFO
-    #-- IMMEDIATE
-    #-- LATEST @ .WINFO
+    #-- LATEST @ 11 .WCODE
 
     #-- Crear palabra nula T
     COLON
