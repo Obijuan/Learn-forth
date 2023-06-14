@@ -1868,6 +1868,22 @@ do_semi:
 
     EXIT
 
+#-------------------------------------------------------------
+#   RECURSE  --      recurse current definition
+#    LATEST @ NFA>CFA ,XT ; IMMEDIATE
+#-------------------------------------------------------------
+.global do_recurse
+do_recurse:
+    DOCOLON
+
+    LATEST
+    FETCH
+    NFATOCFA
+    FETCH
+    CJAL
+
+    EXIT
+
 # =========== CONTROL STRUCTURES ===================================
 #-------------------------------------------------------------
 #  >L   x --   L: -- x        move to leave stack

@@ -484,3 +484,7 @@ myStr: .byte %len,
 .macro IMMEDIATE
   jal do_inmediate
 .end_macro
+
+.macro RECURSE
+  jal do_recurse
+.end_macro
