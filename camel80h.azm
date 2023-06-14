@@ -6,12 +6,6 @@
     immed RECURSE,7,RECURSE,docolon
         DW LATEST,FETCH,NFATOCFA,COMMAXT,EXIT
 
-;C IMMEDIATE   --   make last def'n immediate
-;   1 LATEST @ 1- C! ;   set immediate flag
-    head IMMEDIATE,9,IMMEDIATE,docolon
-        DW LIT,1,LATEST,FETCH,ONEMINUS,CSTORE
-        DW EXIT
-
 ;C POSTPONE  --   postpone compile action of word
 ;   BL WORD FIND
 ;   DUP 0= ABORT" ?"

@@ -481,3 +481,6 @@ myStr: .byte %len,
   jal do_bractick
 .end_macro
 
+.macro IMMEDIATE
+  jal do_inmediate
+.end_macro

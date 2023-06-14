@@ -1700,6 +1700,22 @@ do_bractick:
 
 
 #-------------------------------------------------------------
+#  IMMEDIATE   --   make last def'n immediate
+#   1 LATEST @ 1- C! ;   set immediate flag
+#-------------------------------------------------------------
+.global do_inmediate
+do_inmediate:
+    DOCOLON
+
+    LIT(1)
+    LATEST
+    FETCH
+    ONEMINUS
+    CSTORE
+
+    EXIT
+
+#-------------------------------------------------------------
 #  CREATE   --      create an empty definition
 #   LATEST @ , 0 C,         link & immed field
 #   HERE LATEST !           new "latest" link
