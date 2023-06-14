@@ -4,12 +4,6 @@
 ; header.  This may be common across many CPUs,
 ; or it may be different.
 
-;Z ?ABORT   f c-addr u --      abort & print msg
-;   ROT IF TYPE ABORT THEN 2DROP ;
-    head QABORT,6,?ABORT,docolon
-        DW ROT,qbranch,QABO1,TYPE,ABORT
-QABO1:  DW TWODROP,EXIT
-
 ;C ABORT"  i*x 0  -- i*x   R: j*x -- j*x  x1=0
 ;C         i*x x1 --       R: j*x --      x1<>0
 ;   POSTPONE S" POSTPONE ?ABORT ; IMMEDIATE "
