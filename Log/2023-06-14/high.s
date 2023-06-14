@@ -2079,8 +2079,17 @@ do_until:
     COMMABRANCH
     EXIT
 
-
-
+#-------------------------------------------------------------
+#  AGAIN    adrs --      uncond'l backward branch
+#   ['] branch ,BRANCH  ,DEST ; IMMEDIATE
+#   unconditional backward branch
+#-------------------------------------------------------------
+.global do_again
+do_again:
+    DOCOLON
+    COMMAXT(do_branch2)
+    COMMADEST
+    EXIT
 
 #===================================================================
 #=              INCOMPLETOS.... TO-DO

@@ -21,13 +21,6 @@ POST2:  DW EXIT
 
 ; CONTROL STRUCTURES ============================
 
-;X AGAIN    adrs --      uncond'l backward branch
-;   ['] branch ,BRANCH  ,DEST ; IMMEDIATE
-;   unconditional backward branch
-    immed AGAIN,5,AGAIN,docolon
-        DW LIT,branch,COMMABRANCH
-        DW COMMADEST,EXIT
-
 ;C WHILE    -- adrs         branch for WHILE loop
 ;   POSTPONE IF ; IMMEDIATE
     immed WHILE,5,WHILE,docode

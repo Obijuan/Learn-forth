@@ -508,3 +508,7 @@ myStr: .byte %len,
 .macro UNTIL
   jal do_until
 .end_macro
+
+.macro AGAIN
+  jal do_again
+.end_macro
