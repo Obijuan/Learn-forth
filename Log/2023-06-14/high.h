@@ -488,3 +488,11 @@ myStr: .byte %len,
 .macro RECURSE
   jal do_recurse
 .end_macro
+
+.macro COMMAXT(%xt)
+  la t0, %xt
+  PUSH_T0
+  CJAL
+.end_macro
+
+
