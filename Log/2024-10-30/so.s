@@ -28,3 +28,29 @@
       lw t0, 0(a0) #-- t0: Direccion del codigo ejecutable
       jalr t0      #-- Ejecutar la palabra!
     .end_macro
+
+    #--- Otras macros
+
+    #-- Almacenar un registro en la pila de datos
+    .macro PUSH (%reg)
+      addi sp,sp,-4
+      sw %reg, 0(sp)
+    .end_macro
+
+    #-- Recuperar un registro de la pila de Datos
+    .macro POP (%reg)
+      lw %reg, 0(sp)
+      addi sp,sp,4
+    .end_macro
+
+    #-- Recuperar un registro de la pila R
+    .macro POPR (%reg)
+      lw %reg, 0(fp)
+      addi fp,fp,4
+    .end_macro
+
+    #-- Guardar un registro en la pila R
+    .macro PUSHR (%reg)
+      addi fp,fp,-4
+      sw %reg, 0(fp)
+    .end_macro
