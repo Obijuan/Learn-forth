@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="215.38158mm"
+   height="228.31145mm"
+   viewBox="0 0 215.38158 228.31145"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb, 2024-10-09)"
+   sodipodi:docname="cheat-sheet.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.67793911"
+     inkscape:cx="303.8621"
+     inkscape:cy="519.9582"
+     inkscape:window-width="1866"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2" />
+  <defs
+     id="defs1">
+    <rect
+       x="138.65552"
+       y="283.21127"
+       width="122.42987"
+       height="42.776703"
+       id="rect3" />
+    <rect
+       x="116.52964"
+       y="269.93576"
+       width="387.69083"
+       height="192.68538"
+       id="rect2" />
+    <rect
+       x="116.52964"
+       y="269.93576"
+       width="362.84769"
+       height="224.00932"
+       id="rect20" />
+    <rect
+       x="116.52964"
+       y="269.93576"
+       width="387.69083"
+       height="192.68538"
+       id="rect36" />
+    <rect
+       x="116.52964"
+       y="269.93576"
+       width="362.84769"
+       height="224.00932"
+       id="rect43" />
+    <rect
+       x="116.52964"
+       y="269.93576"
+       width="226.75055"
+       height="161.36143"
+       id="rect52" />
+    <rect
+       x="116.52964"
+       y="269.93576"
+       width="387.69083"
+       height="192.68538"
+       id="rect59" />
+    <rect
+       x="116.52964"
+       y="269.93576"
+       width="388.77097"
+       height="212.12782"
+       id="rect66" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="back"
+     transform="translate(1.9513797,0.78055191)">
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect71"
+       width="215.38158"
+       height="228.31145"
+       x="-1.9513797"
+       y="-0.78055191"
+       rx="7.6777673"
+       ry="7.6777296" />
+    <rect
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect70"
+       width="208.01707"
+       height="220.50592"
+       x="1.9513798"
+       y="1.9513798"
+       rx="7.4152427"
+       ry="7.4152427" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.0069px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="111.9754"
+       y="202.49084"
+       id="text71"><tspan
+         sodipodi:role="line"
+         id="tspan71"
+         style="fill:#000000;stroke-width:0.529167"
+         x="111.9754"
+         y="202.49084">RVFORTH</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.0069px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="99.876846"
+       y="215.76022"
+       id="text72"><tspan
+         sodipodi:role="line"
+         id="tspan72"
+         style="fill:#000000;stroke-width:0.529167"
+         x="99.876846"
+         y="215.76022">CHEAT SHEET</tspan></text>
+  </g>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(1.9513797,0.78055191)">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text2"
+       style="font-size:29.3333px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:center;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect3);display:inline;fill:#e6e6e6;stroke:#000000;stroke-width:2;stroke-linejoin:round" />
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect1"
+       width="96.023651"
+       height="57.565697"
+       x="7.7534084"
+       y="7.3373713"
+       ry="7.4152427"
+       rx="7.4152427" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.25549257,0,0,0.25549257,-20.848218,-52.858124)"
+       id="text1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect2);shape-padding:12.2203;display:inline;fill:#0000ff;stroke:none;stroke-width:2.07116;stroke-linejoin:round"
+       x="-1157.9293"
+       y="0"><tspan
+         x="128.75"
+         y="305.07731"
+         id="tspan3">     <tspan
+   style="fill:#ff00ff"
+   id="tspan1">.data</tspan><tspan
+   style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+   id="tspan2">
+</tspan></tspan><tspan
+         x="128.75"
+         y="331.47727"
+         id="tspan10"><tspan
+           style="fill:#666666"
+           id="tspan4">WORD1</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan5">:  .word </tspan><tspan
+           style="fill:#ff0000"
+           id="tspan6">DOCOL</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan7">  </tspan><tspan
+           style="fill:#008000"
+           id="tspan8">#-- Codeword</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan9">
+</tspan></tspan><tspan
+         x="128.75"
+         y="357.87723"
+         id="tspan18"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan16">        .word WORD2
+</tspan></tspan><tspan
+         x="128.75"
+         y="384.2772"
+         id="tspan24"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan23">        .word WORD3
+</tspan></tspan><tspan
+         x="128.75"
+         y="410.67716"
+         id="tspan30"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan28">        ...
+</tspan></tspan><tspan
+         x="128.75"
+         y="437.07712"
+         id="tspan33"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan31">        .word </tspan><tspan
+           style="fill:#ff0000"
+           id="tspan32">EXIT</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="31.375608"
+       y="13.358909"
+       id="text12"><tspan
+         sodipodi:role="line"
+         id="tspan12"
+         style="fill:#000000;stroke-width:0.529167"
+         x="31.375608"
+         y="13.358909">Palabra FORTH</tspan></text>
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect15"
+       width="96.023651"
+       height="57.565697"
+       x="107.65338"
+       y="7.3373713"
+       ry="7.4152427"
+       rx="7.4152427" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.25549257,0,0,0.25549257,79.603687,-56.997626)"
+       id="text19"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect20);shape-padding:12.2203;display:inline;fill:#0000ff;stroke:none;stroke-width:2.07116;stroke-linejoin:round"
+       x="-1157.9293"
+       y="0"><tspan
+         x="128.75"
+         y="305.07731"
+         id="tspan48">   <tspan
+   style="fill:#ff00ff"
+   id="tspan34">.data</tspan><tspan
+   style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+   id="tspan38">
+</tspan></tspan><tspan
+         x="128.75"
+         y="331.47727"
+         id="tspan57"><tspan
+           style="fill:#4d4d4d"
+           id="tspan49">W1</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan50">:  .word code_W1  </tspan><tspan
+           style="fill:#008000"
+           id="tspan55">#-- Codeword
+</tspan></tspan><tspan
+         x="128.75"
+         y="357.87723"
+         id="tspan63"><tspan
+           style="fill:#008000"
+           id="tspan61">     </tspan><tspan
+           style="fill:#ff00ff"
+           id="tspan62">.text
+</tspan></tspan><tspan
+         x="128.75"
+         y="384.2772"
+         id="tspan73"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan64">code_W1:
+</tspan></tspan><tspan
+         x="128.75"
+         y="410.67716"
+         id="tspan75"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan74">     codigo asm
+</tspan></tspan><tspan
+         x="128.75"
+         y="437.07712"
+         id="tspan77"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan76">     ...
+</tspan></tspan><tspan
+         x="128.75"
+         y="463.47709"
+         id="tspan81"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan78">     </tspan><tspan
+           style="fill:#ff0000"
+           id="tspan79">NEXT</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan80">
+</tspan></tspan><tspan
+         x="128.75"
+         y="504.64567"
+         id="tspan83"><tspan
+           dx="0 10.453342 10.453342 10.453342 10.453342 10.453342 10.453342 10.453346 10.453339 10.453339 10.453346 10.453346 10.453339 10.453339 10.453354 10.453339 10.453339 10.453339 10.453339 10.453354"
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan82">        .word WORD3
+</tspan></tspan><tspan
+         x="128.75"
+         y="531.04563"
+         id="tspan85"><tspan
+           dx="0 10.453342 10.453342 10.453342 10.453342 10.453342 10.453342 10.453346 10.453339 10.453339 10.453346 10.453346"
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan84">        ...
+</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="128.23994"
+       y="13.082942"
+       id="text20"><tspan
+         sodipodi:role="line"
+         id="tspan20"
+         style="fill:#000000;stroke-width:0.529167"
+         x="128.23994"
+         y="13.082942">Palabra primitiva</tspan></text>
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect29"
+       width="65.115372"
+       height="45.699127"
+       x="7.7534084"
+       y="68.601997"
+       ry="7.4152427"
+       rx="7.4152427" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.25549257,0,0,0.25549257,-22.228052,4.8189316)"
+       id="text35"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect36);shape-padding:12.2203;display:inline;fill:#0000ff;stroke:none;stroke-width:2.07116;stroke-linejoin:round"
+       x="-1157.9293"
+       y="0"><tspan
+         x="128.75"
+         y="305.07731"
+         id="tspan88">     <tspan
+   style="fill:#ff00ff"
+   id="tspan86">.text</tspan><tspan
+   style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+   id="tspan87">
+</tspan></tspan><tspan
+         x="128.75"
+         y="331.47727"
+         id="tspan91"><tspan
+           style="fill:#4d4d4d"
+           id="tspan89">DOCOL</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan90">: addi fp,fp,-4
+</tspan></tspan><tspan
+         x="128.75"
+         y="357.87723"
+         id="tspan93"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan92">       sw s1,0(fp)
+</tspan></tspan><tspan
+         x="128.75"
+         y="384.2772"
+         id="tspan95"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan94">       add s1,a0,4
+</tspan></tspan><tspan
+         x="128.75"
+         y="410.67716"
+         id="tspan98"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan96">       </tspan><tspan
+           style="fill:#ff0000"
+           id="tspan97">NEXT</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="33.307377"
+       y="74.347572"
+       id="text36"><tspan
+         sodipodi:role="line"
+         id="tspan36"
+         style="fill:#000000;stroke-width:0.529167"
+         x="33.307377"
+         y="74.347572">DOCOL</tspan></text>
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect37"
+       width="70.910675"
+       height="57.565697"
+       x="77.167137"
+       y="68.798935"
+       ry="7.4152427"
+       rx="7.4152427" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.25549257,0,0,0.25549257,49.117442,4.463941)"
+       id="text42"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect43);shape-padding:12.2203;display:inline;fill:#0000ff;stroke:none;stroke-width:2.07116;stroke-linejoin:round"
+       x="-1157.9293"
+       y="0"><tspan
+         x="128.75"
+         y="305.07731"
+         id="tspan101">   <tspan
+   style="fill:#ff00ff"
+   id="tspan99">.data</tspan><tspan
+   style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+   id="tspan100">
+</tspan></tspan><tspan
+         x="128.75"
+         y="331.47727"
+         id="tspan105"><tspan
+           style="fill:#4d4d4d"
+           id="tspan102">EXIT:</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan103">  .word code_EXIT</tspan><tspan
+           style="fill:#008000"
+           id="tspan104">
+</tspan></tspan><tspan
+         x="128.75"
+         y="357.87723"
+         id="tspan108"><tspan
+           style="fill:#008000"
+           id="tspan106">     </tspan><tspan
+           style="fill:#ff00ff"
+           id="tspan107">.text
+</tspan></tspan><tspan
+         x="128.75"
+         y="384.2772"
+         id="tspan110"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan109">code_EXIT:
+</tspan></tspan><tspan
+         x="128.75"
+         y="410.67716"
+         id="tspan112"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan111">     lw s1, 0(fp)
+</tspan></tspan><tspan
+         x="128.75"
+         y="437.07712"
+         id="tspan114"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan113">     addi fp,fp,4
+</tspan></tspan><tspan
+         x="128.75"
+         y="463.47709"
+         id="tspan118"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan115">     </tspan><tspan
+           style="fill:#ff0000"
+           id="tspan116">NEXT</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan117">
+</tspan></tspan><tspan
+         x="128.75"
+         y="504.64567"
+         id="tspan120"><tspan
+           dx="0 10.453342 10.453342 10.453342 10.453342 10.453342 10.453342 10.453346 10.453339 10.453339 10.453346 10.453346 10.453339 10.453339 10.453354 10.453339 10.453339 10.453339 10.453339 10.453354"
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan119">        .word WORD3
+</tspan></tspan><tspan
+         x="128.75"
+         y="531.04563"
+         id="tspan122"><tspan
+           dx="0 10.453342 10.453342 10.453342 10.453342 10.453342 10.453342 10.453346 10.453339 10.453339 10.453346 10.453346"
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan121">        ...
+</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="106.8606"
+       y="74.268547"
+       id="text43"><tspan
+         sodipodi:role="line"
+         id="tspan43"
+         style="fill:#000000;stroke-width:0.529167"
+         x="106.8606"
+         y="74.268547">EXIT</tspan></text>
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect47"
+       width="65.115372"
+       height="41.835594"
+       x="7.7534084"
+       y="118.00005"
+       ry="7.4152427"
+       rx="7.4152427" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.25549257,0,0,0.25549257,-18.640484,49.525553)"
+       id="text51"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect52);shape-padding:12.2203;display:inline;fill:#0000ff;stroke:none;stroke-width:2.07116;stroke-linejoin:round"
+       x="-1157.9293"
+       y="0"><tspan
+         x="128.75"
+         y="305.07731"
+         id="tspan124"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan123">
+</tspan></tspan><tspan
+         x="128.75"
+         y="331.47727"
+         id="tspan126"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan125">lw  a0,0(s1)
+</tspan></tspan><tspan
+         x="128.75"
+         y="357.87723"
+         id="tspan128"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan127">addi s1,s1,4
+</tspan></tspan><tspan
+         x="128.75"
+         y="384.2772"
+         id="tspan130"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan129">lw t0,0(a0)
+</tspan></tspan><tspan
+         x="128.75"
+         y="410.67716"
+         id="tspan132"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan131">jalr t0</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="25.30434"
+       y="124.57353"
+       id="text52"><tspan
+         sodipodi:role="line"
+         id="tspan52"
+         style="fill:#000000;stroke-width:0.529167"
+         x="25.30434"
+         y="124.57353">NEXT (Macro)</tspan></text>
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect53"
+       width="76.154045"
+       height="53.70216"
+       x="8.0926437"
+       y="163.53458"
+       ry="7.4152427"
+       rx="7.4152427" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.25549257,0,0,0.25549257,-20.508986,100.30344)"
+       id="text58"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect59);shape-padding:12.2203;display:inline;fill:#0000ff;stroke:none;stroke-width:2.07116;stroke-linejoin:round"
+       x="-1157.9293"
+       y="0"><tspan
+         x="128.75"
+         y="305.07731"
+         id="tspan135">     <tspan
+   style="fill:#ff00ff"
+   id="tspan133">.data</tspan><tspan
+   style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+   id="tspan134">
+</tspan></tspan><tspan
+         x="128.75"
+         y="331.47727"
+         id="tspan140"><tspan
+           style="fill:#666666"
+           id="tspan136">TEST</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan137">:   </tspan><tspan
+           style="fill:#008000"
+           id="tspan138">#-- sin Codeword!</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan139">
+</tspan></tspan><tspan
+         x="128.75"
+         y="357.87723"
+         id="tspan142"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan141">        .word WORD1
+</tspan></tspan><tspan
+         x="128.75"
+         y="384.2772"
+         id="tspan144"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan143">        .word WORD2
+</tspan></tspan><tspan
+         x="128.75"
+         y="410.67716"
+         id="tspan146"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan145">        ...
+</tspan></tspan><tspan
+         x="128.75"
+         y="437.07712"
+         id="tspan149"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan147">        </tspan><tspan
+           style="fill:#008000"
+           id="tspan148">#-- sin EXIT</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="25.919548"
+       y="170.384"
+       id="text59"><tspan
+         sodipodi:role="line"
+         id="tspan59"
+         style="fill:#000000;stroke-width:0.529167"
+         x="25.919548"
+         y="170.384">Palabra Inicial</tspan></text>
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.529167;stroke-linejoin:round"
+       id="rect60"
+       width="88.296585"
+       height="58.117626"
+       x="89.211517"
+       y="130.9705"
+       ry="7.4152427"
+       rx="7.4152431" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.25549257,0,0,0.25549257,54.814575,66.911461)"
+       id="text65"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect66);shape-padding:12.2203;display:inline;fill:#0000ff;stroke:none;stroke-width:2.07116;stroke-linejoin:round"
+       x="-1157.9293"
+       y="0"><tspan
+         x="128.75"
+         y="305.07731"
+         id="tspan152">  <tspan
+   style="fill:#ff00ff"
+   id="tspan150">.text</tspan><tspan
+   style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+   id="tspan151">
+</tspan></tspan><tspan
+         x="128.75"
+         y="331.47727"
+         id="tspan156"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan153">    </tspan><tspan
+           style="fill:#008000"
+           id="tspan154">#-- Configurar pila R</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan155">
+</tspan></tspan><tspan
+         x="128.75"
+         y="357.87723"
+         id="tspan158"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan157">    la fp, return_stack_top 
+</tspan></tspan><tspan
+         x="128.75"
+         y="384.2772"
+         id="tspan161"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan159">    </tspan><tspan
+           style="fill:#008000"
+           id="tspan160">#-- Comenzar ejecucion 
+</tspan></tspan><tspan
+         x="128.75"
+         y="410.67716"
+         id="tspan164"><tspan
+           style="fill:#008000"
+           id="tspan162">    #-- de palabra especial TEST</tspan><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan163">
+</tspan></tspan><tspan
+         x="128.75"
+         y="437.07712"
+         id="tspan166"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan165">    la s1, TEST
+</tspan></tspan><tspan
+         x="128.75"
+         y="463.47709"
+         id="tspan169"><tspan
+           style="font-weight:bold;font-size:18.6667px;-inkscape-font-specification:'Ubuntu Mono Bold'"
+           id="tspan167">    </tspan><tspan
+           style="fill:#ff0000"
+           id="tspan168">NEXT</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:0.9;font-family:'Ubuntu Mono';-inkscape-font-specification:'Ubuntu Mono Bold';text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.529167;stroke-linejoin:round"
+       x="101.06761"
+       y="137.56895"
+       id="text66"><tspan
+         sodipodi:role="line"
+         id="tspan66"
+         style="fill:#000000;stroke-width:0.529167"
+         x="101.06761"
+         y="137.56895">Arranque Intérprete</tspan></text>
+  </g>
+</svg>
