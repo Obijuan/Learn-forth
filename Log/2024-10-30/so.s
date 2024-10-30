@@ -1,5 +1,6 @@
 
     #-- Servicios del S.O del RARs
+    .eqv _PRINT_INT  1    #-- Imprimir numero entero
     .eqv _EXIT       10   #-- Terminar
     .eqv _PRINT_CHAR 11   #-- Imprimir un caracter
 
@@ -12,6 +13,11 @@
     .macro SO_PRINT_CHAR (%character)
       li a0, %character
       li a7, _PRINT_CHAR
+      ecall
+    .end_macro
+
+    .macro SYS_PRINT_INT
+      li a7, 1
       ecall
     .end_macro
 
