@@ -5,4 +5,5 @@
 
 #----- Parameters:
 #-- nc : No copyright (no message printed)
-java -jar rars1_6.jar nc $1 
+#-- sm : Start execution at statement with global label main
+java -jar rars1_6.jar nc sm $1 
