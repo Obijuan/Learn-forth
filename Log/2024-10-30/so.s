@@ -14,3 +14,11 @@
       li a7, _PRINT_CHAR
       ecall
     .end_macro
+
+    #-- Macros estandares de FORTH
+    .macro NEXT
+      lw a0, 0(s1) #-- a0: Apunta a la codeword
+      addi s1,s1,4 #-- s1: Apunta la siguiente palabra
+      lw t0, 0(a0) #-- t0: Direccion del codigo ejecutable
+      jalr t0      #-- Ejecutar la palabra!
+    .end_macro
