@@ -1,19 +1,16 @@
 
 #-- Cambio/mejora: 
-#-- Todavía no funciona bien... porque NO hace la vuelta atrás. Como ejemplo
-#-- definimos unas palabras que hacen PETAR el programa
-#-- Se imprime A y luego se produce el Error:
-#-- Error in /home/obijuan/Develop/Learn-forth/Log/2024-10-30/18-test.s 
-#-- line 35->22: Runtime exception at 0x00400014:
-#-- Cannot read directly from text segment!0x00400000
+#-- Para lograr que exista una "vuelta atrás" hay que hacer varios cambios
+#-- Por un lado hay que definir EXIT. Es lo que hacemos en este ejemplo
+#-- Para comprobar que se ejecuta EXIT hacemos que imprima el caracter "R"
 #--
-#-- El problema está al ejecutar W1 de TEST2. En ese momento s1 apunta
-#-- otra vez fuera de TEST2... al limbo del segmento de datos, y por 
-#-- supuesto peta. Desde TEST2 NO se retorna hacia TEST
+#-- Al ejectarse se imprime la cadena AR y luego peta:
+#-- Error in /home/obijuan/Develop/Learn-forth/Log/2024-10-30/19-test.s 
+#-- line 70->22: Runtime exception at 0x00400060: 
+#--  Cannot read directly from text segment!0x00400000
 #--
-#-- La solución es que necesitamos añadir código en ensamblador en una nueva
-#-- palabra, EXIT, que tome el control y deshaga el entuerto. La solucion
-#-- se implementa en el siguiente ejemplo
+#-- La solucion es modificar DOCOL para almacenar s1 en la pila R
+#-- y luego recuperarlo en EXIT. Lo haremos en el siguiente ejemplo
 
     .include "so.s"
 
@@ -34,6 +31,7 @@ TEST:
 TEST2:
     .word DOCOL
     .word W1
+    .word EXIT
 
 #------------------------
 #-- W1: Imprimir A
@@ -68,6 +66,16 @@ code_EX:
    #-- Es una instruccion especial
    #-- Se termina, por lo que NO se llama a NEXT
 
+#--------------------------------------------------------------------
+# EXIT. Palabra que se tiene que ejecutar al final de la definicion
+# de una palabra NO primitiva
+#--------------------------------------------------------------------
+    .data
+EXIT: .word code_EXIT  #-- Codeword
+    .text
+code_EXIT:
+    SO_PRINT_CHAR('R')
+    NEXT
 
 #-----------------------
 #-- DOCOL
