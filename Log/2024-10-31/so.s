@@ -4,6 +4,8 @@
     .eqv _EXIT       10   #-- Terminar
     .eqv _PRINT_CHAR 11   #-- Imprimir un caracter
 
+    .eqv NULL 0
+
     #--------------------------------
     #-- Macros de acceso al S.O
     #--------------------------------
