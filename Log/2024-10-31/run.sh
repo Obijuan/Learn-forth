@@ -4,7 +4,7 @@
 #--   ./run.sh 01-main.s
 
 #-- Hacer que el terminal sea no bloqueante
-stty -icanon min 1 -echo
+stty -icanon min 1 #-echo
 
 #----- Parameters:
 #-- nc : No copyright (no message printed)

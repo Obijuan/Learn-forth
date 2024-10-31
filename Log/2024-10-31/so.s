@@ -12,6 +12,13 @@
       ecall
     .end_macro
 
+    #-- Entrada: a0: Registro a imprimir
+    .macro SYS_PRINT_CHAR
+      li a7, _PRINT_CHAR
+      ecall
+    .end_macro
+
+
     .macro SO_PRINT_CHAR (%character)
       li a0, %character
       li a7, _PRINT_CHAR
