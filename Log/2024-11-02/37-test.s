@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras
-#-- INTERPRET, BRANCH, RSPSTORE, QUIT
+#-- INTERPRET, BRANCH, RSPSTORE, QUIT, BYE
 
     .include "so.s"
 
