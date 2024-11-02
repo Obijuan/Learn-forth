@@ -73,3 +73,9 @@
       addi fp,fp,-4
       sw %reg, 0(fp)
     .end_macro
+
+    .macro RCALL %symbol
+	    PUSH ra			
+	    jal %symbol
+	    POP ra		
+	  .end_macro
