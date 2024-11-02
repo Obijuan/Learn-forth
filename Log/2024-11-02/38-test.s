@@ -3,6 +3,7 @@
 #-- Eliminada palabra de prueba HI: ya no es necesaria
 #-- Eliminada la palabra EX. La que se usa es BYE
 #-- jal sustituido por la macro RCALL
+#-- DUP en diccionario
 
     .include "so.s"
 
@@ -302,8 +303,22 @@ name_SWAP:
        NEXT
 
 
-
-
+#------------------------------------------------
+#-- DUP
+#-- Duplicar el elemento en la cima de la pila 
+#------------------------------------------------
+        .data 
+name_DUP:
+       .word name_SWAP     
+       .byte 3         
+       .ascii "DUP" 
+       .align 2
+DUP:   .word code_DUP
+       .text
+code_DUP:
+	lw a0, 0(sp) 
+	PUSH a0
+	NEXT
 
 
 
@@ -313,7 +328,7 @@ name_SWAP:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_SWAP  
+       .word name_DUP  
        .byte 3         
        .ascii "BYE" 
        .align 2
@@ -345,20 +360,6 @@ code_DOT:
      SO_PRINT_CHAR(' ')
      NEXT
 
-
-
-
-#------------------------------------------------
-#-- DUP
-#-- Duplicar el elemento en la cima de la pila 
-#------------------------------------------------
-       .data
-DUP:   .word code_DUP
-       .text
-code_DUP:
-	lw a0, 0(sp) 
-	PUSH a0
-	NEXT
 
 #--------------------------------------------------------
 #-- KEY
