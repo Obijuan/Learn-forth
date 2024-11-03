@@ -1,8 +1,8 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- ROT, -ROT, 
-#-- Los ejemplos de prueba se estan metiendo en test.f
+#-- ROT, -ROT, 2DROP, 2DUP, 
+#-- 
 
     .include "so.s"
 
@@ -371,6 +371,48 @@ name_TWODROP:
     POP a0
 	NEXT
 
+#----------------------------------------
+#-- 2DUP
+#-- Duplicar los dos elementos de la cima de la pila
+#----------------------------------------
+        .data 
+name_TWODUP:
+       .word name_TWODROP    
+       .byte 4         
+       .ascii "2DUP" 
+       .align 2
+ TWODUP:   .word code_TWODUP
+       .text
+ code_TWODUP:
+	lw a0, 0(sp) #-- Leer Elemento de la cima
+	lw a1, 4(sp) #-- Leer siguiente elemento
+	PUSH a1      #-- Meterlos en la pila
+    PUSH a0
+	NEXT
+
+#----------------------------------------
+#-- 2SWAP
+#-- Intercambiar los dos pares de elementos de la cima de la pila
+#----------------------------------------
+        .data 
+name_TWOSWAP:
+       .word name_TWODUP    
+       .byte 5         
+       .ascii "2SWAP" 
+       .align 2
+ TWOSWAP:   .word code_TWOSWAP
+       .text
+ code_TWOSWAP:
+	POP a0
+    POP a1 
+    POP a2 
+    POP a3
+	PUSH a1
+    PUSH a0
+    PUSH a3
+    PUSH a2
+	NEXT
+
 
 #----------------------------------------------------
 # BYE: Salir del interprete
@@ -378,7 +420,7 @@ name_TWODROP:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_TWODROP
+       .word name_TWOSWAP
        .byte 3         
        .ascii "BYE" 
        .align 2

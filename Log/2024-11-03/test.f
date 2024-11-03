@@ -22,3 +22,9 @@ DROP DROP DROP .S
 \\-- Prueba de 2DROP
 10 1 2 .S 2DROP .S DROP .S
 
+\\-- Prueba de 2DUP
+10 1 2 .S 2DUP .S DROP DROP DROP DROP DROP .S
+
+\\-- Prueba de 2WAP
+10 1 2 3 4 .S 2SWAP .S DROP DROP DROP DROP DROP .S
+
