@@ -354,6 +354,22 @@ name_NROT:
     PUSH a2
     PUSH a1
 	NEXT
+#----------------------------------------
+#-- 2DROP
+#-- Sacar los dos elementos de la cima
+#----------------------------------------
+        .data 
+name_TWODROP:
+       .word name_NROT    
+       .byte 5         
+       .ascii "2DROP" 
+       .align 2
+ TWODROP:   .word code_TWODROP
+       .text
+ code_TWODROP:
+	POP a0
+    POP a0
+	NEXT
 
 
 #----------------------------------------------------
@@ -362,7 +378,7 @@ name_NROT:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_NROT
+       .word name_TWODROP
        .byte 3         
        .ascii "BYE" 
        .align 2

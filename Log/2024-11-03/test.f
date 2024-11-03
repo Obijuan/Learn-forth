@@ -19,3 +19,6 @@ DROP DROP DROP .S
 \\-- Prueba de -ROT
 10 20 1 2 3 .S -ROT .S DROP DROP DROP DROP DROP .S
 
+\\-- Prueba de 2DROP
+10 1 2 .S 2DROP .S DROP .S
+
