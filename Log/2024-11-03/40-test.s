@@ -2,7 +2,7 @@
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
 #-- ROT, -ROT, 2DROP, 2DUP, 2SWAP, ?DUP, 1+, 1-
-#-- 
+#-- 4+, 4-, 8+
 
     .include "so.s"
 
@@ -10,7 +10,7 @@
     .eqv BUFFER_SIZE, 200
 
     #-- VERSION DEL FORTH
-    .eqv JONES_VERSION 38
+    .eqv JONES_VERSION 40
 
     .data
 PRUEBA_FETCH: .word 1973   #-- Valor para hacer pruebas de Fetch. Dir: 0x10010000
@@ -87,9 +87,6 @@ TEST_CREATE:
 
 TEST_TDFA:
     .word DOCOL, WORD, FIND, TDFA, DOTS, EXIT
-
-TEST_INCR4:
-    .word DOCOL, LIT, 10, INCR4, DOTS, EXIT
 
 TEST_TCFA:
     .word DOCOL, WORD, FIND, TCFA, DOTS, EXIT
@@ -469,13 +466,67 @@ name_DECR:
 	PUSH a0
 	NEXT
 
+#----------------------------------------
+#-- 4+
+#-- Sumar 4 a la cima de la pila
+#----------------------------------------
+        .data 
+name_INCR4:
+       .word name_DECR   
+       .byte 2         
+       .ascii "4+" 
+       .align 2
+ INCR4:   .word code_INCR4
+       .text
+ code_INCR4:
+	POP a0
+	addi a0, a0, 4  #-- Sumar 4 a la cima de la pila
+	PUSH a0
+	NEXT
+
+#----------------------------------------
+#-- 4-
+#-- Restar 4 a la cima de la pila
+#----------------------------------------
+        .data 
+name_DECR4:
+       .word name_INCR4   
+       .byte 2         
+       .ascii "4-" 
+       .align 2
+ DECR4:   .word code_DECR4
+       .text
+ code_DECR4:
+	POP a0
+	addi a0, a0, -4 	#-- Restar 4 a la cima de la pila
+	PUSH a0
+	NEXT
+
+#----------------------------------------
+#-- 8+
+#-- Sumar 8 a la cima de la pila
+#----------------------------------------
+        .data 
+name_INCR8:
+       .word name_DECR4   
+       .byte 2         
+       .ascii "8+" 
+       .align 2
+ INCR8:   .word code_INCR8
+       .text
+ code_INCR8:
+	POP a0
+	addi a0, a0, 8	#-- Sumar 8 a la cima de la pila
+	PUSH a0
+	NEXT
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_DECR
+       .word name_INCR8
        .byte 3         
        .ascii "BYE" 
        .align 2
@@ -931,19 +982,6 @@ _TCFA:
 	addi a0, a0, 3		#-- El codeword está alineado a 4-bytes
 	andi a0, a0, 0xFFFFFFFC
 	ret
-
-#------------------------------------------------------
-#-- 4+
-#-- Sumar 4 al tos
-#------------------------------------------------------
-       .data
-INCR4: .word code_INCR4
-       .text
-code_INCR4:
-	POP a0
-	addi a0, a0, 4  #-- Sumar 4
-	PUSH a0
-	NEXT
 
 #-------------------------------------------------------
 #-- >DFA

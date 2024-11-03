@@ -38,3 +38,11 @@ DROP DROP DROP .S
 \\-- Prueba de 1-
 5 .S 1- .S DROP .S
 
+\\-- Prueba de 4+
+10 .S 4+ .S DROP .S
+
+\\-- Prueba de 4-
+12 .S 4- .S DROP .S
+
+\\-- Prueba de 8+
+8 .S 8+ .S DROP .S
