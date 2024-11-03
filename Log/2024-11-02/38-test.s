@@ -3,7 +3,8 @@
 #-- Eliminada palabra de prueba HI: ya no es necesaria
 #-- Eliminada la palabra EX. La que se usa es BYE
 #-- jal sustituido por la macro RCALL
-#-- DUP en diccionario
+#-- Palabras en diccionario
+#--   DUP, OVER
 
     .include "so.s"
 
@@ -313,14 +314,28 @@ name_DUP:
        .byte 3         
        .ascii "DUP" 
        .align 2
-DUP:   .word code_DUP
+ DUP:   .word code_DUP
        .text
-code_DUP:
+ code_DUP:
 	lw a0, 0(sp) 
 	PUSH a0
 	NEXT
 
-
+#----------
+#-- OVER
+#----------
+        .data 
+name_OVER:
+       .word name_DUP    
+       .byte 4         
+       .ascii "OVER" 
+       .align 2
+ OVER:   .word code_OVER
+       .text
+ code_OVER:
+	lw a0, 4(sp)  #-- Obtener el segundo elemento de la pila
+	PUSH a0 	  #-- y ponerlo en la pila para quede encima
+	NEXT
 
 #----------------------------------------------------
 # BYE: Salir del interprete
@@ -328,7 +343,7 @@ code_DUP:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_DUP  
+       .word name_OVER
        .byte 3         
        .ascii "BYE" 
        .align 2
