@@ -520,13 +520,33 @@ name_INCR8:
 	PUSH a0
 	NEXT
 
+
+#----------------------------------------
+#-- 8-
+#-- Restar 8 a la cima de la pila
+#----------------------------------------
+        .data 
+name_DECR8:
+       .word name_INCR8   
+       .byte 2         
+       .ascii "8-" 
+       .align 2
+ DECR8:   .word code_DECR8
+       .text
+ code_DECR8:
+	POP a0
+	addi a0, a0, -8  #-- Restar 8 de la cima de la pila
+	PUSH a0
+	NEXT
+
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_INCR8
+       .word name_DECR8
        .byte 3         
        .ascii "BYE" 
        .align 2

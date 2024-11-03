@@ -46,3 +46,7 @@ DROP DROP DROP .S
 
 \\-- Prueba de 8+
 8 .S 8+ .S DROP .S
+
+\\-- Prueba de 8-
+16 .S 8- .S DROP .S
+
