@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- ROT, -ROT, 2DROP, 2DUP, 
+#-- ROT, -ROT, 2DROP, 2DUP, 2SWAP, ?DUP, 1+, 1-
 #-- 
 
     .include "so.s"
@@ -413,6 +413,61 @@ name_TWOSWAP:
     PUSH a2
 	NEXT
 
+#----------------------------------------
+#-- ?DUP
+#-- Duplicar el elemento de la cima si no es cero
+#----------------------------------------
+        .data 
+name_QDUP:
+       .word name_TWOSWAP    
+       .byte 4         
+       .ascii "?DUP" 
+       .align 2
+ QDUP:   .word code_QDUP
+       .text
+ code_QDUP:
+	lw a0, 0(sp)      #-- Leer elemento de la cima
+	beqz a0, _QDUP_1  #-- Si es 0 terminar
+	PUSH a0           #-- Es != 0. Duplicarlo
+
+ _QDUP_1:
+	NEXT
+
+#----------------------------------------
+#-- 1+
+#-- Incrementar la cima de la pila
+#----------------------------------------
+        .data 
+name_INCR:
+       .word name_QDUP    
+       .byte 2         
+       .ascii "1+" 
+       .align 2
+ INCR:   .word code_INCR
+       .text
+ code_INCR:
+	POP a0
+	addi a0, a0, 1  #-- Incrementar elemento de la cima
+	PUSH a0
+	NEXT
+
+#----------------------------------------
+#-- 1-
+#-- Decrementar la cima de la pila
+#----------------------------------------
+        .data 
+name_DECR:
+       .word name_INCR    
+       .byte 2         
+       .ascii "1-" 
+       .align 2
+ DECR:   .word code_DECR
+       .text
+ code_DECR:
+	POP a0
+	addi a0, a0, -1  #-- Decrementar la cima de la pila
+	PUSH a0
+	NEXT
 
 #----------------------------------------------------
 # BYE: Salir del interprete
@@ -420,7 +475,7 @@ name_TWOSWAP:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_TWOSWAP
+       .word name_DECR
        .byte 3         
        .ascii "BYE" 
        .align 2

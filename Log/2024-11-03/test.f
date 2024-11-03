@@ -28,3 +28,13 @@ DROP DROP DROP .S
 \\-- Prueba de 2WAP
 10 1 2 3 4 .S 2SWAP .S DROP DROP DROP DROP DROP .S
 
+\\-- Prueba de ?DUP
+10 2 .S ?DUP .S DROP DROP DROP .S  \\-- Hay duplicacion
+10 0 .S ?DUP .S DROP DROP .S       \\-- No hay duplicacion
+
+\\-- Prueba de 1+
+5 .S 1+ .S DROP .S
+
+\\-- Prueba de 1-
+5 .S 1- .S DROP .S
+
