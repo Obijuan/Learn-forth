@@ -50,3 +50,8 @@ DROP DROP DROP .S
 \\-- Prueba de 8-
 16 .S 8- .S DROP .S
 
+\\-- Operacion +
+1 1 .S + .S DROP .S
+
+\\-- Operacion -
+10 10 .S - .S DROP .S

@@ -2,7 +2,7 @@
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
 #-- ROT, -ROT, 2DROP, 2DUP, 2SWAP, ?DUP, 1+, 1-
-#-- 4+, 4-, 8+
+#-- 4+, 4-, 8+, 8-, +, -, 
 
     .include "so.s"
 
@@ -540,13 +540,52 @@ name_DECR8:
 	NEXT
 
 
+#----------------------------------------
+#-- +
+#-- Suma de dos operandos
+#----------------------------------------
+        .data 
+name_ADD:
+       .word name_DECR8   
+       .byte 1        
+       .ascii "+" 
+       .align 2
+ ADD:   .word code_ADD
+       .text
+ code_ADD:
+	POP a0
+    POP a1	#-- Leer los dos operandos de la pila
+	add a0, a0, a1	#-- Sumarlos
+	PUSH a0         #-- Dejar el resultado en la pila
+	NEXT
+
+#----------------------------------------
+#-- -
+#-- Resta de dos operandos
+#----------------------------------------
+        .data 
+name_SUB:
+       .word name_ADD   
+       .byte 1        
+       .ascii "-" 
+       .align 2
+ SUB:   .word code_SUB
+       .text
+ code_SUB:
+	POP a0
+    POP a1	#-- Leer los dos operandos de la pila
+	sub a0, a1, a0	#-- Restarlos
+	PUSH a0         #-- Meter el resulado en la pila
+	NEXT
+
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_DECR8
+       .word name_SUB
        .byte 3         
        .ascii "BYE" 
        .align 2
