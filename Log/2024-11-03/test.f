@@ -55,3 +55,7 @@ DROP DROP DROP .S
 
 \\-- Operacion -
 10 10 .S - .S DROP .S
+
+\\-- Operacion *
+7 3 .S * .S DROP .S
+

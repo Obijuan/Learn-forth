@@ -2,7 +2,7 @@
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
 #-- ROT, -ROT, 2DROP, 2DUP, 2SWAP, ?DUP, 1+, 1-
-#-- 4+, 4-, 8+, 8-, +, -, 
+#-- 4+, 4-, 8+, 8-, +, -, *
 
     .include "so.s"
 
@@ -579,13 +579,34 @@ name_SUB:
 	NEXT
 
 
+#----------------------------------------
+#-- *
+#-- Multiplicacion de dos operandos
+#----------------------------------------
+        .data 
+name_MUL:
+       .word name_SUB
+       .byte 1        
+       .ascii "*" 
+       .align 2
+ MUL:   .word code_MUL
+       .text
+ code_MUL:
+	POP a0
+    POP a1
+	mul a0, a0, a1
+	PUSH a0	 #-- Se ignora el overflow
+	NEXT
+
+
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_SUB
+       .word name_MUL
        .byte 3         
        .ascii "BYE" 
        .align 2
