@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- =, <>, <, >, <=, 
+#-- =, <>, <, >, <=, >=, 
 
     .include "so.s"
 
@@ -723,13 +723,34 @@ name_LE:
 	NEXT
 
 
+#-------------------------------------------------------------------
+#-- >=
+#-- Comprobar si N es mayor o igual que T (cima de la pila) 
+#-------------------------------------------------------------------
+        .data 
+name_GE:
+       .word name_LE
+       .byte 2
+       .ascii ">=" 
+       .align 2
+ GE:   .word code_GE
+       .text
+ code_GE:
+	POP a0
+    POP a1
+	slt t0, a1, a0   #-- Si a1 >= a0, entonces !(a1 < a0)
+	li t1, 1
+	sub t0, t1, t0
+	PUSH t0
+	NEXT
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_LE
+       .word name_GE
        .byte 3         
        .ascii "BYE" 
        .align 2

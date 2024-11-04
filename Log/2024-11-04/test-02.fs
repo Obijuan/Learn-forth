@@ -19,4 +19,8 @@
 5 5 .S <= .S DROP .S
 5 1 .S <= .S DROP .S
 
+\ Probar el operador >=
+5 1 .S >= .S DROP .S
+5 5 .S >= .S DROP .S
+5 10 .S >= .S DROP .S
 
