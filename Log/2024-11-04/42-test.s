@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- =, <>, <, 
+#-- =, <>, <, >, <=, 
 
     .include "so.s"
 
@@ -682,6 +682,46 @@ name_LT:
 	NEXT
 
 
+#-------------------------------------------------------------------
+#-- >
+#-- Comprobar si N es mayor que T (cima de la pila) 
+#-------------------------------------------------------------------
+        .data 
+name_GT:
+       .word name_LT
+       .byte 1
+       .ascii ">" 
+       .align 2
+ GT:   .word code_GT
+       .text
+ code_GT:
+	POP a0
+    POP a1
+	slt a0, a0, a1  #-- Poner a0 a 1 si a0 < a1, de lo contrario poner a0 a 0
+	PUSH a0
+	NEXT
+
+#-------------------------------------------------------------------
+#-- <=
+#-- Comprobar si N es menor o igual que T (cima de la pila) 
+#-------------------------------------------------------------------
+        .data 
+name_LE:
+       .word name_GT
+       .byte 2
+       .ascii "<=" 
+       .align 2
+ LE:   .word code_LE
+       .text
+ code_LE:
+	POP a0
+    POP a1
+	slt t0, a0, a1 #-- si a1 <= a0, entonces !(a0 < a1)
+	li t1, 1
+	sub t0, t1, t0
+	PUSH t0
+	NEXT
+
 
 #----------------------------------------------------
 # BYE: Salir del interprete
@@ -689,7 +729,7 @@ name_LT:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_LT
+       .word name_LE
        .byte 3         
        .ascii "BYE" 
        .align 2
