@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- AND, OR, 
+#-- AND, OR, XOR, INVERT, !, @, 
 
     .include "so.s"
 
@@ -71,12 +71,6 @@ TEST_SUBSTORE:
 
 TEST_ADDSTORE:
     .word DOCOL, LIT, 1, LIT, PRUEBA_FETCH, ADDSTORE, LIT PRUEBA_FETCH, FETCH, DOT, EXIT 
-
-TEST_FETCH:
-    .word DOCOL, LIT, PRUEBA_FETCH, FETCH, DOT, EXIT
-
-TEST_STORE:
-    .word DOCOL, LIT, 0xCACA, LIT, 0x10040000, STORE, DOTS, EXIT
 
 TEST_COMMA:
     .word DOCOL, WORD, CREATE, LIT, 0xCACA, COMMA, DOTS, EXIT 
@@ -933,13 +927,73 @@ name_INVERT:
 	PUSH a0
 	NEXT
 
+
+#------------------------------------------------------
+#-- ! (STORE)
+#-- Almacenar un valor en una dirección
+#------------------------------------------------------
+       .data 
+name_STORE:
+       .word name_INVERT
+       .byte 1
+       .ascii "!" 
+       .align 2
+ STORE: .word code_STORE
+       .text
+ code_STORE:
+	POP a0    #-- a0: Direccion 
+    POP a1    #-- a1: Dato
+	sw a1, 0(a0)	#-- Haz el store!
+	NEXT
+
+#------------------------------------------------------
+#-- @ (FETCH)
+#-- Leer valor de una direccion
+#------------------------------------------------------
+       .data 
+name_FETCH:
+       .word name_STORE
+       .byte 1
+       .ascii "@" 
+       .align 2
+ FETCH: .word code_FETCH
+       .text
+ code_FETCH:
+	POP a0			#-- Direccion a leer
+	lw a1, 0(a0)	#-- Leer la direccion 
+	PUSH a1			#-- Meter el valor leido en la pila
+	NEXT
+
+
+#------------------------------------------------------
+#-- +! (ADDSTORE)
+#-- Incrementar una variable en una cantidad
+#------------------------------------------------------
+       .data 
+name_ADDSTORE:
+       .word name_FETCH
+       .byte 2
+       .ascii "+!" 
+       .align 2
+ADDSTORE: .word code_ADDSTORE
+       .text
+code_ADDSTORE:
+	POP a0   #-- a0 = Direccion
+    POP a1	 #-- a1 = Cantidad a sumar
+
+	lw a2, 0(a0)    #-- Leer variable
+	add a3, a1, a2	#-- Incrementarla
+	sw a3, 0(a0)    #-- Almacenar nuevo valor
+	NEXT
+
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_INVERT
+       .word name_ADDSTORE
        .byte 3         
        .ascii "BYE" 
        .align 2
@@ -1407,47 +1461,6 @@ TDFA: .word DOCOL
       .word INCR4  #-- Sumar 4 para apuntar a la siguiente palabra
       .word EXIT   #-- Retornar de una palabra FORTH
 
-#------------------------------------------------------
-#-- ! (STORE)
-#-- Almacenar un valor en una dirección
-#------------------------------------------------------
-       .data
-STORE: .word code_STORE
-       .text
-code_STORE:
-	POP a0    #-- a0: Direccion 
-    POP a1    #-- a1: Dato
-	sw a1, 0(a0)	#-- Haz el store!
-	NEXT
-
-#------------------------------------------------------
-#-- @ (FETCH)
-#-- Leer valor de una direccion
-#------------------------------------------------------
-       .data
-FETCH: .word code_FETCH
-       .text
-code_FETCH:
-	POP a0			#-- Direccion a leer
-	lw a1, 0(a0)	#-- Leer la direccion 
-	PUSH a1			#-- Meter el valor leido en la pila
-	NEXT
-
-#------------------------------------------------------
-#-- +! (ADDSTORE)
-#-- Incrementar una variable en una cantidad
-#------------------------------------------------------
-       .data
-ADDSTORE: .word code_ADDSTORE
-       .text
-code_ADDSTORE:
-	POP a0   #-- a0 = Direccion
-    POP a1	 #-- a1 = Cantidad a sumar
-
-	lw a2, 0(a0)    #-- Leer variable
-	add a3, a1, a2	#-- Incrementarla
-	sw a3, 0(a0)    #-- Almacenar nuevo valor
-	NEXT
 
 #------------------------------------------------------
 #-- -! (SUBSTORE)
