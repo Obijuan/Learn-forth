@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- AND, OR, XOR, INVERT, !, @, 
+#-- AND, OR, XOR, INVERT, !, @, +!, -!, 
 
     .include "so.s"
 
@@ -975,14 +975,35 @@ name_ADDSTORE:
        .byte 2
        .ascii "+!" 
        .align 2
-ADDSTORE: .word code_ADDSTORE
+ ADDSTORE: .word code_ADDSTORE
        .text
-code_ADDSTORE:
+ code_ADDSTORE:
 	POP a0   #-- a0 = Direccion
     POP a1	 #-- a1 = Cantidad a sumar
 
 	lw a2, 0(a0)    #-- Leer variable
 	add a3, a1, a2	#-- Incrementarla
+	sw a3, 0(a0)    #-- Almacenar nuevo valor
+	NEXT
+
+#------------------------------------------------------
+#-- -! (SUBSTORE)
+#-- Decrementar una variable en una cantidad
+#------------------------------------------------------
+       .data 
+name_SUBSTORE:
+       .word name_ADDSTORE
+       .byte 2
+       .ascii "-!" 
+       .align 2
+SUBSTORE: .word code_SUBSTORE
+       .text
+code_SUBSTORE:
+	POP a0   #-- a0 = Direccion
+    POP a1	 #-- a1 = Cantidad a restar
+
+	lw a2, 0(a0)    #-- Leer variable
+	sub a3, a2, a1	#-- Decrementarla
 	sw a3, 0(a0)    #-- Almacenar nuevo valor
 	NEXT
 
@@ -993,7 +1014,7 @@ code_ADDSTORE:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_ADDSTORE
+       .word name_SUBSTORE
        .byte 3         
        .ascii "BYE" 
        .align 2
@@ -1461,22 +1482,6 @@ TDFA: .word DOCOL
       .word INCR4  #-- Sumar 4 para apuntar a la siguiente palabra
       .word EXIT   #-- Retornar de una palabra FORTH
 
-
-#------------------------------------------------------
-#-- -! (SUBSTORE)
-#-- Decrementar una variable en una cantidad
-#------------------------------------------------------
-       .data
-SUBSTORE: .word code_SUBSTORE
-       .text
-code_SUBSTORE:
-	POP a0   #-- a0 = Direccion
-    POP a1	 #-- a1 = Cantidad a restar
-
-	lw a2, 0(a0)    #-- Leer variable
-	sub a3, a2, a1	#-- Decrementarla
-	sw a3, 0(a0)    #-- Almacenar nuevo valor
-	NEXT
 
 #------------------------------------------------------
 #-- C! (STOREBYTE)
