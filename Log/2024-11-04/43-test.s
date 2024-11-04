@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#--  
+#--  0=, 0<>, 
 
     .include "so.s"
 
@@ -755,10 +755,46 @@ name_ZEQU:
        .ascii "0=" 
        .align 2
  ZEQU:   .word code_ZEQU
-       .textBYE
+       .text
  code_ZEQU:
 	POP a0
 	seqz a0, a0
+	PUSH a0
+	NEXT
+
+#-------------------------------------------------------------
+#-- 0<>
+#-- Comprobar si T != 0
+#-------------------------------------------------------------
+        .data 
+name_ZNEQU:
+       .word name_ZEQU
+       .byte 3
+       .ascii "0<>" 
+       .align 2
+ ZNEQU:   .word code_ZNEQU
+       .text
+ code_ZNEQU:
+	POP a0
+	sltu a0, zero, a0
+	PUSH a0
+	NEXT
+
+#-------------------------------------------------------------
+#-- 0<
+#-- Comprobar si T < 0
+#-------------------------------------------------------------
+        .data 
+name_ZLT:
+       .word name_ZNEQU
+       .byte 2
+       .ascii "0<" 
+       .align 2
+ ZLT:   .word code_ZLT
+       .text
+ code_ZLT:
+	POP a0
+	slt a0, a0, zero
 	PUSH a0
 	NEXT
 
@@ -768,7 +804,7 @@ name_ZEQU:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_ZEQU
+       .word name_ZLT
        .byte 3         
        .ascii "BYE" 
        .align 2
