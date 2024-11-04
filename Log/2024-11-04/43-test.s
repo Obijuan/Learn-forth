@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#--  0=, 0<>, 0<, 0>, 0<=, 
+#--  0=, 0<>, 0<, 0>, 0<=, 0>=, 
 
     .include "so.s"
 
@@ -837,6 +837,25 @@ name_ZLE:
 	PUSH t0
 	NEXT
 
+#-------------------------------------------------------------
+#-- 0>=
+#-- Comprobar si T >= 0
+#-------------------------------------------------------------
+        .data 
+name_ZGE:
+       .word name_ZLE
+       .byte 3
+       .ascii "0>=" 
+       .align 2
+ ZGE:   .word code_ZGE
+       .text
+ code_ZGE:
+	POP a0
+	slt t0, a0, zero
+	li t1, 1
+	sub t0, t1, t0
+	PUSH t0
+	NEXT
 
 #----------------------------------------------------
 # BYE: Salir del interprete
@@ -844,7 +863,7 @@ name_ZLE:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_ZLE
+       .word name_ZGE
        .byte 3         
        .ascii "BYE" 
        .align 2
