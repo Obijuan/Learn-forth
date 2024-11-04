@@ -9,7 +9,7 @@
     .eqv BUFFER_SIZE, 200
 
     #-- VERSION DEL FORTH
-    .eqv JONES_VERSION 40
+    .eqv JONES_VERSION 42
 
     .data
 PRUEBA_FETCH: .word 1973   #-- Valor para hacer pruebas de Fetch. Dir: 0x10010000
