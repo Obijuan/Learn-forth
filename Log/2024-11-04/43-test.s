@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#--  0=, 0<>, 
+#--  0=, 0<>, 0<, 0>, 0<=, 
 
     .include "so.s"
 
@@ -798,13 +798,53 @@ name_ZLT:
 	PUSH a0
 	NEXT
 
+#-------------------------------------------------------------
+#-- 0>
+#-- Comprobar si T > 0
+#-------------------------------------------------------------
+        .data 
+name_ZGT:
+       .word name_ZLT
+       .byte 2
+       .ascii "0>" 
+       .align 2
+ ZGT:   .word code_ZGT
+       .text
+ code_ZGT:
+	POP a0
+	slt a0, zero, a0
+	PUSH a0
+	NEXT
+
+
+#-------------------------------------------------------------
+#-- 0<=
+#-- Comprobar si T <= 0
+#-------------------------------------------------------------
+        .data 
+name_ZLE:
+       .word name_ZGT
+       .byte 3
+       .ascii "0<=" 
+       .align 2
+ ZLE:   .word code_ZLE
+       .text
+ code_ZLE:
+	POP a0
+	slt t0, zero, a0
+	li t1, 1
+	sub t0, t1, t0
+	PUSH t0
+	NEXT
+
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_ZLT
+       .word name_ZLE
        .byte 3         
        .ascii "BYE" 
        .align 2
