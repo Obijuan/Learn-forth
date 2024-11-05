@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- C!, C@, C@C!, CMOVE, STATE, LATEST,
+#-- C!, C@, C@C!, CMOVE, STATE, LATEST, HERE, S0, BASE
 
     .include "so.s"
 
@@ -38,21 +38,6 @@ TEST_RZ: .word DOCOL, RZ, DOT, EXIT
 
 TEST_VERSION:
     .word DOCOL, VERSION, DOT, EXIT 
-
-TEST_BASE:
-    .word DOCOL, BASE, FETCH, DOT, EXIT 
-
-TEST_SZ:
-    .word DOCOL, SZ, FETCH, DOT, EXIT 
-
-TEST_HERE:
-    .word DOCOL, HERE, FETCH, DOT, EXIT 
-
-TEST_LATEST:
-    .word DOCOL, LATEST, FETCH, DOT, EXIT 
-
-TEST_STATE:
-    .word DOCOL, STATE, FETCH, DOT, EXIT
 
 TEST_CMOVE:
     .word DOCOL, LIT, SRC_STR, LIT, DST_STR, LIT, 4, CMOVE, DOTS, EXIT
@@ -1067,9 +1052,9 @@ name_CMOVE:
        .byte 5
        .ascii "CMOVE" 
        .align 2
-CMOVE: .word code_CMOVE
+ CMOVE: .word code_CMOVE
        .text
-code_CMOVE:
+ code_CMOVE:
 	POP a0      #-- a0: Tamano del bloque a copiar
     POP a1      #-- a1: Direccion destino
     POP a2		#-- a2: Direccion fuente
@@ -1077,11 +1062,11 @@ code_CMOVE:
 	RCALL _COPY_BYTES
 	NEXT
 
-_COPY_BYTES:
+ _COPY_BYTES:
 	slti a4, a0, 4		#-- Si longitud <4, salta para copiar byte a byte
 	bnez a4, _COPY_BYTES2
 
-_COPY_BYTES1:        #-- Copiar palabra a palabra
+ _COPY_BYTES1:        #-- Copiar palabra a palabra
 	lw a3, 0(a2)     #-- a2: Fuente --> a1: Destino
 	sw a3, 0(a1)
 
@@ -1093,7 +1078,7 @@ _COPY_BYTES1:        #-- Copiar palabra a palabra
 	slti a4, a0, 4	 #-- Si longitud < 4, copiamos byte a byte
 	beqz a4, _COPY_BYTES1     #-- Si no, seguimos palabra a palabra
 
-_COPY_BYTES2:      #-- Copy byte
+ _COPY_BYTES2:      #-- Copy byte
 	lb a3, 0(a2)   #-- a2: Fuente --> a1: Destino
 	sb a3, 0(a1)
 
@@ -1102,7 +1087,7 @@ _COPY_BYTES2:      #-- Copy byte
 	addi a2, a2, 1   #-- Actualizar puntero fuente
 	bnez a0, _COPY_BYTES2  #-- Loop mientras queden bytes a copiar
 
-_COPY_BYTES3:
+ _COPY_BYTES3:
 	ret
 
 
@@ -1122,15 +1107,15 @@ name_STATE:
        .byte 5
        .ascii "STATE" 
        .align 2
-STATE: .word code_STATE
+ STATE: .word code_STATE
        .text
-code_STATE:
+ code_STATE:
        la t0, var_STATE
        PUSH t0
        NEXT
        .data
        .align 2
-var_STATE: .word 0  #-- Interpretando por defecto
+ var_STATE: .word 0  #-- Interpretando por defecto
 
 #------------------------------------------------------
 #-- LATEST: Apunta a la última palabra introducida
@@ -1141,15 +1126,15 @@ name_LATEST:
        .byte 6
        .ascii "LATEST" 
        .align 2
-LATEST: .word code_LATEST
+ LATEST: .word code_LATEST
        .text
-code_LATEST:
+ code_LATEST:
        la t0, var_LATEST
        PUSH t0
        NEXT
        .data
        .align 2
-var_LATEST:
+ var_LATEST:
 	.word name_BYE
 
 
@@ -1157,39 +1142,51 @@ var_LATEST:
 #-- HERE
 #-- Apunta al siguiente byte disponible de memoria
 #----------------------------------------------------
-     .data
-HERE: .word code_HERE
+name_HERE:
+       .word name_LATEST
+       .byte 4
+       .ascii "HERE" 
+       .align 2
+ HERE: .word code_HERE
        .text
-code_HERE:
+ code_HERE:
        la t0, var_HERE
        PUSH t0
        NEXT
        .data
        .align 2
-var_HERE: .word free_mem
+ var_HERE: .word free_mem
 
 
 #----------------------------------------------------
 #-- S0
-#-- Direcciodn de la cime de la pila de parametros
+#-- Direcciodn de la cima de la pila de parametros
 #----------------------------------------------------- 
-     .data
-SZ: .word code_SZ
+name_SZ:
+       .word name_HERE
+       .byte 2
+       .ascii "S0" 
+       .align 2
+ SZ: .word code_SZ
        .text
-code_SZ:
+ code_SZ:
        la t0, var_SZ
        PUSH t0
        NEXT
        .data
        .align 2
-var_SZ: .word stack_top
+ var_SZ: .word stack_top
 
 
 #-------------------------------------------------------
 #-- BASE a utilizar para los numeros que se leen 
 #-- y que se imprimen. Por defecto es BASE 10 
 #-------------------------------------------------------
-    .data
+name_BASE:
+       .word name_SZ
+       .byte 4
+       .ascii "BASE" 
+       .align 2
 BASE: .word code_BASE
        .text
 code_BASE:
@@ -1208,7 +1205,7 @@ var_BASE: .word 10
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_LATEST
+       .word name_BASE
        .byte 3         
        .ascii "BYE" 
        .align 2

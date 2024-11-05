@@ -41,5 +41,11 @@ STATE .S @ .S DROP .S  \-- Leer variable STATE
 \ Probar LATEST
 LATEST .S @ .S DROP .S \-- Leer variable LATEST
 
+\ Probar HERE
+HERE .S @ .S DROP .S    \-- Leer variable HERE
 
+\ Probar S0
+S0 .S @ .S DROP .S
 
+\ Probar BASE
+BASE .S @ .S DROP .S  \-- Leer variable BASE
