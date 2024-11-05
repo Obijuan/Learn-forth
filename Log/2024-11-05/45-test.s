@@ -1,7 +1,7 @@
 
 #-- Cambio/mejora: 
 #-- Nuevas palabras en el diccionario:
-#-- 
+#-- C!, C@, C@C!, CMOVE, STATE, LATEST,
 
     .include "so.s"
 
@@ -59,12 +59,6 @@ TEST_CMOVE:
 
 TEST_CCOPY:
     .word DOCOL, LIT, SRC_BYTE, LIT, DST_BYTE, DOTS, CCOPY, DOTS, EXIT
-
-TEST_FETCHBYTE:
-    .word DOCOL, LIT, VAR_BYTE, FETCHBYTE, DOT, EXIT
-
-TEST_STOREBYTE:
-    .word DOCOL, LIT, 0xA5, LIT, 0x10040000, STOREBYTE, DOTS, EXIT
 
 TEST_COMMA:
     .word DOCOL, WORD, CREATE, LIT, 0xCACA, COMMA, DOTS, EXIT 
@@ -1011,13 +1005,202 @@ name_STOREBYTE:
        .byte 2
        .ascii "C!" 
        .align 2
-STOREBYTE: .word code_STOREBYTE
+ STOREBYTE: .word code_STOREBYTE
        .text
-code_STOREBYTE:
+ code_STOREBYTE:
 	POP a0        #-- a0: Direccion
     POP a1		  #-- a1: Dato a guardar
 	sb a1, 0(a0)	#-- Almacenar!
 	NEXT
+
+
+#------------------------------------------------------
+#-- C@ (FETCHBYTE)
+#-- Leer un byte de una direccion
+#------------------------------------------------------
+       .data 
+name_FETCHBYTE:
+       .word name_STOREBYTE
+       .byte 2
+       .ascii "C@" 
+       .align 2
+ FETCHBYTE: .word code_FETCHBYTE
+       .text
+ code_FETCHBYTE:
+	POP a0			#-- a0: Direccion
+	lb a1, 0(a0)	#-- Leer el byte
+	PUSH a1			#-- Meterlo en la pila
+	NEXT
+
+
+
+#------------------------------------------------------
+#-- C@C! (CCOPY)
+#-- Copiar un byte de una direccion a otra
+#------------------------------------------------------
+#-- TODO!! REVISAR ESTA FUNCION... NO TIENE MUCHO SENTIDO
+       .data 
+name_CCOPY:
+       .word name_FETCHBYTE
+       .byte 4
+       .ascii "C@C!" 
+       .align 2
+ CCOPY: .word code_CCOPY
+       .text
+ code_CCOPY:
+	POP a0        #-- a0: Direccion destino
+    POP a1		  #-- a1: Direccion fuente
+	lb a2, 0(a1)		#-- Leer caracter fuente get source
+	sb a2, 0(a0)		#-- Copiar a destino
+	addi a1, a1, 4      #-- Incrementar direccion fuente
+	PUSH a0
+    PUSH a1
+	NEXT
+
+#------------------------------------------------------
+#-- CMOVE
+#-- Operacion de copia de un bloque
+#------------------------------------------------------
+       .data 
+name_CMOVE:
+       .word name_CCOPY
+       .byte 5
+       .ascii "CMOVE" 
+       .align 2
+CMOVE: .word code_CMOVE
+       .text
+code_CMOVE:
+	POP a0      #-- a0: Tamano del bloque a copiar
+    POP a1      #-- a1: Direccion destino
+    POP a2		#-- a2: Direccion fuente
+
+	RCALL _COPY_BYTES
+	NEXT
+
+_COPY_BYTES:
+	slti a4, a0, 4		#-- Si longitud <4, salta para copiar byte a byte
+	bnez a4, _COPY_BYTES2
+
+_COPY_BYTES1:        #-- Copiar palabra a palabra
+	lw a3, 0(a2)     #-- a2: Fuente --> a1: Destino
+	sw a3, 0(a1)
+
+	addi a0, a0, -4	 #-- Una palabra menos a copiar
+	beqz a0, _COPY_BYTES3  #-- Si 0 palabras por copiar --> Terminar
+
+	addi a1, a1, 4   #-- Actualizar puntero destino
+	addi a2, a2, 4   #-- Actualizar puntero fuente
+	slti a4, a0, 4	 #-- Si longitud < 4, copiamos byte a byte
+	beqz a4, _COPY_BYTES1     #-- Si no, seguimos palabra a palabra
+
+_COPY_BYTES2:      #-- Copy byte
+	lb a3, 0(a2)   #-- a2: Fuente --> a1: Destino
+	sb a3, 0(a1)
+
+	addi a0, a0, -1  #-- Un byte menos a copiar
+	addi a1, a1, 1   #-- Actualizar punteros destino
+	addi a2, a2, 1   #-- Actualizar puntero fuente
+	bnez a0, _COPY_BYTES2  #-- Loop mientras queden bytes a copiar
+
+_COPY_BYTES3:
+	ret
+
+
+#============================================================================
+#=                              VARIABLES
+#============================================================================
+
+#----------------------------------------------------
+#-- STATE
+#-- Estado del intérprete
+#-- 0: El intérprete está ejecutando código
+#-- !=0: El intérprete está compilando una palabra
+#----------------------------------------------------
+       .data 
+name_STATE:
+       .word name_CMOVE
+       .byte 5
+       .ascii "STATE" 
+       .align 2
+STATE: .word code_STATE
+       .text
+code_STATE:
+       la t0, var_STATE
+       PUSH t0
+       NEXT
+       .data
+       .align 2
+var_STATE: .word 0  #-- Interpretando por defecto
+
+#------------------------------------------------------
+#-- LATEST: Apunta a la última palabra introducida
+#-- en el diccionario
+#------------------------------------------------------
+name_LATEST:
+       .word name_STATE
+       .byte 6
+       .ascii "LATEST" 
+       .align 2
+LATEST: .word code_LATEST
+       .text
+code_LATEST:
+       la t0, var_LATEST
+       PUSH t0
+       NEXT
+       .data
+       .align 2
+var_LATEST:
+	.word name_BYE
+
+
+#----------------------------------------------------
+#-- HERE
+#-- Apunta al siguiente byte disponible de memoria
+#----------------------------------------------------
+     .data
+HERE: .word code_HERE
+       .text
+code_HERE:
+       la t0, var_HERE
+       PUSH t0
+       NEXT
+       .data
+       .align 2
+var_HERE: .word free_mem
+
+
+#----------------------------------------------------
+#-- S0
+#-- Direcciodn de la cime de la pila de parametros
+#----------------------------------------------------- 
+     .data
+SZ: .word code_SZ
+       .text
+code_SZ:
+       la t0, var_SZ
+       PUSH t0
+       NEXT
+       .data
+       .align 2
+var_SZ: .word stack_top
+
+
+#-------------------------------------------------------
+#-- BASE a utilizar para los numeros que se leen 
+#-- y que se imprimen. Por defecto es BASE 10 
+#-------------------------------------------------------
+    .data
+BASE: .word code_BASE
+       .text
+code_BASE:
+       la t0, var_BASE
+       PUSH t0
+       NEXT
+       .data
+       .align 2
+var_BASE: .word 10
+
+
 
 #----------------------------------------------------
 # BYE: Salir del interprete
@@ -1025,7 +1208,7 @@ code_STOREBYTE:
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_STOREBYTE
+       .word name_LATEST
        .byte 3         
        .ascii "BYE" 
        .align 2
@@ -1494,93 +1677,6 @@ TDFA: .word DOCOL
       .word EXIT   #-- Retornar de una palabra FORTH
 
 
-
-
-
-#------------------------------------------------------
-#-- C@ (FETCHBYTE)
-#-- Leer un byte de una direccion
-#------------------------------------------------------
-       .data
-FETCHBYTE: .word code_FETCHBYTE
-       .text
-code_FETCHBYTE:
-	POP a0			#-- a0: Direccion
-	lb a1, 0(a0)	#-- Leer el byte
-	PUSH a1			#-- Meterlo en la pila
-	NEXT
-
-
-#------------------------------------------------------
-#-- C@C! (CCOPY)
-#-- Copiar un byte de una direccion a otra
-#------------------------------------------------------
-#-- TODO!! REVISAR ESTA FUNCIONA... NO TIENE MUCHO SENTIDO
-       .data
-CCOPY: .word code_CCOPY
-       .text
-code_CCOPY:
-	POP a0        #-- a0: Direccion destino
-    POP a1		  #-- a1: Direccion fuente
-	lb a2, 0(a1)		#-- Leer caracter fuente get source
-	sb a2, 0(a0)		#-- Copiar a destino
-	addi a1, a1, 4      #-- Incrementar direccion fuente
-	PUSH a0
-    PUSH a1
-	NEXT
-
-#------------------------------------------------------
-#-- CMOVE
-#-- Operacion de copia de un bloque
-#------------------------------------------------------
-       .data
-CMOVE: .word code_CMOVE
-       .text
-code_CMOVE:
-	POP a0      #-- a0: Tamano del bloque a copiar
-    POP a1      #-- a1: Direccion destino
-    POP a2		#-- a2: Direccion fuente
-
-	RCALL _COPY_BYTES
-	NEXT
-
-_COPY_BYTES:
-	slti a4, a0, 4		#-- Si longitud <4, salta para copiar byte a byte
-	bnez a4, _COPY_BYTES2
-
-_COPY_BYTES1:        #-- Copiar palabra a palabra
-	lw a3, 0(a2)     #-- a2: Fuente --> a1: Destino
-	sw a3, 0(a1)
-
-	addi a0, a0, -4	 #-- Una palabra menos a copiar
-	beqz a0, _COPY_BYTES3  #-- Si 0 palabras por copiar --> Terminar
-
-	addi a1, a1, 4   #-- Actualizar puntero destino
-	addi a2, a2, 4   #-- Actualizar puntero fuente
-	slti a4, a0, 4	 #-- Si longitud < 4, copiamos byte a byte
-	beqz a4, _COPY_BYTES1     #-- Si no, seguimos palabra a palabra
-
-_COPY_BYTES2:      #-- Copy byte
-	lb a3, 0(a2)   #-- a2: Fuente --> a1: Destino
-	sb a3, 0(a1)
-
-	addi a0, a0, -1  #-- Un byte menos a copiar
-	addi a1, a1, 1   #-- Actualizar punteros destino
-	addi a2, a2, 1   #-- Actualizar puntero fuente
-	bnez a0, _COPY_BYTES2  #-- Loop mientras queden bytes a copiar
-
-_COPY_BYTES3:
-	ret
-
-
-
-
-
-
-
-
-
-
 #------------------------------------------------------------
 #-- CREATE
 #-- Crear la cabecera de una palabra FORTH
@@ -1840,93 +1936,6 @@ _INTERPRET_7:
 errmsg: .ascii "PARSE ERROR\n"
 errmsgend:
 errmsgnl: .ascii "\n"
-
-
-
-#============================================================================
-#=                              VARIABLES
-#============================================================================
-
-#----------------------------------------------------
-#-- STATE
-#-- Estado del intérprete
-#-- 0: El intérprete está ejecutando código
-#-- !=0: El intérprete está compilando una palabra
-#----------------------------------------------------
-      .data
-STATE: .word code_STATE
-       .text
-code_STATE:
-       la t0, var_STATE
-       PUSH t0
-       NEXT
-       .data
-       .align 2
-var_STATE: .word 0  #-- Interpretando por defecto
-
-#------------------------------------------------------
-#-- LATEST: Apunta a la última palabra introducida
-#-- en el diccionario
-#------------------------------------------------------
-      .data
-LATEST: .word code_LATEST
-       .text
-code_LATEST:
-       la t0, var_LATEST
-       PUSH t0
-       NEXT
-       .data
-       .align 2
-var_LATEST:
-	.word name_BYE
-
-
-#----------------------------------------------------
-#-- HERE
-#-- Apunta al siguiente byte disponible de memoria
-#----------------------------------------------------
-     .data
-HERE: .word code_HERE
-       .text
-code_HERE:
-       la t0, var_HERE
-       PUSH t0
-       NEXT
-       .data
-       .align 2
-var_HERE: .word free_mem
-
-
-#----------------------------------------------------
-#-- S0
-#-- Direcciodn de la cime de la pila de parametros
-#----------------------------------------------------- 
-     .data
-SZ: .word code_SZ
-       .text
-code_SZ:
-       la t0, var_SZ
-       PUSH t0
-       NEXT
-       .data
-       .align 2
-var_SZ: .word stack_top
-
-
-#-------------------------------------------------------
-#-- BASE a utilizar para los numeros que se leen 
-#-- y que se imprimen. Por defecto es BASE 10 
-#-------------------------------------------------------
-    .data
-BASE: .word code_BASE
-       .text
-code_BASE:
-       la t0, var_BASE
-       PUSH t0
-       NEXT
-       .data
-       .align 2
-var_BASE: .word 10
 
 #============================================================================
 #=                              CONSTANTES

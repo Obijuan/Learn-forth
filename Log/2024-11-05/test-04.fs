@@ -25,3 +25,21 @@
 \ Probar C!
 55 268697600 .S C! .S  \Leer mem[268697600]  
 
+\ Probar C@
+268697600 .S C@ .S DROP .S  \ Leer mem[268697600]
+
+\Probar C@C!
+\-- TODO
+
+\Proba CMOVE
+\-- TODO
+
+\ Probar STATE
+STATE .S @ .S DROP .S  \-- Leer variable STATE
+\-- Nota: No se escribe para no cambiar al estado "Compilar"
+
+\ Probar LATEST
+LATEST .S @ .S DROP .S \-- Leer variable LATEST
+
+
+
