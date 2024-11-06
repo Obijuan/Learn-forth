@@ -28,3 +28,22 @@ RSP@ .S DROP .S
 \ Probar DSP@
 DSP@ .S DROP .S
 
+\ Probar KEY
+KEY A .S DROP .S
+
+\ Probar WORD
+WORD HOLA .S DROP DROP .S
+
+\ Probar FIND
+WORD DROP FIND .S DROP .S  \ Buscar la palabra "DROP"
+WORD hhh  FIND .S DROP .S  \ Buscar la palabra "hhh" (que no existe)
+
+\ Probar >CFA
+WORD DROP FIND >CFA .S DROP .S  \-- Direccion al codeword de DROP
+
+\ Probar >DFA
+WORD DROP FIND >DFA .S DROP .S  
+
+\ Probar CREATE
+WORD hhh CREATE .S
+
