@@ -12,16 +12,6 @@
     #-- VERSION DEL FORTH
     .eqv JONES_VERSION 48
 
-    .data
-PRUEBA_FETCH: .word 1973   #-- Valor para hacer pruebas de Fetch. Dir: 0x10010000
-VAR_BYTE:     .byte 86     #-- Byte para hacer pruebas de Fetch
-SRC_BYTE:     .word 65     #-- Byte para pruebas de copias
-DST_BYTE:     .word 0      #-- Byte para pruebas de copias
-SRC_STR:      .string "HOLA"
-
-              .align 2
-DST_STR:      .space 10
-
 #----------------------------------------------------------------------------
 #-- Definimos las palabras de nuestro sistema
 #----------------------------------------------------------------------------
@@ -29,52 +19,12 @@ DST_STR:      .space 10
     .align 2
 
 TEST_QUIT: .word DOCOL, QUIT
-TEST_BRANCH: .word DOCOL, BRANCH, 12, LIT, 1, LIT, 2, DOTS, EXIT
-TEST_INTERPRET: .word DOCOL, INTERPRET, DOTS, EXIT 
-TEST_F_LENMASK: .word DOCOL, __F_LENMASK, DOT, EXIT 
-TEST_F_HIDDEN: .word DOCOL, __F_HIDDEN, DOT, EXIT
-TEST_F_IMMED: .word DOCOL, __F_IMMED, DOT, EXIT 
-TEST_DOCOL: .word DOCOL, __DOCOL, DOT, EXIT 
-TEST_RZ: .word DOCOL, RZ, DOT, EXIT
-
-TEST_VERSION:
-    .word DOCOL, VERSION, DOT, EXIT 
-
-TEST_CMOVE:
-    .word DOCOL, LIT, SRC_STR, LIT, DST_STR, LIT, 4, CMOVE, DOTS, EXIT
-
-TEST_CCOPY:
-    .word DOCOL, LIT, SRC_BYTE, LIT, DST_BYTE, DOTS, CCOPY, DOTS, EXIT
-
-TEST_COMMA:
-    .word DOCOL, WORD, CREATE, LIT, 0xCACA, COMMA, DOTS, EXIT 
-
-TEST_CREATE:
-    .word DOCOL, WORD, CREATE, DOTS, EXIT
-
-TEST_TDFA:
-    .word DOCOL, WORD, FIND, TDFA, DOTS, EXIT
-
-TEST_TCFA:
-    .word DOCOL, WORD, FIND, TCFA, DOTS, EXIT
-
-TEST_FIND:
-    .word DOCOL, WORD, FIND, DOTS, EXIT
-
 TEST_NUMBER:
     .word DOCOL, WORD, NUMBER, DOTS, EXIT
-
-#-- Comprobar WORD
-TEST_WORD:
-    .word DOCOL, WORD, DOTS, EXIT
 
 #-- Comprobar EMIT
 TEST_EMIT:
     .word DOCOL, LIT, 65, DUP, EMIT, EMIT, EXIT
-
-#-- Comprobar KEY
-TEST_KEY:
-    .word DOCOL, KEY, KEY, DOTS, EXIT
 
 #-----------------------
 #-- DOCOL
