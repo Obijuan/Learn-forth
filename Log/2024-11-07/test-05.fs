@@ -58,3 +58,9 @@ HIDE SWAP .S   \-- Oculatar palabra SWAP
 
 \ Probar CHAR
 CHAR A .S DROP .S
+
+\ Probar SYSCALL0
+30 SYSCALL0 .S DROP .S   \-- Servicio TIME: Obtener la hora (en segundos)
+
+\ Probar SYSCALL1
+5 1 SYSCALL1 DROP .S  \-- Servicio PRINTINT

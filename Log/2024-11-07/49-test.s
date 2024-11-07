@@ -2,7 +2,7 @@
 #-- Cambio/mejora: 
 #-- Palabras nuevas:en el diccionario
 #-- IMMEDIATE, HIDE, ', BRANCH, 0BRANCH, LITSTRING, QUIT, INTERPRET,
-#-- CHAR, EXECUTE,
+#-- CHAR, EXECUTE, SYSCALL3, SYSCALL2, SYSCALL1, SYSCALL0
 
     .include "so.s"
 
@@ -2340,13 +2340,93 @@ name_EXECUTE:
 				    #-- Tras la ejecucion de xt su NEXT
                     #-- ejecutará la siguiente palabra
 
+#---------------------------------------------------
+#-- SYSCALL3
+#--  * Llamada al sistema con 3 parametros (a0,a1,a2)
+#--------------------------------------------------
+       .data
+name_SYSCALL3:
+       .word name_EXECUTE
+       .byte 8
+       .ascii "SYSCALL3" 
+       .align 2
+ SYSCALL3: .word code_SYSCALL3
+       .text
+ code_SYSCALL3:
+	POP a7     #-- a7: Numero de llamada al sistema
+    POP a0     #-- a0...a2: Parametros
+    POP a1
+    POP a2	
+	ecall
+	PUSH a0	   #-- Meter el resultado en la pila
+	NEXT
+
+#---------------------------------------------------
+#-- SYSCALL2
+#--  * Llamada al sistema con 2 parametros (a0,a1)
+#--------------------------------------------------
+       .data
+name_SYSCALL2:
+       .word name_SYSCALL3
+       .byte 8
+       .ascii "SYSCALL2" 
+       .align 2
+ SYSCALL2: .word code_SYSCALL2
+       .text
+ code_SYSCALL2:
+	POP a7     #-- a7: Numero de llamada al sistema
+    POP a0     #-- a0...a1: Parametros
+    POP a1
+	ecall
+	PUSH a0	   #-- Meter el resultado en la pila
+	NEXT
+
+
+#---------------------------------------------------
+#-- SYSCALL1
+#--  * Llamada al sistema con 1 parametros
+#--------------------------------------------------
+       .data
+name_SYSCALL1:
+       .word name_SYSCALL2
+       .byte 8
+       .ascii "SYSCALL1" 
+       .align 2
+ SYSCALL1: .word code_SYSCALL1
+       .text
+ code_SYSCALL1:
+	POP a7     #-- a7: Numero de llamada al sistema
+    POP a0     #-- a0...a1: Parametros
+	ecall
+	PUSH a0	   #-- Meter el resultado en la pila
+	NEXT
+
+
+#---------------------------------------------------
+#-- SYSCALL0
+#--  * Llamada al sistema sin parametros
+#--------------------------------------------------
+       .data
+name_SYSCALL0:
+       .word name_SYSCALL1
+       .byte 8
+       .ascii "SYSCALL0" 
+       .align 2
+ SYSCALL0: .word code_SYSCALL0
+       .text
+ code_SYSCALL0:
+	POP a7     #-- a7: Numero de llamada al sistema
+	ecall
+	PUSH a0	   #-- Meter el resultado en la pila
+	NEXT
+
 #----------------------------------------------------
 # BYE: Salir del interprete
 # Se invoca al servicio EXIT del systema operativo
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_EXECUTE
+       .word name_SYSCALL0
        .byte 3         
        .ascii "BYE"
        .align 2
