@@ -2037,14 +2037,14 @@ name_SEMICOLON:
 #-- ultima introducida
 #------------------------------------------------------------
         .data 
-name_INMEDIATE:
+name_IMMEDIATE:
        .word name_SEMICOLON
        .byte 0x89
-       .ascii "INMEDIATE" 
+       .ascii "IMMEDIATE" 
        .align 2
- INMEDIATE: .word code_INMEDIATE
+ IMMEDIATE: .word code_IMMEDIATE
        .text
- code_INMEDIATE:
+ code_IMMEDIATE:
 	la a0, var_LATEST
 	lw a0, 0(a0)        #-- a0: Puntero a la ultima palabra (LATEST)
 	addi a0, a0, 4		#-- Apuntar al campo len/flags
@@ -2061,7 +2061,7 @@ name_INMEDIATE:
 #------------------------------------------------------------
        .data 
 name_HIDDEN:
-       .word name_INMEDIATE
+       .word name_IMMEDIATE
        .byte 6
        .ascii "HIDDEN" 
        .align 2  

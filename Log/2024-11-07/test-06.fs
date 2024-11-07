@@ -16,6 +16,9 @@ CR CR CR SPACE SPACE SPACE .S
 \ Probar TRUE y FALSE
 TRUE FALSE .S DROP DROP .S 
 
+\ Probar ':'
+':' EMIT .S 
+
 
 
 
