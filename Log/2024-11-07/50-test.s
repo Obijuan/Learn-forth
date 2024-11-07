@@ -1025,8 +1025,11 @@ name_CMOVE:
 	NEXT
 
  _COPY_BYTES:
-	slti a4, a0, 8		#-- Si longitud <8, salta para copiar byte a byte
-	bnez a4, _COPY_BYTES2
+    #-- hay un BUG!!
+	#slti a4, a0, 8		#-- Si longitud <8, salta para copiar byte a byte
+	#bnez a4, _COPY_BYTES2
+    #-- De momento saltamos a copiar BYTE a BYTE
+    j _COPY_BYTES2
 
  _COPY_BYTES1:        #-- Copiar palabra a palabra
 	lw a3, 0(a2)     #-- a2: Fuente --> a1: Destino

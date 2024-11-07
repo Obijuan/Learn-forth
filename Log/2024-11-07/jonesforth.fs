@@ -43,3 +43,63 @@
 	LITERAL	\ Compilar LIT 58 como definicion de la palabra ':' word
 ;
 
+\ Mas caracteres CONSTANTES definidos igual que arriba
+: ';' [ CHAR ; ] LITERAL ;
+: '(' [ CHAR ( ] LITERAL ;
+: ')' [ CHAR ) ] LITERAL ;
+: '"' [ CHAR " ] LITERAL ;
+: 'A' [ CHAR A ] LITERAL ;
+: '0' [ CHAR 0 ] LITERAL ;
+: '-' [ CHAR - ] LITERAL ;
+: '.' [ CHAR . ] LITERAL ;
+
+\ Compilar la palabra que viene a continuacion
+\ [COMPILE] word --> Compila la palabra word
+: [COMPILE] IMMEDIATE
+	WORD		\ Obtener la siguiente palabra
+	FIND		\ Encontrarla en el diccionario
+	>CFA		\ Obtener su codeword
+	,		    \ y compilarlo
+;
+
+\ RECURSE hace una llamada recursiva a la palabra que esta siendo
+\ compilada
+: RECURSE IMMEDIATE
+	LATEST @	\ LATEST points to the word being compiled at the moment
+	>CFA		\ get the codeword
+	,		\ compile it
+;
+
+\ ===========================================================================
+\ ==     ESTRUCTURAS DE CONTROL
+\ ===========================================================================
+
+\----------------
+\---- IF
+\----------------
+\-- Sintaxis:  Condicion IF parte-verdadera THEN resto;
+\-- COMPILA A: --> condicion 0BRANCH OFFSET parte-verdadera resto
+\--    OFFSET es el desplazamiento hacia `resto
+
+\-- Sintaxis:  Condicion IF parte-verdadera ELSE parte-falsa THEN resto;
+\-- COMPILA A: --> 
+\--   condicion 0BRANCH OFFSET parte-verdad BRANCH OFFSET2 parte-falsa resto;
+\--	  donde OFFSET es el offset de la parte falsa y OFFSET2 es el offset del resto
+
+\ IF es una palabra IMMEDIATE que compila a 0BRANCH seguida de un offset dummy, 
+\ y coloca la dirección de 0BRANCH en la pila. Despues, cuando vemos THEN, sacamos
+\ la direccion de la pila, calcula el offset y lo escribe (sustituyendo a dummy)
+: IF IMMEDIATE
+	' 0BRANCH ,	\-- Compilar 0BRANCH
+	HERE @		\-- Guardar la direccion de la posicion del offset en la pila
+	0 ,		    \-- Compilar un offset dummy
+;
+
+: THEN IMMEDIATE
+	DUP
+	HERE @ SWAP -	\-- Calcular el offset a partir de la direccion guardada 
+                    \-- en la pila
+	SWAP !		    \-- Guardar el offset
+;
+
+
