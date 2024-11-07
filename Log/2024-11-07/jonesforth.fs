@@ -103,3 +103,29 @@
 ;
 
 
+: ELSE IMMEDIATE
+	' BRANCH ,	\ definite branch to just over the false-part
+	HERE @		\ save location of the offset on the stack
+	0 ,		\ compile a dummy offset
+	SWAP		\ now back-fill the original (IF) offset
+	DUP		\ same as for THEN word above
+	HERE @ SWAP -
+	SWAP !
+;
+
+\-----------------------
+\-- BEGIN ... UNTIL
+\-----------------------
+
+\ BEGIN loop-part condition UNTIL
+\	-- compiles to: --> loop-part condition 0BRANCH OFFSET
+: BEGIN IMMEDIATE
+	HERE @		\-- Guardar la direccion en la pila (para luego saltar a ella)
+;
+
+: UNTIL IMMEDIATE
+	' 0BRANCH ,	\-- Compilar 0BRANCH
+	HERE @ -	\-- Calcular el offset a partir de la direccion en la pila
+	,		    \-- Compilar el offset
+;
+
