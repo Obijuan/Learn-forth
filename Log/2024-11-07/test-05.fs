@@ -56,3 +56,5 @@ HIDE SWAP .S   \-- Oculatar palabra SWAP
 \ Probar ' 
 : TEST ' DROP ; TEST .S DROP .S  
 
+\ Probar CHAR
+CHAR A .S DROP .S

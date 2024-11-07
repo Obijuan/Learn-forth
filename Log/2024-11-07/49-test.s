@@ -2,6 +2,7 @@
 #-- Cambio/mejora: 
 #-- Palabras nuevas:en el diccionario
 #-- IMMEDIATE, HIDE, ', BRANCH, 0BRANCH, LITSTRING, QUIT, INTERPRET,
+#-- CHAR, EXECUTE,
 
     .include "so.s"
 
@@ -2171,7 +2172,7 @@ name_QUIT:
        .word name_TELL
        .byte 4
        .ascii "QUIT" 
-QUIT:  .word DOCOL
+ QUIT:  .word DOCOL
 	   .word RZ,RSPSTORE	#// R0 RSP!, clear the return stack
 	   .word INTERPRET		#// interpret the next word
 	   .word BRANCH, 
@@ -2187,9 +2188,9 @@ name_INTERPRET:
        .byte 9
        .ascii "INTERPRET" 
        .align 2
-INTERPRET: .word code_INTERPRET
+ INTERPRET: .word code_INTERPRET
        .text
-code_INTERPRET:
+ code_INTERPRET:
 
     #-- Leer palabra de la entrada estándar
 	RCALL _WORD		
@@ -2214,7 +2215,7 @@ code_INTERPRET:
 
 	j _INTERPRET_2
 
-_INTERPRET_1:  #-- No esta en el diccionario. Asumimos que es un numero literal
+ _INTERPRET_1:  #-- No esta en el diccionario. Asumimos que es un numero literal
 	addi s2, s2, 1	#-- Activar flag de literal
 
     RCALL _NUMBER		#-- Devuelve el numero parseado en a0. a1 es > 0 si error
@@ -2225,7 +2226,7 @@ _INTERPRET_1:  #-- No esta en el diccionario. Asumimos que es un numero literal
 	mv a1, a0     #-- a1: Numero literal
 	la a0, LIT	  #-- Palabra a ejecutar: LIT
 
-_INTERPRET_2:  #-- Estamos compilando o ejecutando?
+ _INTERPRET_2:  #-- Estamos compilando o ejecutando?
 	la t1, var_STATE  
 	lw t0, 0(t1)     #-- t0: Estado del interprete (0 ejecutando, 1 compilando)
 	beqz t0, _INTERPRET_4	 #-- Saltar si estamos ejecutando
@@ -2237,9 +2238,9 @@ _INTERPRET_2:  #-- Estamos compilando o ejecutando?
 	mv a0, a1                   #-- Si es literal. LIT va seguido de un numero
 	RCALL _COMMA            #-- Añadir el numero al diccionario
 
-_INTERPRET_3:	NEXT  #-- Hemos terminado
+ _INTERPRET_3:	NEXT  #-- Hemos terminado
 
-_INTERPRET_4:   #-- Ejecuta la palabra!!!!  
+ _INTERPRET_4:   #-- Ejecuta la palabra!!!!  
     
 	bnez s2, _INTERPRET_5		#-- Si es literal, saltar
 
@@ -2249,11 +2250,11 @@ _INTERPRET_4:   #-- Ejecuta la palabra!!!!
 	jr t0          #-- Ejecutar el codeword!
 
 
-_INTERPRET_5: #-- Ejecutar un literal: meterlo en la pila
+ _INTERPRET_5: #-- Ejecutar un literal: meterlo en la pila
 	PUSH a1   
 	NEXT
 
-_INTERPRET_6: #-- Error de parseado (No es una palabra conocido ni un numero
+ _INTERPRET_6: #-- Error de parseado (No es una palabra conocido ni un numero
               #-- en la base actual)
               #-- Imprimir un mensaje de error
 
@@ -2278,7 +2279,7 @@ _INTERPRET_6: #-- Error de parseado (No es una palabra conocido ni un numero
 	beqz t0, _INTERPRET_7
 	li a2, 40
 
-_INTERPRET_7:
+ _INTERPRET_7:
     sub a1, a1, a2		#-- a1: Comienzo del area a imprimir. a2 = longitud
 	li a0, 2
 	li a7, 64	#-- Llamada al sistema WRITE
@@ -2294,11 +2295,50 @@ _INTERPRET_7:
 
     .data
     .align 2
-errmsg: .ascii "PARSE ERROR\n"
-errmsgend:
-errmsgnl: .ascii "\n"
+ errmsg: .ascii "PARSE ERROR\n"
+ errmsgend:
+ errmsgnl: .ascii "\n"
 
+#============================================================================
+#=                      RETAZOS
+#============================================================================
 
+#-----------------------------------------------------
+#-- CHAR
+#-- Meter en la pila el codigo ascii de un caracter
+#-----------------------------------------------------
+        .data 
+name_CHAR:
+       .word name_INTERPRET
+       .byte 4
+       .ascii "CHAR" 
+       .align 2
+ CHAR: .word code_CHAR
+       .text
+ code_CHAR:
+	RCALL _WORD		#-- Retorna a1 = Longitud, a0 = Puntero a la palabra
+	lb t0, 0(a0)	#-- Obtener el primer caracter de la palabra
+	PUSH t0			#-- Salvarlo en la pila
+	NEXT
+
+#---------------------------------------------------
+#-- EXECUTE
+#--  * Ejecutar una codeword (Execution token, xt)
+#--------------------------------------------------
+       .data
+name_EXECUTE:
+       .word name_CHAR
+       .byte 7
+       .ascii "EXECUTE" 
+       .align 2
+ EXECUTE: .word code_EXECUTE
+       .text
+ code_EXECUTE:
+	POP a0			# a0: Obtener el token de ejecucion
+	lw t0, 0(a0)    #-- Obtener la direccion del codigo maquina
+	jr t0			#-- Saltar a ejecutarlo
+				    #-- Tras la ejecucion de xt su NEXT
+                    #-- ejecutará la siguiente palabra
 
 #----------------------------------------------------
 # BYE: Salir del interprete
@@ -2306,7 +2346,7 @@ errmsgnl: .ascii "\n"
 #----------------------------------------------------
        .data 
 name_BYE:
-       .word name_INTERPRET
+       .word name_EXECUTE
        .byte 3         
        .ascii "BYE"
        .align 2
