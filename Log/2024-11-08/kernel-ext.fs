@@ -129,3 +129,42 @@
 	,		    \-- Compilar el offset
 ;
 
+\ BEGIN loop-part AGAIN
+\	-- compiles to: --> loop-part BRANCH OFFSET
+\	where OFFSET points back to the loop-part
+\ Es un bucle infinito. Solo se retorna llamando a EXIT
+: AGAIN IMMEDIATE
+	' BRANCH ,	\ Compilar BRANCH
+	HERE @ -	\ Calcular el offset para volver (loop)
+	,		\ Compilar el offset
+;
+
+\ Probando BEGIN-AGAIN
+\ BUCLE INFINITO!!! Se deja comentado
+\ : INF BEGIN 65 EMIT AGAIN ;
+\ INF
+
+\ BEGIN condition WHILE loop-part REPEAT
+\	-- compiles to: --> condition 0BRANCH OFFSET2 loop-part BRANCH OFFSET
+\	where OFFSET points back to condition (the beginning) and OFFSET2 points to after the whole piece of code
+\ So this is like a while (condition) { loop-part } loop in the C language
+: WHILE IMMEDIATE
+	' 0BRANCH ,	\ compile 0BRANCH
+	HERE @		\ save location of the offset2 on the stack
+	0 ,		\ compile a dummy offset2
+;
+
+: REPEAT IMMEDIATE
+	' BRANCH ,	\ compile BRANCH
+	SWAP		\ get the original offset (from BEGIN)
+	HERE @ - ,	\ and compile it after BRANCH
+	DUP
+	HERE @ SWAP -	\ calculate the offset2
+	SWAP !		\ and back-fill it in the original location
+;
+
+\ UNLESS. Es el contrario de IF
+: UNLESS IMMEDIATE
+	' NOT ,		\ compile NOT (to reverse the test)
+	[COMPILE] IF	\ continue by calling the normal IF
+;
