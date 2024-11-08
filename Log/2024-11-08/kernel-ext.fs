@@ -129,6 +129,10 @@
 	,		    \-- Compilar el offset
 ;
 
+
+\-----------------------
+\-- BEGIN ... AGAIN
+\-----------------------
 \ BEGIN loop-part AGAIN
 \	-- compiles to: --> loop-part BRANCH OFFSET
 \	where OFFSET points back to the loop-part
@@ -139,11 +143,10 @@
 	,		\ Compilar el offset
 ;
 
-\ Probando BEGIN-AGAIN
-\ BUCLE INFINITO!!! Se deja comentado
-\ : INF BEGIN 65 EMIT AGAIN ;
-\ INF
 
+\-------------------------------
+\-- BEGIN ... WHILE ... REPEAT
+\-------------------------------
 \ BEGIN condition WHILE loop-part REPEAT
 \	-- compiles to: --> condition 0BRANCH OFFSET2 loop-part BRANCH OFFSET
 \	where OFFSET points back to condition (the beginning) and OFFSET2 points to after the whole piece of code
@@ -163,8 +166,75 @@
 	SWAP !		\ and back-fill it in the original location
 ;
 
+\-------------------------------
+\-- UNLESS
+\-------------------------------
 \ UNLESS. Es el contrario de IF
 : UNLESS IMMEDIATE
 	' NOT ,		\ compile NOT (to reverse the test)
 	[COMPILE] IF	\ continue by calling the normal IF
 ;
+
+\ ===========================================================================
+\ ==     COMENTARIOS
+\ ===========================================================================
+\ En el estandar FORTH se definen las palabras ( ... ) que permiten poner
+\ comentarios dentro de las funciones. Lo interesante es que...
+\ ¡Se definen en Forth!
+
+: ( IMMEDIATE
+	1		\ Profundidad. Esto permite anidar los parentesis
+	BEGIN
+		KEY		\ Leer siguiente caracter
+		DUP '(' = IF	\ Abrir parentesis?
+			DROP		\ Eliminar el caracter
+			1+		\ Incrementar la profundidad
+		ELSE
+			')' = IF	\ Cerrar parentesis?
+				1-		\ Decrementar la profundidad
+			THEN
+		THEN
+	DUP 0= UNTIL		\ Continuar hasta que se alcanza el equilibro: depth 0
+	DROP		\ Deshacerse del contador de profundidad
+;
+
+(
+	A partir de ahora ya podemos usar ( ... ) para comentar!!!
+	Lo hemos añadido al FORTH! Impresionante...
+)
+
+ 
+\==========================================================================
+\         NOTACION DE PILA
+\============================================================================ 
+
+(
+	En Forth se utiliza la notacion ( ... -- ... ) para mostrar el efecto que 
+	tiene una palabra en los parametros de la pila. Ejemplos:
+	
+	( n -- )     La palabra consume un entero (n) de la pila de parametros
+	( b a -- c)  La palabra usa dos enteros (a y b) y retorna un caracter (c)
+	( -- )       La palabra no afecta a la pila de parametros
+)
+
+( Some more complicated stack examples, showing the stack notation. )
+: NIP ( x y -- y ) SWAP DROP ;
+: TUCK ( x y -- y x y ) SWAP OVER ;
+: PICK ( x_u ... x_1 x_0 u -- x_u ... x_1 x_0 x_u )
+	1+		( add one because of 'u' on the stack )
+	8 *		( multiply by the word size )
+	DSP@ +		( add to the stack pointer )
+	@    		( and fetch )
+;
+
+\-- Escribir n espacio en la salida
+: SPACES	( n -- )
+	BEGIN
+		DUP 0>		( while n > 0 )
+	WHILE
+		SPACE		( print a space )
+		1-		( until we count down to 0 )
+	REPEAT
+	DROP
+;
+
