@@ -60,5 +60,23 @@ TRUE FALSE .S DROP DROP .S
 \-- Probando SPACES
 10 SPACES 65 EMIT CR  \-- Imprimir 10 espacios y una 'A' al final
 
+\-- Pruebas de HEX y DECIMAL
+HEX 0FF .S DROP .S      \-- Meter FF en la pila
+DECIMAL 255 .S DROP .S  \-- Meter 255 en la pila 
 
 
+\-- Probando U.
+1 1 + U. CR .S
+
+\-- Probando UWIDTH
+455 UWIDTH .S CR DROP 
+17845 UWIDTH .S CR DROP 
+
+\-- Probando U.R
+255  10 U.R CR  \-- Imprimir 255 con anchura 10
+4000 10 U.R CR  \-- Imprimir 4000 con anchura 10
+
+\-- Probando .R
+-543 10 .R CR    \-- Imprimir -543
+23   10 .R CR    \-- Imprimir 23
+        
