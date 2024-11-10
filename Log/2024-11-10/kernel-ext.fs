@@ -480,3 +480,30 @@
 	' EXIT ,	( append the codeword EXIT )
 ;
 
+\ CUIDADO! Si n NO es multiplo de 4, HERE queda en direccion desalineada y 
+\ al compilar la siguiente palabra se produce un error
+: ALLOT		( n -- addr )
+	HERE @ SWAP	( here n )
+	HERE +!		( adds n to HERE, after this the old value of HERE is still on the stack )
+;
+
+(
+	Second, CELLS.  In FORTH the phrase 'n CELLS ALLOT' means allocate n integers of whatever size
+	is the natural size for integers on this machine architecture.  On this 32 bit machine therefore
+	CELLS just multiplies the top of stack by 4.
+)
+: CELLS ( n -- n ) 4 * ;
+
+(
+	So now we can define VARIABLE easily in much the same way as CONSTANT above.  Refer to the
+	diagram above to see what the word that this creates will look like.
+)
+: VARIABLE
+	1 CELLS ALLOT	( allocate 1 cell of memory, push the pointer to this memory )
+	WORD CREATE	( make the dictionary entry (the name follows VARIABLE) )
+	DOCOL ,		( append DOCOL (the codeword field of this word) )
+	' LIT ,		( append the codeword LIT )
+	,		( append the pointer to the new memory )
+	' EXIT ,	( append the codeword EXIT )
+;
+

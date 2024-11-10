@@ -107,3 +107,9 @@ S" VERSION:" TELL SPACE VERSION . CR
 \-- Prueba de constantes
 30 CONSTANT MAX   \-- Definir constante MAX
 ." MAX: " MAX . CR          \-- Imprimir constante
+
+\-- Prueba de variables
+VARIABLE VAR1
+." VAR1: " VAR1 ? CR
+1023 VAR1 !
+." VAR1: " VAR1 ? CR
