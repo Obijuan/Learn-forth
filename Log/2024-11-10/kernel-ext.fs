@@ -620,3 +620,41 @@
 	REPEAT
 	2DROP		( len addr -- )
 ;
+
+(
+	'WORD word FIND ?HIDDEN' returns true if 'word' is flagged as hidden.
+
+	'WORD word FIND ?IMMEDIATE' returns true if 'word' is flagged as immediate.
+)
+: ?HIDDEN
+	4+		( skip over the link pointer )
+	C@		( get the flags/length byte )
+	F_HIDDEN AND	( mask the F_HIDDEN flag and return it (as a truth value) )
+;
+
+: ?IMMEDIATE
+	4+		( skip over the link pointer )
+	C@		( get the flags/length byte )
+	F_IMMED AND	( mask the F_IMMED flag and return it (as a truth value) )
+;
+
+(
+	WORDS prints all the words defined in the dictionary, starting with the word defined most recently.
+	However it doesn't print hidden words.
+
+	The implementation simply iterates backwards from LATEST using the link pointers.
+)
+: WORDS
+	LATEST @	( start at LATEST dictionary entry )
+	BEGIN
+		?DUP		( while link pointer is not null )
+	WHILE
+		DUP ?HIDDEN NOT IF	( ignore hidden words )
+			DUP ID.		( but if not hidden, print the word )
+			SPACE
+		THEN
+		@		( dereference the link pointer - go to previous word )
+	REPEAT
+	CR
+;
+
