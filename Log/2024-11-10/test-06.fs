@@ -93,4 +93,7 @@ S" HOLA" .S CR TELL CR .S
 \-- Imprimir la version
 S" VERSION:" TELL SPACE VERSION . CR
 
+\-- Prueba del comando ." 
+." --> TEST PRINT" CR
+: TEST_PRINT ." --> TEST PRINT2" CR ; TEST_PRINT
 

@@ -433,3 +433,38 @@
 ;
 
 
+(
+	." is the print string operator in FORTH.  Example: ." Something to print"
+	The space after the operator is the ordinary space required between words and is not
+	a part of what is printed.
+
+	In immediate mode we just keep reading characters and printing them until we get to
+	the next double quote.
+
+	In compile mode we use S" to store the string, then add TELL afterwards:
+		LITSTRING <string length> <string rounded up to 8 bytes> TELL
+
+	It may be interesting to note the use of [COMPILE] to turn the call to the immediate
+	word S" into compilation of that word.  It compiles it into the definition of .",
+	not into the definition of the word being compiled when this is running (complicated
+	enough for you?)
+)
+: ." IMMEDIATE		( -- )
+	STATE @ IF	( compiling? )
+		[COMPILE] S"	( read the string, and compile LITSTRING, etc. )
+		' TELL ,	( compile the final TELL )
+	ELSE
+		( In immediate mode, just read characters and print them until we get
+		  to the ending double quote. )
+		BEGIN
+			KEY
+			DUP '"' = IF
+				DROP	( drop the double quote character )
+				EXIT	( return from this function )
+			THEN
+			EMIT
+		AGAIN
+	THEN
+;
+
+
