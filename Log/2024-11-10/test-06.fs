@@ -90,5 +90,7 @@ DECIMAL 255 .S DROP .S  \-- Meter 255 en la pila
 S" HOLA" .S CR TELL CR .S 
 : TEST_S S" HOLA2" TELL CR ; TEST_S  
 
+\-- Imprimir la version
+S" VERSION:" TELL SPACE VERSION . CR
 
 
