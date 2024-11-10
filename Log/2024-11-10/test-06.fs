@@ -113,3 +113,9 @@ VARIABLE VAR1
 ." VAR1: " VAR1 ? CR
 1023 VAR1 !
 ." VAR1: " VAR1 ? CR
+
+\-- Prueba de valores
+20 VALUE VAL
+." VAL:" VAL . CR
+30 TO VAL
+." VAL:" VAL . CR

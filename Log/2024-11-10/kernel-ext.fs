@@ -507,3 +507,76 @@
 	' EXIT ,	( append the codeword EXIT )
 ;
 
+\ ===========================================================================
+\ =     VALORES
+\ ===========================================================================
+(
+    VALUEs are like VARIABLEs but with a simpler syntax.  You would generally use them when you
+	want a variable which is read often, and written infrequently.
+
+	20 VALUE VAL 	creates VAL with initial value 20
+	VAL		pushes the value (20) directly on the stack
+	30 TO VAL	updates VAL, setting it to 30
+	VAL		pushes the value (30) directly on the stack
+
+	Notice that 'VAL' on its own doesn't return the address of the value, but the value itself,
+	making values simpler and more obvious to use than variables (no indirection through '@').
+	The price is a more complicated implementation, although despite the complexity there is no
+	performance penalty at runtime.
+
+	A naive implementation of 'TO' would be quite slow, involving a dictionary search each time.
+	But because this is FORTH we have complete control of the compiler so we can compile TO more
+	efficiently, turning:
+		TO VAL
+	into:
+		LIT <addr> !
+	and calculating <addr> (the address of the value) at compile time.
+
+	Now this is the clever bit.  We'll compile our value like this:
+
+	+---------+---+---+---+---+------------+------------+------------+------------+
+	| LINK    | 3 | V | A | L | DOCOL      | LIT        | <value>    | EXIT       |
+	+---------+---+---+---+---+------------+------------+------------+------------+
+                   len              codeword
+
+	where <value> is the actual value itself.  Note that when VAL executes, it will push the
+	value on the stack, which is what we want.
+
+	But what will TO use for the address <addr>?  Why of course a pointer to that <value>:
+
+		code compiled	- - - - --+------------+------------+------------+-- - - - -
+		by TO VAL		  | LIT        | <addr>     | !          |
+				- - - - --+------------+-----|------+------------+-- - - - -
+							     |
+							     V
+	+---------+---+---+---+---+------------+------------+------------+------------+
+	| LINK    | 3 | V | A | L | DOCOL      | LIT        | <value>    | EXIT       |
+	+---------+---+---+---+---+------------+------------+------------+------------+
+                   len              codeword
+
+	In other words, this is a kind of self-modifying code.
+
+	(Note to the people who want to modify this FORTH to add inlining: values defined this
+	way cannot be inlined).
+)
+: VALUE		( n -- )
+	WORD CREATE	( make the dictionary entry (the name follows VALUE) )
+	DOCOL ,		( append DOCOL )
+	' LIT ,		( append the codeword LIT )
+	,		( append the initial value )
+	' EXIT ,	( append the codeword EXIT )
+;
+
+: TO IMMEDIATE	( n -- )
+	WORD		( get the name of the value )
+	FIND		( look it up in the dictionary )
+	>DFA		( get a pointer to the first data field (the 'LIT') )
+	4+		( increment to point at the value )
+	STATE @ IF	( compiling? )
+		' LIT ,		( compile LIT )
+		,		( compile the address of the value )
+		' ! ,		( compile ! )
+	ELSE		( immediate mode )
+		!		( update it straightaway )
+	THEN
+;
