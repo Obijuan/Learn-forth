@@ -26,4 +26,9 @@ ENDCASE
 1 TEST-CASE CR
 5 TEST-CASE CR
 
-
+\-- TESTING SEE 
+CR ." ------- Testing SEE " CR
+: TEN 10 ;
+SEE TEN
+: SUMA11 1 1 + ;
+SEE SUMA11

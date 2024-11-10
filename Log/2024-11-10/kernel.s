@@ -7,11 +7,14 @@
     #-- Tamano pila R en bytes
     .eqv STACK_R_SIZE 80  #-- 20 Palabras * 4
 
+    #-- Tamano Pila de datos en bytes
+    .eqv STACK_SIZE 80  #-- 20 Palabras * 4
+
     #-- Tamano buffer de entrada
     .eqv BUFFER_SIZE, 200
 
     #-- VERSION DEL FORTH
-    .eqv JONES_VERSION 60
+    .eqv JONES_VERSION 61
 
 #----------------------------------------------------------------------------
 #-- Definimos las palabras de nuestro sistema
@@ -2527,7 +2530,7 @@ cold_start:
 
     .data
     .align 2
-    .space 40
+    .space STACK_SIZE
     .align 2
 return_stack_top:
 

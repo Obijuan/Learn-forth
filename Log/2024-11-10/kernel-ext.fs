@@ -1,4 +1,4 @@
-
+\-- Extension del nucleo
 
 \ Division /
 \ (a b -- a/b ) 
@@ -225,7 +225,7 @@
 : TUCK ( x y -- y x y ) SWAP OVER ;
 : PICK ( x_u ... x_1 x_0 u -- x_u ... x_1 x_0 x_u )
 	1+		( add one because of 'u' on the stack )
-	8 *		( multiply by the word size )
+	4 *		( multiply by the word size )
 	DSP@ +		( add to the stack pointer )
 	@    		( and fetch )
 ;
@@ -770,5 +770,140 @@
 	WHILE
 		[COMPILE] THEN
 	REPEAT
+;
+
+(
+	DECOMPILER ----------------------------------------------------------------------
+
+	CFA> is the opposite of >CFA.  It takes a codeword and tries to find the matching
+	dictionary definition.  (In truth, it works with any pointer into a word, not just
+	the codeword pointer, and this is needed to do stack traces).
+
+	In this FORTH this is not so easy.  In fact we have to search through the dictionary
+	because we don't have a convenient back-pointer (as is often the case in other versions
+	of FORTH).  Because of this search, CFA> should not be used when performance is critical,
+	so it is only used for debugging tools such as the decompiler and printing stack
+	traces.
+
+	This word returns 0 if it doesn't find a match.
+)
+
+: CFA>
+	LATEST @	( start at LATEST dictionary entry )
+	BEGIN
+		?DUP		( while link pointer is not null )
+	WHILE
+		2DUP SWAP	( cfa curr curr cfa )
+		< IF		( current dictionary entry < cfa? )
+			NIP		( leave curr dictionary entry on the stack )
+			EXIT
+		THEN
+		@		( follow link pointer back )
+	REPEAT
+	DROP		( restore stack )
+	0		( sorry, nothing found )
+;
+
+(
+	SEE decompiles a FORTH word.
+
+	We search for the dictionary entry of the word, then search again for the next
+	word (effectively, the end of the compiled word).  This results in two pointers:
+
+	+---------+---+---+---+---+------------+------------+------------+------------+
+	| LINK    | 3 | T | E | N | DOCOL      | LIT        | 10         | EXIT       |
+	+---------+---+---+---+---+------------+------------+------------+------------+
+	 ^									       ^
+	 |									       |
+	Start of word							      End of word
+
+	With this information we can have a go at decompiling the word.  We need to
+	recognise "meta-words" like LIT, LITSTRING, BRANCH, etc. and treat those separately.
+)
+: SEE
+	WORD FIND	( find the dictionary entry to decompile )
+
+	( Now we search again, looking for the next word in the dictionary.  This gives us
+	  the length of the word that we will be decompiling.  (Well, mostly it does). )
+	HERE @		( address of the end of the last compiled word )
+	LATEST @	( word last curr )
+	BEGIN
+		2 PICK		( word last curr word )
+		OVER		( word last curr word curr )
+		<>		( word last curr word<>curr? )
+	WHILE			( word last curr )
+		NIP		( word curr )
+		DUP @		( word curr prev (which becomes: word last curr) )
+	REPEAT
+
+	DROP		( at this point, the stack is: start-of-word end-of-word )
+	SWAP		( end-of-word start-of-word )
+
+	( begin the definition with : NAME [IMMEDIATE] )
+	':' EMIT SPACE DUP ID. SPACE
+	DUP ?IMMEDIATE IF ." IMMEDIATE " THEN
+
+	>DFA		( get the data address, ie. points after DOCOL | end-of-word start-of-data )
+
+	( now we start decompiling until we hit the end of the word )
+	BEGIN		( end start )
+		2DUP >
+	WHILE
+		DUP @		( end start codeword )
+
+		CASE
+		' LIT OF		( is it LIT ? )
+			4 + DUP @		( get next word which is the integer constant )
+			.			( and print it )
+		ENDOF
+		' LITSTRING OF		( is it LITSTRING ? )
+			[ CHAR S ] LITERAL EMIT '"' EMIT SPACE ( print S"<space> )
+			4 + DUP @		( get the length word )
+			SWAP 4 + SWAP		( end start+8 length )
+			2DUP TELL		( print the string )
+			'"' EMIT SPACE		( finish the string with a final quote )
+			+ ALIGNED		( end start+8+len, aligned )
+			4 -			( because we're about to add 8 below )
+		ENDOF
+		' 0BRANCH OF		( is it 0BRANCH ? )
+			." 0BRANCH ( "
+			4 + DUP @		( print the offset )
+			.
+			." ) "
+		ENDOF
+		' BRANCH OF		( is it BRANCH ? )
+			." BRANCH ( "
+			4 + DUP @		( print the offset )
+			.
+			." ) "
+		ENDOF
+		' ' OF			( is it ' (TICK) ? )
+			[ CHAR ' ] LITERAL EMIT SPACE
+			4 + DUP @		( get the next codeword )
+			CFA>			( and force it to be printed as a dictionary entry )
+			ID. SPACE
+		ENDOF
+		' EXIT OF		( is it EXIT? )
+			( We expect the last word to be EXIT, and if it is then we don't print it
+			  because EXIT is normally implied by ;.  EXIT can also appear in the middle
+			  of words, and then it needs to be printed. )
+			2DUP			( end start end start )
+			4 +			( end start end start+8 )
+			<> IF			( end start | we're not at the end )
+				." EXIT "
+			THEN
+		ENDOF
+					( default case: )
+			DUP			( in the default case we always need to DUP before using )
+			CFA>			( look up the codeword to get the dictionary entry )
+			ID. SPACE		( and print it )
+		ENDCASE
+
+		4 +		( end start+8 )
+	REPEAT
+
+	';' EMIT CR
+
+	2DROP		( restore stack )
 ;
 
