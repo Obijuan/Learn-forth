@@ -32,3 +32,9 @@ CR ." ------- Testing SEE " CR
 SEE TEN
 : SUMA11 1 1 + ;
 SEE SUMA11
+
+\-- TESTING EXECUTE
+CR ." ------- Testing EXECUTE " CR
+: DOUBLE DUP + ;
+: SLOW WORD FIND >CFA EXECUTE ;
+5 SLOW DOUBLE . CR   \-- Prints 10

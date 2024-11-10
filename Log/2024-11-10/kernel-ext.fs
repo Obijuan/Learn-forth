@@ -907,3 +907,137 @@
 	2DROP		( restore stack )
 ;
 
+: :NONAME
+	0 0 CREATE	( create a word with no name - we need a dictionary header because ; expects it )
+	HERE @		( current HERE value is the address of the codeword, ie. the xt )
+	DOCOL ,		( compile DOCOL (the codeword) )
+	]		( go into compile mode )
+;
+
+: ['] IMMEDIATE
+	' LIT ,		( compile LIT )
+;
+
+
+
+
+: EXCEPTION-MARKER
+	RDROP			( drop the original parameter stack pointer )
+	0			( there was no exception, this is the normal return path )
+;
+
+
+: CATCH		( xt -- exn? )
+	DSP@ 4+ >R		( save parameter stack pointer (+8 because of xt) on the return stack )
+	' EXCEPTION-MARKER 4+	( push the address of the RDROP inside EXCEPTION-MARKER ... )
+	>R			( ... on to the return stack so it acts like a return address )
+	EXECUTE			( execute the nested function )
+;
+
+
+: THROW		( n -- )
+	?DUP IF			( only act if the exception code <> 0 )
+		RSP@ 			( get return stack pointer )
+		BEGIN
+			DUP R0 4- <		( RSP < R0 )
+		WHILE
+			DUP @			( get the return stack entry )
+			' EXCEPTION-MARKER 4+ = IF	( found the EXCEPTION-MARKER on the return stack )
+				4+			( skip the EXCEPTION-MARKER on the return stack )
+				RSP!			( restore the return stack pointer )
+
+				( Restore the parameter stack. )
+				DUP DUP DUP		( reserve some working space so the stack for this word
+							  doesn't coincide with the part of the stack being restored )
+				R>			( get the saved parameter stack pointer | n dsp )
+				4-			( reserve space on the stack to store n )
+				SWAP OVER		( dsp n dsp )
+				!			( write n on the stack )
+				DSP! EXIT		( restore the parameter stack pointer, immediately exit )
+			THEN
+			4+
+		REPEAT
+
+		( No matching catch - print a message and restart the INTERPRETer. )
+		DROP
+
+		CASE
+		0 1- OF	( ABORT )
+			." ABORTED" CR
+		ENDOF
+			( default case )
+			." UNCAUGHT THROW "
+			DUP . CR
+		ENDCASE
+		QUIT
+	THEN
+;
+
+
+: ABORT		( -- )
+	0 1- THROW
+;
+
+
+: Z" IMMEDIATE
+	STATE @ IF	( compiling? )
+		' LITSTRING ,	( compile LITSTRING )
+		HERE @		( save the address of the length word on the stack )
+		0 ,		( dummy length - we don't know what it is yet )
+		BEGIN
+			KEY 		( get next character of the string )
+			DUP '"' <>
+		WHILE
+			HERE @ C!	( store the character in the compiled image )
+			1 HERE +!	( increment HERE pointer by 1 byte )
+		REPEAT
+		0 HERE @ C!	( add the ASCII NUL byte )
+		1 HERE +!
+		DROP		( drop the double quote character at the end )
+		DUP		( get the saved address of the length word )
+		HERE @ SWAP -	( calculate the length )
+		4-		( subtract 8 (because we measured from the start of the length word) )
+		SWAP !		( and back-fill the length location )
+		ALIGN		( round up to next multiple of 8 bytes for the remaining code )
+		' DROP ,	( compile DROP (to drop the length) )
+	ELSE		( immediate mode )
+		HERE @		( get the start address of the temporary space )
+		BEGIN
+			KEY
+			DUP '"' <>
+		WHILE
+			OVER C!		( save next character )
+			1+		( increment address )
+		REPEAT
+		DROP		( drop the final " character )
+		0 SWAP C!	( store final ASCII NUL )
+		HERE @		( push the start address )
+	THEN
+;
+
+
+
+: STRLEN 	( str -- len )
+	DUP		( save start address )
+	BEGIN
+		DUP C@ 0<>	( zero byte found? )
+	WHILE
+		1+
+	REPEAT
+
+	SWAP -		( calculate the length )
+;
+
+
+
+: CSTRING	( addr len -- c-addr )
+	SWAP OVER	( len saddr len )
+	HERE @ SWAP	( len saddr daddr len )
+	CMOVE		( len )
+
+	HERE @ +	( daddr+len )
+	0 SWAP C!	( store terminating NUL char )
+
+	HERE @ 		( push start address )
+;
+

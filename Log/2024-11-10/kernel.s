@@ -14,7 +14,7 @@
     .eqv BUFFER_SIZE, 200
 
     #-- VERSION DEL FORTH
-    .eqv JONES_VERSION 61
+    .eqv JONES_VERSION 62
 
 #----------------------------------------------------------------------------
 #-- Definimos las palabras de nuestro sistema
@@ -1355,8 +1355,8 @@ name_RSPSTORE:
        .data 
 name_RDROP:
        .word name_RSPSTORE
-       .byte 4
-       .ascii "RSP!" 
+       .byte 5
+       .ascii "RDROP" 
        .align 2
  RDROP: .word code_RDROP
        .text
