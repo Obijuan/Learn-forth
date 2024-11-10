@@ -596,3 +596,27 @@
 	THEN
 ;
 
+\ ===========================================================================
+\ ==   IMPRIMIR EL DIRECTORIO
+\ ===========================================================================
+(
+	ID. takes an address of a dictionary entry and prints the word's name.
+
+	For example: LATEST @ ID. would print the name of the last word that was defined.
+)
+
+: ID.
+	4+		( skip over the link pointer )
+	DUP C@		( get the flags/length byte )
+	F_LENMASK AND	( mask out the flags - just want the length )
+
+	BEGIN
+		DUP 0>		( length > 0? )
+	WHILE
+		SWAP 1+		( addr len -- len addr+1 )
+		DUP C@		( len addr -- len addr char | get the next character)
+		EMIT		( len addr char -- len addr | and print it)
+		SWAP 1-		( len addr -- addr len-1    | subtract one from length )
+	REPEAT
+	2DROP		( len addr -- )
+;

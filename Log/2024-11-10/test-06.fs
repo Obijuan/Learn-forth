@@ -122,3 +122,7 @@ VARIABLE VAR1
 10 +TO VAL
 ." VAL:" VAL . CR
 
+\-- Prueba de ID.
+." * TEST ID. " CR
+LATEST @ ID. CR
+
