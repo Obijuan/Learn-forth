@@ -119,3 +119,6 @@ VARIABLE VAR1
 ." VAL:" VAL . CR
 30 TO VAL
 ." VAL:" VAL . CR
+10 +TO VAL
+." VAL:" VAL . CR
+
