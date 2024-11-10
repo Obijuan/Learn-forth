@@ -14,7 +14,7 @@
     .eqv BUFFER_SIZE, 200
 
     #-- VERSION DEL FORTH
-    .eqv JONES_VERSION 62
+    .eqv JONES_VERSION 63
 
 #----------------------------------------------------------------------------
 #-- Definimos las palabras de nuestro sistema
@@ -1151,12 +1151,31 @@ name_SZ:
  var_SZ: .word stack_top
 
 
+#----------------------------------------------------
+#-- TOP_HERE
+#-- Direccion mas alta disponible
+#----------------------------------------------------- 
+name_TOP_HERE:
+       .word name_SZ
+       .byte 8
+       .ascii "TOP_HERE" 
+       .align 2
+ TOP_HERE: .word code_TOP_HERE
+       .text
+ code_TOP_HERE:
+       la t0, var_TOP_HERE
+       PUSH t0
+       NEXT
+       .data
+       .align 2
+ var_TOP_HERE: .word top_free_mem
+
 #-------------------------------------------------------
 #-- BASE a utilizar para los numeros que se leen 
 #-- y que se imprimen. Por defecto es BASE 10 
 #-------------------------------------------------------
 name_BASE:
-       .word name_SZ
+       .word name_TOP_HERE
        .byte 4
        .ascii "BASE" 
        .align 2
@@ -2547,3 +2566,5 @@ buffer:
 #--- las nuevas palabras creadas al ejecutar Forth
     .align 2
 free_mem:
+      .space 0x10000
+top_free_mem:

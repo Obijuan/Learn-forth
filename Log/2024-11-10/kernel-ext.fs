@@ -1041,3 +1041,21 @@
 	HERE @ 		( push start address )
 ;
 
+: UNUSED	( -- n )
+	TOP_HERE @		( get end of data segment according to the kernel )
+	HERE @		( get current position in data segment )
+	-
+	4 /		( returns number of cells )
+;
+
+
+: WELCOME
+	S" TEST-MODE" FIND NOT IF
+		." JONESFORTH VERSION " VERSION . CR
+		 UNUSED . ." CELLS REMAINING" CR
+		." OK " CR
+	THEN
+;
+
+WELCOME
+HIDE WELCOME
