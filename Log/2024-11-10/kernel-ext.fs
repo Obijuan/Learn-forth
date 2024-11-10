@@ -746,3 +746,29 @@
 	BASE !			( restore saved BASE )
 ;
 
+: CASE IMMEDIATE
+	0		( push 0 to mark the bottom of the stack )
+;
+
+: OF IMMEDIATE
+	' OVER ,	( compile OVER )
+	' = ,		( compile = )
+	[COMPILE] IF	( compile IF )
+	' DROP ,  	( compile DROP )
+;
+
+: ENDOF IMMEDIATE
+	[COMPILE] ELSE	( ENDOF is the same as ELSE )
+;
+
+: ENDCASE IMMEDIATE
+	' DROP ,	( compile DROP )
+
+	( keep compiling THEN until we get to our zero marker )
+	BEGIN
+		?DUP
+	WHILE
+		[COMPILE] THEN
+	REPEAT
+;
+
