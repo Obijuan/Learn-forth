@@ -658,3 +658,91 @@
 	CR
 ;
 
+(
+	FORGET ----------------------------------------------------------------------
+
+	So far we have only allocated words and memory.  FORTH provides a rather primitive method
+	to deallocate.
+
+	'FORGET word' deletes the definition of 'word' from the dictionary and everything defined
+	after it, including any variables and other memory allocated after.
+
+	The implementation is very simple - we look up the word (which returns the dictionary entry
+	address).  Then we set HERE to point to that address, so in effect all future allocations
+	and definitions will overwrite memory starting at the word.  We also need to set LATEST to
+	point to the previous word.
+
+	Note that you cannot FORGET built-in words (well, you can try but it will probably cause
+	a segfault).
+
+	XXX: Because we wrote VARIABLE to store the variable in memory allocated before the word,
+	in the current implementation VARIABLE FOO FORGET FOO will leak 1 cell of memory.
+)
+: FORGET
+	WORD FIND	( find the word, gets the dictionary entry address )
+	DUP @ LATEST !	( set LATEST to point to the previous word )
+	HERE !		( and store HERE with the dictionary address )
+;
+
+(
+	DUMP ----------------------------------------------------------------------
+
+	DUMP is used to dump out the contents of memory, in the 'traditional' hexdump format.
+
+	Notice that the parameters to DUMP (address, length) are compatible with string words
+	such as WORD and S".
+
+	You can dump out the raw code for the last word you defined by doing something like:
+
+		LATEST @ 128 DUMP
+)
+: DUMP		( addr len -- )
+	BASE @ -ROT		( save the current BASE at the bottom of the stack )
+	HEX			( and switch to hexadecimal mode )
+
+	BEGIN
+		?DUP		( while len > 0 )
+	WHILE
+		OVER 8 U.R	( print the address )
+		SPACE
+
+		( print up to 16 words on this line )
+		2DUP		( addr len addr len )
+		1- 15 AND 1+	( addr len addr linelen )
+		BEGIN
+			?DUP		( while linelen > 0 )
+		WHILE
+			SWAP		( addr len linelen addr )
+			DUP C@		( addr len linelen addr byte )
+			2 .R SPACE	( print the byte )
+			1+ SWAP 1-	( addr len linelen addr -- addr len addr+1 linelen-1 )
+		REPEAT
+		DROP		( addr len )
+
+		( print the ASCII equivalents )
+		2DUP 1- 15 AND 1+ ( addr len addr linelen )
+		BEGIN
+			?DUP		( while linelen > 0)
+		WHILE
+			SWAP		( addr len linelen addr )
+			DUP C@		( addr len linelen addr byte )
+			DUP 32 128 WITHIN IF	( 32 <= c < 128? )
+				EMIT
+			ELSE
+				DROP '.' EMIT
+			THEN
+			1+ SWAP 1-	( addr len linelen addr -- addr len addr+1 linelen-1 )
+		REPEAT
+		DROP		( addr len )
+		CR
+
+		DUP 1- 15 AND 1+ ( addr len linelen )
+		TUCK		( addr linelen len linelen )
+		-		( addr linelen len-linelen )
+		>R + R>		( addr+linelen len-linelen )
+	REPEAT
+
+	DROP			( restore stack )
+	BASE !			( restore saved BASE )
+;
+

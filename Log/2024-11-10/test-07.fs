@@ -9,4 +9,8 @@ CR
 ." * WORDS " CR
 WORDS CR
 
+\-- Prueba del comando DUMP
+." * DUMP " CR
+LATEST @ 128 DUMP 
+
 
