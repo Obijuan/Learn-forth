@@ -86,4 +86,9 @@ DECIMAL 255 .S DROP .S  \-- Meter 255 en la pila
 \-- Probando ALIGNED
 1 ALIGNED . .S CR 
 
+\-- Probando S"
+S" HOLA" .S CR TELL CR .S 
+: TEST_S S" HOLA2" TELL CR ; TEST_S  
+
+
 

@@ -413,7 +413,7 @@
 		DROP		( drop the double quote character at the end )
 		DUP		( get the saved address of the length word )
 		HERE @ SWAP -	( calculate the length )
-		8-		( subtract 8 (because we measured from the start of the length word) )
+		4-		( subtract 8 (because we measured from the start of the length word) )
 		SWAP !		( and back-fill the length location )
 		ALIGN		( round up to next multiple of 8 bytes for the remaining code )
 	ELSE		( immediate mode )

@@ -11,7 +11,7 @@
     .eqv BUFFER_SIZE, 200
 
     #-- VERSION DEL FORTH
-    .eqv JONES_VERSION 51
+    .eqv JONES_VERSION 52
 
 #----------------------------------------------------------------------------
 #-- Definimos las palabras de nuestro sistema
