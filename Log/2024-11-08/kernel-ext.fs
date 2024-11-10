@@ -264,10 +264,9 @@
 	EMIT
 ;
 
-(
 	FORTH word .S prints the contents of the stack.  It doesn't alter the stack.
 	Very useful for debugging.
-)
+
 : .S		( -- )
 	DSP@		( get current stack pointer )
 	BEGIN
@@ -279,6 +278,7 @@
 	REPEAT
 	DROP
 ;
+
 
 ( This word returns the width (in characters) of an unsigned number in the current base )
 : UWIDTH	( u -- width )
@@ -336,4 +336,92 @@
 
 	U.
 ;
+
+
+( Finally we can define word . in terms of .R, with a trailing space. )
+: . 0 .R SPACE ;
+
+( The real U., note the trailing space. )
+: U. U. SPACE ;
+
+( ? fetches the integer at an address and prints it. )
+: ? ( addr -- ) @ . ;
+
+( c a b WITHIN returns true if a <= c and c < b )
+(  or define without ifs: OVER - >R - R>  U<  )
+: WITHIN
+	-ROT		( b c a )
+	OVER		( b c a c )
+	<= IF
+		> IF		( b c -- )
+			TRUE
+		ELSE
+			FALSE
+		THEN
+	ELSE
+		2DROP		( b c -- )
+		FALSE
+	THEN
+;
+
+
+( DEPTH returns the depth of the stack. )
+: DEPTH		( -- n )
+	S0 @ DSP@ -
+	4-			( adjust because S0 was on the stack when we pushed DSP )
+;
+
+
+(
+	ALIGNED takes an address and rounds it up (aligns it) to the next 8 byte boundary.
+)
+: ALIGNED	( addr -- addr )
+	3 + 3 INVERT AND	( (addr+3) & ~3 )
+;
+
+(
+	ALIGN aligns the HERE pointer, so the next word appended will be aligned properly.
+)
+: ALIGN HERE @ ALIGNED HERE ! ;
+
+
+( C, appends a byte to the current compiled word. )
+: C,
+	HERE @ C!	( store the character in the compiled image )
+	1 HERE +!	( increment HERE pointer by 1 byte )
+;
+
+: S" IMMEDIATE		( -- addr len )
+	STATE @ IF	( compiling? )
+		' LITSTRING ,	( compile LITSTRING )
+		HERE @		( save the address of the length word on the stack )
+		0 ,		( dummy length - we don't know what it is yet )
+		BEGIN
+			KEY 		( get next character of the string )
+			DUP '"' <>
+		WHILE
+			C,		( copy character )
+		REPEAT
+		DROP		( drop the double quote character at the end )
+		DUP		( get the saved address of the length word )
+		HERE @ SWAP -	( calculate the length )
+		8-		( subtract 8 (because we measured from the start of the length word) )
+		SWAP !		( and back-fill the length location )
+		ALIGN		( round up to next multiple of 8 bytes for the remaining code )
+	ELSE		( immediate mode )
+		HERE @		( get the start address of the temporary space )
+		BEGIN
+			KEY
+			DUP '"' <>
+		WHILE
+			OVER C!		( save next character )
+			1+		( increment address )
+		REPEAT
+		DROP		( drop the final " character )
+		HERE @ -	( calculate the length )
+		HERE @		( push the start address )
+		SWAP 		( addr len )
+	THEN
+;
+
 

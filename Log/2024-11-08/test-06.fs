@@ -2,7 +2,7 @@
 \----- en jonesforth.fs
 
 \ Probar la division /
-10 5 .S / .S DROP .S 
+10 5 .S / .S DROP .S
 
 \ Probar el modulo MOD
 10 3 .S MOD .S DROP .S 
@@ -80,3 +80,18 @@ DECIMAL 255 .S DROP .S  \-- Meter 255 en la pila
 -543 10 .R CR    \-- Imprimir -543
 23   10 .R CR    \-- Imprimir 23
         
+\-- Probando DEPTH
+1 2 3 DEPTH . DROP DROP DROP DEPTH . CR 
+
+\-- Probando ALIGNED
+1 ALIGNED . .S CR 
+
+\ =========================================================================
+\=                  STRINGS  
+\==========================================================================
+( C, appends a byte to the current compiled word. )
+: C,
+	HERE @ C!	( store the character in the compiled image )
+	1 HERE +!	( increment HERE pointer by 1 byte )
+;
+

@@ -1067,6 +1067,7 @@ name_CMOVE:
 #-- !=0: El intérprete está compilando una palabra
 #----------------------------------------------------
        .data 
+       .align 2
 name_STATE:
        .word name_CMOVE
        .byte 5
@@ -2437,6 +2438,7 @@ name_SYSCALL0:
 	ecall
 	PUSH a0	   #-- Meter el resultado en la pila
 	NEXT
+
 
 #----------------------------------------------------
 # BYE: Salir del interprete
