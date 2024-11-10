@@ -467,4 +467,16 @@
 	THEN
 ;
 
+\ ===========================================================================
+\ =     CONSTANTES Y VARIABLES
+\ ===========================================================================
+
+: CONSTANT
+	WORD		( get the name (the name follows CONSTANT) )
+	CREATE		( make the dictionary entry )
+	DOCOL ,		( append DOCOL (the codeword field of this word) )
+	' LIT ,		( append the codeword LIT )
+	,		( append the value on the top of the stack )
+	' EXIT ,	( append the codeword EXIT )
+;
 

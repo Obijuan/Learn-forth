@@ -97,3 +97,13 @@ S" VERSION:" TELL SPACE VERSION . CR
 ." --> TEST PRINT" CR
 : TEST_PRINT ." --> TEST PRINT2" CR ; TEST_PRINT
 
+\-- Pruebas de impresion de variables
+." STATE : " STATE ? CR
+." LATEST: 0x" HEX LATEST ? CR DECIMAL 
+." HERE  : 0x" HEX HERE ? CR DECIMAL
+." S0    : 0x" HEX S0 ? CR DECIMAL 
+." BASE  : " BASE ? CR
+
+\-- Prueba de constantes
+30 CONSTANT MAX   \-- Definir constante MAX
+." MAX: " MAX . CR          \-- Imprimir constante
