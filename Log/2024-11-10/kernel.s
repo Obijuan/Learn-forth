@@ -808,7 +808,7 @@ name_AND:
        .text
  code_AND:
 	POP a0
-    POP a1
+      POP a1
 	and a0, a0, a1
 	PUSH a0
 	NEXT
@@ -870,13 +870,56 @@ name_INVERT:
 	NEXT
 
 
+#-------------------------------------------------------------
+#-- LSHIFT
+#-- Desplazar a la izquierda
+#-- ( x u -- x ) 
+#-- Ej. 1 3 LSHIFT --> 8
+#-------------------------------------------------------------
+        .data 
+name_LSHIFT:
+       .word name_INVERT
+       .byte 6
+       .ascii "LSHIFT" 
+       .align 2
+ LSHIFT:   .word code_LSHIFT
+       .text
+ code_LSHIFT:
+      POP a0   #-- Obtener numero bits a desplazar
+      POP a1   #-- Obtener numero
+      sll a2, a1, a0
+      PUSH a2  #-- Meter resultado en la pila
+      NEXT 
+
+#-------------------------------------------------------------
+#-- RSHIFT
+#-- Desplazar a la derecha
+#-- ( x u -- x ) 
+#-- Ej. 8 3 RSHIFT --> 1
+#-------------------------------------------------------------
+        .data 
+name_RSHIFT:
+       .word name_LSHIFT
+       .byte 6
+       .ascii "RSHIFT" 
+       .align 2
+ RSHIFT:   .word code_RSHIFT
+       .text
+ code_RSHIFT:
+      POP a0   #-- Obtener numero bits a desplazar
+      POP a1   #-- Obtener numero
+      srl a2, a1, a0
+      PUSH a2  #-- Meter resultado en la pila
+      NEXT 
+
+
 #------------------------------------------------------
 #-- ! (STORE)
 #-- Almacenar un valor en una dirección
 #------------------------------------------------------
        .data 
 name_STORE:
-       .word name_INVERT
+       .word name_RSHIFT
        .byte 1
        .ascii "!" 
        .align 2
